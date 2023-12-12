@@ -1,0 +1,65 @@
+/* 改变主题色变量 */
+$--color-primary: #FFA800;
+$--color-success: #67C23A;
+$--color-warning: #ffba00;
+$--color-danger: #ff4949;
+$--color-info: #999999;
+$--color-text-primary: #000000;
+$--color-text-regular: #333333;
+$--color-text-secondary: #666666;
+$--color-text-placeholder: #CCCCCC;
+$--border-color-light: #DCDFE6;
+$--border-color-extra-light: #DCDFE6;
+$--background-color-base: #FAFAFA;
+
+$--font-weight-primary: 400;
+
+$--messagebox-content-font-size: 14px;
+$--table-header-font-color: #333333;
+$--table-header-background-color: #F5F7FA;
+$--table-font-color: #333333;
+
+/* button */
+$--button-font-weight: 400;
+
+/* checkbox */
+$--checkbox-font-weight: 400;
+
+/* calendar */
+$--calendar-selected-background-color: #F5F7FA;
+
+/* dialog */ 
+$--dialog-content-font-size: 12px;
+
+/* pagination */
+$--pagination-font-size: 12px;
+$--pagination-button-height: 32px;
+
+/* radio */
+$--radio-font-size: 12px;
+$--radio-font-weight: 400;
+
+/* form */
+$--form-label-font-size: 12px;
+
+/* link */
+$--link-primary-font-color: #2D8CF0;
+
+/* input */
+$--input-small-font-size: 12px;
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";
+
+// message-box样式
+.el-message-box__status {
+    font-size: 20px !important;
+}
+.el-icon-warning+.el-message-box__message {
+    padding-left: 33px;
+}
+.el-message-box__message p {
+    line-height: 20px;
+}

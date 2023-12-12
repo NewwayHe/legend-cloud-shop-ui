@@ -1,0 +1,151 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './element-ui.scss';
+@import './elementRewrite.scss';    //重写ElEMENTUI样式也在此引入 在index.scss做统一管理 不再main.js引入 必须在ls-main之前引入 否则在element元素上复写的样式会失效
+@import './sidebar.scss';
+@import './table.scss';
+@import './commom.scss';
+@import './ls-main.scss';
+@import './customTable.scss';
+* {
+    margin: 0;
+}
+
+html,
+body {
+    min-height: 100%;
+    height: 100%;
+    line-height: 1.5;
+}
+
+body {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+    padding: 0 !important;
+    background-color: #eef2f6;
+}
+
+label {
+    font-weight: 400;
+}
+
+html {
+    box-sizing: border-box;
+    background-color: #eef2f6;
+}
+
+#app {
+    height: 100%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+    outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+div:focus {
+    outline: none;
+}
+
+.clearfix {
+    &:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+    }
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+// main-container global css
+.app-container {
+    padding: 20px;
+}
+
+.complain--color {
+    color: #ccc;
+	
+}
+
+.self-popper-class{
+		color: #fff;
+		background-color: #ccc  !important;
+}
+
+/* 这段代码会与<el-table> 的Height属性和<el-table-clomn>fixed属性冲突，造成设置了fixed的列遮挡住table的滚动条并且在滚动条拖至尽头时造成表格错位
+// 用了el-scrollbar的,谷歌浏览上就将原生的scrollbar去掉
+.el-scrollbar__wrap::-webkit-scrollbar {
+  display: none;
+}
+.el-scrollbar__wrap{
+    // 用了el-scrollbar的,火狐浏览上就将原生的scrollbar去掉
+    scrollbar-width: none;
+
+    // ie 去掉滚动条
+    -ms-scroll-chaining: chained;
+    -ms-overflow-style: none;
+    -ms-content-zooming: zoom;
+    -ms-scroll-rails: none;
+    -ms-overflow-style: none;
+    overflow: auto;
+}
+ */
+
+.app-wrapper {
+   height: 100%;
+   width: 100%;
+}
+/* 从大到小写进行覆盖 */
+// @media screen and (max-width:1440px) {
+//     .app-wrapper {
+//         width: 1440px;
+//     }
+// }
+
+@media screen and (max-width:1366px) {
+    .app-wrapper {
+        width: 1366px;
+    }
+}
+
+// @media screen and (max-width:1024px) {
+//     .app-wrapper {
+//         width: 1024px;
+//     }
+// }
+
+
+@media screen and (max-height:900px) {
+    .app-wrapper {
+        // height: 900px + 114px(固定头部) + 50px(页面出现[返回,提交按钮时]固定尾部);
+        height: 1064px;
+    }
+}
+
+@media screen and (max-height:768px) {
+    .app-wrapper {
+        height: 932px;
+    }
+}

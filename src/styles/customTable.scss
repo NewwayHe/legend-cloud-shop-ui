@@ -1,0 +1,104 @@
+.customTable {
+    &__waring {
+        color: #e6a23c;
+        cursor: pointer;
+    }
+    &__primary {
+        color: $mainColor;
+        cursor: pointer;
+    }
+    &__trHead {
+        background-color: #f5f7fa;
+        td {
+            text-align: left;
+            font-size: 0 !important;
+            height: 48px !important;
+            >label {
+                font-size: 0;
+            }
+        }
+        &--action {
+            //  color: #2d8cf0;
+            cursor: pointer;
+            margin-right: 30px;
+            font-size: 12px;
+            line-height: 1;
+        }
+    }
+    &__warp {
+        width: 100%;
+        overflow-x: auto;
+        .el-checkbox__label {
+            display: none;
+        }
+        th,
+        td {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #333;
+            text-align: center;
+            height: 48px;
+            // min-height: 48px;
+            // line-height: 26px;
+            line-height: 1.5;
+            border: 1px solid #ebeef5;
+            font-size: 12px;
+            padding: 15px 10px;
+        }
+        th {
+            border: none;
+            background-color: #f5f7fa;
+        }
+        .dateTime {
+            width: 140px;
+        }
+    }
+    &__header {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        white-space: nowrap;
+        table-layout: fixed;
+        th {
+            &:first-child {
+                width: 48px;
+            }
+        }
+    }
+    &__con {
+        width: 100%;
+        overflow: hidden;
+        // overflow-x: auto;
+    }
+    &__table {
+        margin-top: 15px;
+        border-collapse: collapse;
+        border-spacing: 0;
+        // white-space: nowrap;
+        width: 100%;
+        table-layout: fixed;
+        border: 1px solid #ebeef5;
+        td {
+            &:first-child {
+                width: 48px;
+            }
+        }
+        td.dateTime {
+            width: 140px;
+            border: 1px solid red;
+        }
+        td.dateTimeNotPd{
+            padding: 0;
+            // width: 140px;
+            div {
+                width: 140px;
+                padding: 15px 10px;
+            }
+        }
+        
+    }
+}
+
+.bg__grap {
+    background-color: #f5f7fa;
+}

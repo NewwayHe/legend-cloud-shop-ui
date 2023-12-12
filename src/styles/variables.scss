@@ -1,0 +1,35 @@
+// sidebar
+$mainColor:#FFA800;
+$mainBg:rgba(238, 242, 246, 1);
+$menuText:#000;
+$menuActiveText:#FFA800;
+$menuActiveBg:#FFF6E6;
+$subMenuActiveText:#FFA800; //https://github.com/ElemeFE/element/issues/12951
+$menuBg:#fff;
+$menuHover:#FFF6E6;
+$subMenuBg:#fff;
+$subMenuHover:#FFA800;
+$sideBarWidth: 210px;
+$headLineSize:18px;//用于大标题、分类页标题
+$titleSize:14px;//用于菜单栏、标题、搜索筛选等文字
+$mainTextSize:12px;//默认常规文字大小
+$auxiliarySize:10px;//用于辅助文字
+// the :export directive is the magic sauce for webpack
+// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+:export {
+    menuText: $menuText;
+    menuActiveText: $menuActiveText;
+    subMenuActiveText: $subMenuActiveText;
+    menuBg: $menuBg;
+    menuHover: $menuHover;
+    subMenuBg: $subMenuBg;
+    subMenuHover: $subMenuHover;
+    sideBarWidth: $sideBarWidth;
+    menuActiveBg: $menuActiveBg;
+    mainBg: $mainBg;
+    mainColor: $mainColor;
+    headLineSize:$headLineSize;//用于大标题、分类页标题
+    titleSize:$titleSize;//用于菜单栏、标题、搜索筛选等文字
+    mainTextSize:$mainTextSize;//默认常规文字大小
+    auxiliarySize:$auxiliarySize;//用于辅助文字
+}
