@@ -2,7 +2,15 @@
     <!-- 规格模板 -->
     <el-dialog title="编辑库存" custom-class="dialog-form-large" :visible.sync="dialogVisible">
         <el-form ref="dialogForm" :inline="true" :model="dialogForm" size="small" @submit.native.prevent>
-            <el-table ref="multipleTable" :data="dialogForm.templateList" tooltip-effect="dark" class="w-100 dialog-form-table" height="300" header-row-class-name="headerRow" row-key="id">
+            <el-table
+                ref="multipleTable"
+                :data="dialogForm.templateList"
+                tooltip-effect="dark"
+                class="w-100 dialog-form-table"
+                height="300"
+                header-row-class-name="headerRow"
+                row-key="id"
+            >
                 <el-table-column prop="cnProperties" label="商品规格">
                     <template slot-scope="scope">
                         {{ scope.row.cnProperties || scope.row.name }}
@@ -19,7 +27,14 @@
                     <template slot="header" slot-scope="scope">
                         <el-row type="flex" align="middle" justify="center">
                             <div class="flex-shrink mr-3 ml-3">编辑库存</div>
-                            <el-input v-model.number="batchVal" :oninput="$inputInteger" style="width: 100px" size="small" class="flex-1" maxlength="8"></el-input>
+                            <el-input
+                                v-model.number="batchVal"
+                                :oninput="$inputInteger"
+                                style="width: 100px"
+                                size="small"
+                                class="flex-1"
+                                maxlength="8"
+                            ></el-input>
                             <el-button type="text" class="ml-3" @click="batchAdd">
                                 <span class="text-blue font-12">应用</span>
                                 <i class="el-icon-caret-bottom el-icon--right text-blue"></i>
@@ -33,7 +48,7 @@
                             style="width: 150px"
                             class="flex-1"
                             size="small"
-							maxlength="8"
+                            maxlength="8"
                         ></el-input>
                     </template>
                 </el-table-column>
@@ -41,7 +56,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="dialogVisible = false">取 消</el-button>
-            <ls-button size="small" type="primary" :asyncFunction="onSubmit">确 定</ls-button>
+            <ls-button size="small" type="primary" :async-function="onSubmit">确 定</ls-button>
         </span>
     </el-dialog>
 </template>
@@ -132,23 +147,25 @@ export default {
             }
         },
         onSubmit() {
-            return new Promise(resolve=>{
-                inventoryManage.batchUpdateSku(this.initResultData(this.dialogForm.templateList)).then((res) => {
-                    if (res.code == 1) {
-                        this.$message.success('操作成功')
-                        if (this.type == 'sku') {
-                            // 为解决库存管理里面编辑库存找不到组件里面的getData()方法
-                            this.$parent.$parent.getData()
-                        } else {
-                            this.$parent.getData()
+            return new Promise((resolve) => {
+                inventoryManage
+                    .batchUpdateSku(this.initResultData(this.dialogForm.templateList))
+                    .then((res) => {
+                        if (res.code == 1) {
+                            this.$message.success('操作成功')
+                            if (this.type == 'sku') {
+                                // 为解决库存管理里面编辑库存找不到组件里面的getData()方法
+                                this.$parent.$parent.getData()
+                            } else {
+                                this.$parent.getData()
+                            }
+                            this.dialogVisible = false
                         }
-                        this.dialogVisible = false
-                    }
-                }).finally(_=>{
-                    resolve()
-                })
+                    })
+                    .finally((_) => {
+                        resolve()
+                    })
             })
-            
         },
         showDialog() {
             this.dialogVisible = true
@@ -161,12 +178,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .el-table .cell{
-       color: #333;
+::v-deep .el-table .cell {
+    color: #333;
+    font-size: 12px !important;
+    .el-radio__label {
+        color: #333;
         font-size: 12px !important;
-      .el-radio__label{
-          color: #333;
-           font-size: 12px !important;
-      }
+    }
 }
 </style>

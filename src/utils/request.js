@@ -45,7 +45,7 @@ service.interceptors.response.use(
             // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
             if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
                 // to re-login
-				MessageBox.confirm('您已经退出登录，您可以取消留在该页面或返回登录页面', '退出登录', {
+                MessageBox.confirm('您已经退出登录，您可以取消留在该页面或返回登录页面', '退出登录', {
                     confirmButtonText: 'Re-Login',
                     cancelButtonText: 'Cancel',
                     type: 'warning'
@@ -64,16 +64,16 @@ service.interceptors.response.use(
         }
     },
     (error) => {
-		console.log(JSON.parse(JSON.stringify(error)))
-		console.log('err:' + error) // for debug
-		let err = JSON.parse(JSON.stringify(error))
-		let errTimeOut = ''
-		// 如果是超过了 timeout请求时间
-		if (err.message.indexOf("timeout of") != -1) {
-			errTimeOut = '请求超时，请刷新页面后重试！'
-		}
-		
-		singleMessage.showMessage(errTimeOut || error.response.data.msg || '网络请求异常, 请检查您的网络设置后刷新重试!')
+        console.log(JSON.parse(JSON.stringify(error)))
+        console.log('err:' + error) // for debug
+        let err = JSON.parse(JSON.stringify(error))
+        let errTimeOut = ''
+        // 如果是超过了 timeout请求时间
+        if (err.message.indexOf('timeout of') != -1) {
+            errTimeOut = '请求超时，请刷新页面后重试！'
+        }
+
+        singleMessage.showMessage(errTimeOut || error.response.data.msg || '网络请求异常, 请检查您的网络设置后刷新重试!')
 
         return Promise.reject(error)
     }
@@ -140,9 +140,9 @@ export const request = {
         const requestParmams = {
             url,
             method: 'post',
-            data: data,
+            data: data
         }
-        return this.sendRequest(requestParmams, {...opt,addHeader:{ 'Content-Type': 'multipart/form-data' }})
+        return this.sendRequest(requestParmams, { ...opt, addHeader: { 'Content-Type': 'multipart/form-data' } })
     },
     put(url, data, opt) {
         const requestParmams = {
@@ -170,19 +170,20 @@ export const request = {
             data: { getFile: true },
             responseType: 'blob'
         }
-		const opt = {
-			addHeader: { 'Content-Type': 'application/json' },
-		}
-        this.sendRequest(requestParmams,opt)
+        const opt = {
+            addHeader: { 'Content-Type': 'application/json' }
+        }
+        this.sendRequest(requestParmams, opt)
             .then((res) => {
                 // 如果是二进制的，则进行下载
-                if(res.data.type==='application/vnd.ms-excel' || res.data.type=== 'application/vnd.ms-excel;charset=utf-8'){ //2022.4.26部分导出功能改为异步导出，故加判断。是excel文件则下载，否则就只弹提示
-                    
+                if (res.data.type === 'application/vnd.ms-excel' || res.data.type === 'application/vnd.ms-excel;charset=utf-8') {
+                    //2022.4.26部分导出功能改为异步导出，故加判断。是excel文件则下载，否则就只弹提示
+
                     const fileName = string.getFileName(res.headers['content-disposition'])
-                    if('msSaveOrOpenBlob' in navigator){
+                    if ('msSaveOrOpenBlob' in navigator) {
                         // IE下载文件
                         window.navigator.msSaveOrOpenBlob(res.data, fileName)
-                    }else{
+                    } else {
                         //其他浏览器下载文件
                         const fileContent = new Blob([res.data])
                         const link = document.createElement('a') // a标签下载
@@ -196,7 +197,7 @@ export const request = {
                         type: 'success',
                         duration: 5 * 1000
                     })
-                }else{
+                } else {
                     Message({
                         message: '文件正在生成中，请稍后前往右上角文件导出中心下载',
                         type: 'success',
@@ -225,7 +226,8 @@ export const request = {
                 params.headers = {}
                 params.headers['serviceName'] = params.url.split('/')[1]
             }
-            if(options.addHeader) {     //是否需要增加请求头参数
+            if (options.addHeader) {
+                //是否需要增加请求头参数
                 Object.assign(params.headers, options.addHeader)
             }
             const defaultOptions = {

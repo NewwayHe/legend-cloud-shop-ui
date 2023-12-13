@@ -16,8 +16,8 @@
         :max="max"
         :precision="precision"
         :controls-position="controlsPosition"
-        @input="inputChange"
         :disabled="disabled"
+        @input="inputChange"
     ></inputNumber>
 </template>
 
@@ -62,10 +62,10 @@ export default {
             type: Boolean,
             default: false
         },
-        size:String,
-        disabled:{
+        size: String,
+        disabled: {
             type: Boolean,
-            default:false
+            default: false
         }
     },
     data() {

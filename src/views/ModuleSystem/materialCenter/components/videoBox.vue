@@ -177,10 +177,10 @@
         <template>
             <el-dialog title="图片预览" :visible.sync="imgDialogVisible" width="620px" custom-class="demo">
                 <!-- 图片预览 -->
-                <el-image-viewer v-if="showView" :on-close="closeViewer" :url-list="[imgUrl]" style="z-index: 3333;"/>
+                <el-image-viewer v-if="showView" :on-close="closeViewer" :url-list="[imgUrl]" style="z-index: 3333" />
                 <div class="d-flex j-center" style="max-height: 600px">
                     <el-tooltip content="单击可以预览" placement="right-end">
-                        <ls-image :src="imgSrc" fit="contain" :isPreview="false" @handleImg="handleImg()"></ls-image>
+                        <ls-image :src="imgSrc" fit="contain" :is-preview="false" @handleImg="handleImg()"></ls-image>
                     </el-tooltip>
                 </div>
                 <el-row class="mt-20">
@@ -569,7 +569,6 @@ export default {
             //             return
             //         }
             //         this.$message.success('移动成功')
-
             //         setTimeout(() => {
             //             this.dbnSearch()
             //         })

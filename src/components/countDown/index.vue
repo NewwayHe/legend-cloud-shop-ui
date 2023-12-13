@@ -53,7 +53,7 @@ export default {
             remain: 0,
             rafId: null,
             currentTime: 0,
-            timeDiff:355
+            timeDiff: 355
         }
     },
     computed: {
@@ -75,9 +75,7 @@ export default {
     },
     created() {
         this.currentTime = Date.now() - this.timeDiff
-        
     },
-
 
     // #ifndef MP-WEIXIN
     mounted() {
@@ -102,7 +100,6 @@ export default {
 
         // 重置
         reset() {
-
             if (this.timeDiff) {
                 this.remain = this.time * 1 - (Date.now() - this.timeDiff)
             }

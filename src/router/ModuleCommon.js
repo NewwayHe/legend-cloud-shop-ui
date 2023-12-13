@@ -5,57 +5,57 @@ const ModuleCommon = [
         path: '/register',
         component: () => import('@/views/ModuleCommon/register/index'),
         hidden: true,
-		meta: { title: '注册' }
+        meta: { title: '注册' }
     },
     {
         path: '/agreeMent',
         name: 'agreeMent',
         component: () => import('@/views/ModuleCommon/components/agreeMent'),
         hidden: true,
-		meta: { title: '注册协议' }
+        meta: { title: '注册协议' }
     },
     {
         path: '/forgetPwd',
         component: () => import('@/views/ModuleCommon/forgetPwd/index'),
         hidden: true,
-		meta: { title: '忘记密码' }
+        meta: { title: '忘记密码' }
     },
     {
         path: '/login',
         component: () => import('@/views/ModuleCommon/login/index'),
         hidden: true,
-		meta: { title: '账号登录' }
+        meta: { title: '账号登录' }
     },
     {
         path: '/staffLogin',
         component: () => import('@/views/ModuleCommon/login/staffLogin'),
         hidden: true,
-		meta: { title: '员工账号登录' }
+        meta: { title: '员工账号登录' }
     },
     {
         path: '/shopMoveIn',
         component: () => import('@/views/ModuleCommon/shopMoveIn/index'),
-        name:'shopMoveIn',
+        name: 'shopMoveIn',
         hidden: true,
-		meta: { title: '商家入驻' }
+        meta: { title: '商家入驻' }
     },
     {
         path: '/userHelpCenter',
         component: () => import('@/views/ModuleCommon/userHelpCenter/index'),
         hidden: true,
-		meta: { title: '帮助中心' }
+        meta: { title: '帮助中心' }
     },
     {
         path: '/userMessage',
         component: () => import('@/views/ModuleCommon/userMessage'),
         hidden: true,
-		meta: { title: '消息' }
+        meta: { title: '消息' }
     },
     {
         path: '/userMessageDetail',
         component: () => import('@/views/ModuleCommon/userMessage/userMessageDetail'),
         hidden: true,
-		meta: { title: '消息详情' }
+        meta: { title: '消息详情' }
     },
     {
         path: '/help',

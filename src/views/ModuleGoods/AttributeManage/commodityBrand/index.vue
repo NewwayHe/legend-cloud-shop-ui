@@ -3,12 +3,12 @@
 */ -->
 <template>
     <section class="">
-        <el-card shadow :body-style="{padding:`20px 20px 10px 20px`}">
+        <el-card shadow :body-style="{ padding: `20px 20px 10px 20px` }">
             <!-- 查询 -->
             <div class="search">
                 <el-form :inline="true" :model="searchFilters" size="small">
                     <el-form-item label="品牌名称">
-                        <el-input v-model="searchFilters.brandName" placeholder="品牌名称" maxlength="200"/>
+                        <el-input v-model="searchFilters.brandName" placeholder="品牌名称" maxlength="200" />
                     </el-form-item>
                     <el-form-item label="状态">
                         <el-select v-model="searchFilters.status" clearable filterable placeholder="请选择">
@@ -31,10 +31,10 @@
                             <el-radio-button label="1">已通过</el-radio-button>
                             <el-radio-button label="-1">未通过</el-radio-button>
                         </el-radio-group>
-						<el-button class="ml-20" type="primary" size="medium" @click="handleCreate">新增</el-button>
+                        <el-button class="ml-20" type="primary" size="medium" @click="handleCreate">新增</el-button>
                     </el-col>
                 </el-row>
-                 <el-row class="mb-20">
+                <el-row class="mb-20">
                     <el-alert class="theme" :closable="false" show-icon>
                         <p>商家可向平台提交品牌申请，提交品牌申请后需要登台平台审核，审核通过后平台所有商家都可使用该品牌</p>
                     </el-alert>
@@ -56,30 +56,22 @@
                     <el-table-column prop="brandName" label="品牌名称" />
                     <el-table-column prop="brandPic" label="品牌LOGO">
                         <template slot-scope="scope">
-                            <ls-image
-                                style="flex: 0 0 50px"
-                                :src="scope.row.brandPic"
-                                :options="{ w: '50', h: '50', br: '4' }"
-                            />
+                            <ls-image style="flex: 0 0 50px" :src="scope.row.brandPic" :options="{ w: '50', h: '50', br: '4' }" />
                         </template>
                     </el-table-column>
                     <el-table-column prop="bigImage" label="品牌大图">
                         <template slot-scope="scope">
-                            <ls-image
-                                style="flex: 0 0 60px"
-                                :src="scope.row.bigImage"
-                                :options="{ w: '80', h: '80', br: '6' }"
-                            />
+                            <ls-image style="flex: 0 0 60px" :src="scope.row.bigImage" :options="{ w: '80', h: '80', br: '6' }" />
                         </template>
                     </el-table-column>
                     <el-table-column prop="brief" label="品牌介绍" />
                     <el-table-column prop="status" label="状态">
                         <template slot-scope="scope">
-                            <span class="status-wait" v-if="scope.row.opStatus == 0" >待审核</span>
-                            <span class="status-veto" v-else-if="scope.row.opStatus == -1">审核不通过</span>
+                            <span v-if="scope.row.opStatus == 0" class="status-wait">待审核</span>
+                            <span v-else-if="scope.row.opStatus == -1" class="status-veto">审核不通过</span>
                             <template v-else>
-                                <span class="status-pass" v-if="scope.row.status == 1">上线</span>
-                                <span class="status-done" v-if="scope.row.status == 0" >下线</span>
+                                <span v-if="scope.row.status == 1" class="status-pass">上线</span>
+                                <span v-if="scope.row.status == 0" class="status-done">下线</span>
                             </template>
                         </template>
                     </el-table-column>
@@ -99,66 +91,85 @@
                         </template>
                     </el-table-column>
                 </el-table>
-				<LsSticky :data="tableList">
-					<el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
-						<pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
-					</el-row>
-				</LsSticky>
+                <LsSticky :data="tableList">
+                    <el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
+                        <pagination
+                            :current-page="page.curPage"
+                            :total="tableTotal"
+                            @size-change="pageSizeChange"
+                            @current-change="currentPageChange"
+                        />
+                    </el-row>
+                </LsSticky>
             </div>
         </el-card>
-		<!-- 新增-编辑 -->
-		<el-dialog :title="dialogForm.title" :visible.sync="dialogForm.isVisible" custom-class="dialog-form-small" width="500px" :close-on-click-modal="false">
-		    <el-form
-		        ref="myForm"
-		        :inline="false"
-		        :model="dialogForm.formData"
-		        :rules="dialogForm.formRule"
-		        :destroy-on-close="true"
-		        label-position="right"
-		        label-width="98px"
-		        size="small"
-		    >
-		        <el-form-item label="品牌名称：" prop="brandName">
-		            <el-input v-model="dialogForm.formData.brandName" :maxlength="50" show-word-limit placeholder="请输入" />
-		        </el-form-item>
-		        <el-form-item label="品牌LOGO：" prop="brandPic">
-		            <imgCenter v-model="dialogForm.formData.brandPic" :key="'1'" @input="$refs.myForm.validateField('brandPic')"></imgCenter>
-		            <span class="text-999 font ml-15 v-top">建议尺寸：200*200</span>
-		        </el-form-item>
-		        <el-form-item label="品牌大图：" prop="bigImage">
-		            <imgCenter v-model="dialogForm.formData.bigImage" :key="'2'" @input="$refs.myForm.validateField('bigImage')"></imgCenter>
-		            <span class="text-999 font ml-15 v-top">建议尺寸：590*350</span>
-		        </el-form-item>
-		        <el-form-item label="排序：" prop="seq">
-					<lsInput v-model="dialogForm.formData.seq" :precision="0" :min="0" :max="999999" textAlign="left"/>
-		        </el-form-item>
-		        <el-form-item label="品牌介绍：" prop="brief">
-		            <el-input v-model="dialogForm.formData.brief" :maxlength="300" placeholder="请输入" type="textarea" autosize show-word-limit/>
-		        </el-form-item>
-				<el-form-item label="商标注册证号：" prop="trademarkingNumber">
-				    <el-input v-model="dialogForm.formData.trademarkingNumber" :maxlength="30" show-word-limit placeholder="请输入" />
-				</el-form-item>
-				<el-form-item label="注册人：" prop="registrationPeople">
-				    <el-input v-model="dialogForm.formData.registrationPeople" :maxlength="20" show-word-limit placeholder="请输入" />
-				</el-form-item>
-				<el-form-item label="注册地址：" prop="registrationAddess">
-				    <el-input v-model="dialogForm.formData.registrationAddess" :maxlength="50" show-word-limit placeholder="请输入" />
-				</el-form-item>
-				<el-form-item label="商标有效期：" prop="time">
-				    <el-date-picker style="width: 100%;" v-model="dialogForm.formData.time" type="datetimerange" value-format="yyyy-MM-dd HH:mm:ss"
-				        range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间" :picker-options="pickerOptions"
-				        @input="timeChange"></el-date-picker>
-				</el-form-item>
-				<el-form-item label="商标注册证：" prop="registrationPic">
-				    <imgCenter v-model="dialogForm.formData.registrationPic" :key="'3'"></imgCenter>
-				    <span class="text-999 font ml-15 v-top">建议尺寸：590*350</span>
-				</el-form-item>
-		    </el-form>
-		    <span slot="footer" class="dialog-footer">
-		        <el-button size="small" @click="dialogForm.isVisible = false">取 消</el-button>
-		        <el-button size="small" type="primary" @click.stop="debounceSubmit('myForm')">保 存</el-button>
-		    </span>
-		</el-dialog>
+        <!-- 新增-编辑 -->
+        <el-dialog
+            :title="dialogForm.title"
+            :visible.sync="dialogForm.isVisible"
+            custom-class="dialog-form-small"
+            width="500px"
+            :close-on-click-modal="false"
+        >
+            <el-form
+                ref="myForm"
+                :inline="false"
+                :model="dialogForm.formData"
+                :rules="dialogForm.formRule"
+                :destroy-on-close="true"
+                label-position="right"
+                label-width="98px"
+                size="small"
+            >
+                <el-form-item label="品牌名称：" prop="brandName">
+                    <el-input v-model="dialogForm.formData.brandName" :maxlength="50" show-word-limit placeholder="请输入" />
+                </el-form-item>
+                <el-form-item label="品牌LOGO：" prop="brandPic">
+                    <imgCenter :key="'1'" v-model="dialogForm.formData.brandPic" @input="$refs.myForm.validateField('brandPic')"></imgCenter>
+                    <span class="text-999 font ml-15 v-top">建议尺寸：200*200</span>
+                </el-form-item>
+                <el-form-item label="品牌大图：" prop="bigImage">
+                    <imgCenter :key="'2'" v-model="dialogForm.formData.bigImage" @input="$refs.myForm.validateField('bigImage')"></imgCenter>
+                    <span class="text-999 font ml-15 v-top">建议尺寸：590*350</span>
+                </el-form-item>
+                <el-form-item label="排序：" prop="seq">
+                    <lsInput v-model="dialogForm.formData.seq" :precision="0" :min="0" :max="999999" text-align="left" />
+                </el-form-item>
+                <el-form-item label="品牌介绍：" prop="brief">
+                    <el-input v-model="dialogForm.formData.brief" :maxlength="300" placeholder="请输入" type="textarea" autosize show-word-limit />
+                </el-form-item>
+                <el-form-item label="商标注册证号：" prop="trademarkingNumber">
+                    <el-input v-model="dialogForm.formData.trademarkingNumber" :maxlength="30" show-word-limit placeholder="请输入" />
+                </el-form-item>
+                <el-form-item label="注册人：" prop="registrationPeople">
+                    <el-input v-model="dialogForm.formData.registrationPeople" :maxlength="20" show-word-limit placeholder="请输入" />
+                </el-form-item>
+                <el-form-item label="注册地址：" prop="registrationAddess">
+                    <el-input v-model="dialogForm.formData.registrationAddess" :maxlength="50" show-word-limit placeholder="请输入" />
+                </el-form-item>
+                <el-form-item label="商标有效期：" prop="time">
+                    <el-date-picker
+                        v-model="dialogForm.formData.time"
+                        style="width: 100%"
+                        type="datetimerange"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        range-separator="至"
+                        start-placeholder="开始时间"
+                        end-placeholder="结束时间"
+                        :picker-options="pickerOptions"
+                        @input="timeChange"
+                    ></el-date-picker>
+                </el-form-item>
+                <el-form-item label="商标注册证：" prop="registrationPic">
+                    <imgCenter :key="'3'" v-model="dialogForm.formData.registrationPic"></imgCenter>
+                    <span class="text-999 font ml-15 v-top">建议尺寸：590*350</span>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button size="small" @click="dialogForm.isVisible = false">取 消</el-button>
+                <el-button size="small" type="primary" @click.stop="debounceSubmit('myForm')">保 存</el-button>
+            </span>
+        </el-dialog>
     </section>
 </template>
 <script>
@@ -170,7 +181,7 @@ import { commodityBrand } from '@/api/ModuleGoods'
 export default {
     name: 'CommodityBrand',
     components: {
-        Upload,
+        Upload
     },
     mixins: [common, cud],
     data() {
@@ -231,20 +242,20 @@ export default {
                 intro: '',
                 status: ''
             },
-			pickerOptions: {
-			    disabledDate: (time) => {
-			        let currentTime = new Date().getTime() - 24 * 3600 * 1000
-			        return currentTime > time.getTime()
-			    }
-			},
+            pickerOptions: {
+                disabledDate: (time) => {
+                    let currentTime = new Date().getTime() - 24 * 3600 * 1000
+                    return currentTime > time.getTime()
+                }
+            }
         }
     },
     watch: {
-		'dialogForm.formData.startTime'(val) {
-		    if (val) {
-		    	this.dialogForm.formData.time = [val, this.dialogForm.formData.endTime]
-		    }
-		},
+        'dialogForm.formData.startTime'(val) {
+            if (val) {
+                this.dialogForm.formData.time = [val, this.dialogForm.formData.endTime]
+            }
+        }
     },
     mounted() {},
     methods: {
@@ -257,25 +268,25 @@ export default {
                 }
             })
         },
-		// 开始/结束时间
-		timeChange(value) {
-		    if (!value) {
-		        value = []
-		    }
-		    this.dialogForm.formData.startTime = value[0] || ''
-		    this.dialogForm.formData.endTime = value[1] || ''
-		},
+        // 开始/结束时间
+        timeChange(value) {
+            if (!value) {
+                value = []
+            }
+            this.dialogForm.formData.startTime = value[0] || ''
+            this.dialogForm.formData.endTime = value[1] || ''
+        }
     }
 }
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 ::v-deep .dialog-form-small {
     .el-form {
         .el-form-item {
-            ::v-deep .el-input-number .el-input__inner{
+            ::v-deep .el-input-number .el-input__inner {
                 text-align: left;
             }
-            ::v-deep .el-textarea .el-input__count{
+            ::v-deep .el-textarea .el-input__count {
                 line-height: 1;
             }
         }

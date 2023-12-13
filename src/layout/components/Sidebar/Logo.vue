@@ -1,17 +1,29 @@
 <template>
     <div class="sidebar-logo-container" :class="{ collapse: collapse }">
-		<transition name="sidebarLogoFade">
-		    <router-link v-if="collapse" key="collapse" class="w-100 h-100 flex-center" to="/" v-loading="!systemConfigFinally">
-				<ls-image class="v-middle" :src="systemConfigTemp.logo" :options="{ w: '30', h: '30'}" :isPreview="false" v-if="systemConfigTemp&&systemConfigTemp.logo" />
-		        <img class="h-30p v-middle" style="width: 30px;" src="@/assets/images/logo.png" v-else-if="systemConfigFinally"/>
-				<div style="width: 30px;height: 30px;" v-else></div>
-		    </router-link>
-		    <router-link v-else key="expand" class="w-100 h-100 flex-center" to="/" v-loading="!systemConfigFinally">
-				<ls-image class="v-middle" :src="systemConfigTemp.shopSmallLogo" :options="{ w: '120', h: '40'}" :isPreview="false" v-if="systemConfigTemp&&systemConfigTemp.shopSmallLogo" />
-		        <img class="w-120p v-middle" style="height:40px;" src="@/assets/images/logo-small.png" v-else-if="systemConfigFinally"/>
-				<div style="width: 150px;height: 50px;" v-else></div>
-		    </router-link>
-		</transition>
+        <transition name="sidebarLogoFade">
+            <router-link v-if="collapse" key="collapse" v-loading="!systemConfigFinally" class="w-100 h-100 flex-center" to="/">
+                <ls-image
+                    v-if="systemConfigTemp && systemConfigTemp.logo"
+                    class="v-middle"
+                    :src="systemConfigTemp.logo"
+                    :options="{ w: '30', h: '30' }"
+                    :is-preview="false"
+                />
+                <img v-else-if="systemConfigFinally" class="h-30p v-middle" style="width: 30px" src="@/assets/images/logo.png" />
+                <div v-else style="width: 30px; height: 30px"></div>
+            </router-link>
+            <router-link v-else key="expand" v-loading="!systemConfigFinally" class="w-100 h-100 flex-center" to="/">
+                <ls-image
+                    v-if="systemConfigTemp && systemConfigTemp.shopSmallLogo"
+                    class="v-middle"
+                    :src="systemConfigTemp.shopSmallLogo"
+                    :options="{ w: '120', h: '40' }"
+                    :is-preview="false"
+                />
+                <img v-else-if="systemConfigFinally" class="w-120p v-middle" style="height: 40px" src="@/assets/images/logo-small.png" />
+                <div v-else style="width: 150px; height: 50px"></div>
+            </router-link>
+        </transition>
     </div>
 </template>
 
@@ -24,34 +36,33 @@ export default {
             required: true
         }
     },
-	computed: {
-	},
     data() {
         return {
-			systemConfigTemp:'',// 【用户】获取ICP备案号以及商城名称、登录页面logo、侧边栏左上角图标等
-			systemConfigFinally:false
+            systemConfigTemp: '', // 【用户】获取ICP备案号以及商城名称、登录页面logo、侧边栏左上角图标等
+            systemConfigFinally: false
         }
     },
-	created() {
-		let systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
-		// 如果main.js里面执行了方法获取到系统设置
-		if (systemConfig&&systemConfig.id) {
-			this.systemConfigTemp = systemConfig
-			this.systemConfigFinally = true
-		// 如果VUEX里没有设置systemConfig(系统设置)
-		}else{
-			this.$store
-			    .dispatch('user/getSystemConfig')
-			    .then((res) => {
-					this.systemConfigTemp = res
-					// console.log('systemConfig:',this.systemConfigTemp);
-			    })
-			    .catch(() => {
-			    }).finally(()=>{
-					this.systemConfigFinally = true
-				})
-		}
-	},
+    computed: {},
+    created() {
+        let systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
+        // 如果main.js里面执行了方法获取到系统设置
+        if (systemConfig && systemConfig.id) {
+            this.systemConfigTemp = systemConfig
+            this.systemConfigFinally = true
+            // 如果VUEX里没有设置systemConfig(系统设置)
+        } else {
+            this.$store
+                .dispatch('user/getSystemConfig')
+                .then((res) => {
+                    this.systemConfigTemp = res
+                    // console.log('systemConfig:',this.systemConfigTemp);
+                })
+                .catch(() => {})
+                .finally(() => {
+                    this.systemConfigFinally = true
+                })
+        }
+    }
 }
 </script>
 

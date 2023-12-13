@@ -2,7 +2,7 @@
     优惠券报表—>拉新复购饼图
 -->
 <template>
-    <div :class="className" :style="{ height: height, width: width }"/>
+    <div :class="className" :style="{ height: height, width: width }" />
 </template>
 
 <script>
@@ -37,14 +37,14 @@ export default {
         colors: {
             type: Array,
             default: () => [
-                '#5470c6', 
-                '#91cc75', 
-                '#fac858', 
-                '#ee6666', 
-                '#73c0de', 
-                '#3ba272', 
-                '#fc8452', 
-                '#9a60b4', 
+                '#5470c6',
+                '#91cc75',
+                '#fac858',
+                '#ee6666',
+                '#73c0de',
+                '#3ba272',
+                '#fc8452',
+                '#9a60b4',
                 '#ea7ccc',
                 '#32b67a',
                 '#facac0',
@@ -55,7 +55,8 @@ export default {
                 '#f0cf61'
             ]
         },
-        xAxis: {    //x轴的日期范围
+        xAxis: {
+            //x轴的日期范围
             type: Array,
             default: () => []
         }
@@ -72,29 +73,27 @@ export default {
             let section = []
             let [startDate, endDate] = this.xAxis
             section.push(startDate)
-            startDate = moment(startDate);
-            endDate = moment(endDate);
-            let diff = endDate.diff(startDate,'d')
-            let i = 0;
-            while(i < diff) {
-                section.push(startDate.add(1,'d').format('YYYY-MM-DD'))
+            startDate = moment(startDate)
+            endDate = moment(endDate)
+            let diff = endDate.diff(startDate, 'd')
+            let i = 0
+            while (i < diff) {
+                section.push(startDate.add(1, 'd').format('YYYY-MM-DD'))
                 ++i
             }
             return section
         }
     },
     watch: {
-        chartData:{
-            handler(){
+        chartData: {
+            handler() {
                 this.getChartData()
             },
-            deep:true,
-            immediate:true
+            deep: true,
+            immediate: true
         }
     },
-    created() {
-       
-    },
+    created() {},
     mounted() {
         // console.log('mount--',this.chartData)
         /* 示例
@@ -107,8 +106,6 @@ export default {
             },
         ] */
         // this.getChartData(this.chartData)
-        
-        
         // this.initChart()
     },
     beforeDestroy() {
@@ -119,44 +116,47 @@ export default {
         this.chart = null
     },
     methods: {
-        getChartData(){
-            if(!this.$utils.test.isEmpty(this.chartData)) {
-            this.series = this.chartData.map((item,index) => ({
-                name: item.name,
-                data: item.value,
-                type: 'line',
-                // stack: 'Total'，
-                itemStyle: {
-                    // color: 'red'
-                    color: this.colors[index]
-                }
-            }))
-            this.$nextTick(() => {
-                this.initChart()
-            })
-        }
+        getChartData() {
+            if (!this.$utils.test.isEmpty(this.chartData)) {
+                this.series = this.chartData.map((item, index) => ({
+                    name: item.name,
+                    data: item.value,
+                    type: 'line',
+                    // stack: 'Total'，
+                    itemStyle: {
+                        // color: 'red'
+                        color: this.colors[index]
+                    }
+                }))
+                this.$nextTick(() => {
+                    this.initChart()
+                })
+            }
         },
         initChart() {
             this.chart = echarts.init(this.$el)
             this.setOptions()
         },
-        setOptions(){
+        setOptions() {
             const option = {
                 tooltip: {
-                    trigger: 'axis',
+                    trigger: 'axis'
                     // position: ['50%', '50%']
                 },
-                legend: {           //图例
+                legend: {
+                    //图例
                     // bottom: '0%',
                     // left: 'center',
                 },
-                xAxis: {        //x轴
+                xAxis: {
+                    //x轴
                     type: 'category',
                     boundaryGap: false,
                     // data: ['Mon', 'Tue']
                     data: this.xAxisDate
                 },
-                yAxis: {        //y轴
+                yAxis: {
+                    //y轴
                     type: 'value'
                 },
                 grid: {
@@ -165,16 +165,12 @@ export default {
                     bottom: '3%',
                     containLabel: true
                 },
-                series: this.series,
-            };
+                series: this.series
+            }
             this.chart.setOption(option)
-        },
-
-
+        }
     }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

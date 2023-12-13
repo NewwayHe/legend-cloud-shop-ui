@@ -29,7 +29,7 @@ const getUa = function () {
     isQQ = !!ua.match(/pa qq/i) // QQ内置浏览器
     isQQBrowser = !!ua.match(/MQQBrowser/i) // QQ浏览器
     isWeibo = !!ua.match(/weiBo/i)
-	isIE = ua.match(/msie/) != null || ua.match(/trident/) != null
+    isIE = ua.match(/msie/) != null || ua.match(/trident/) != null
     // #endif
 
     _cache.ua = {
@@ -41,7 +41,7 @@ const getUa = function () {
         isQQ: isQQ,
         isWeibo: isWeibo,
         isQQBrowser: isQQBrowser,
-        isIE: isIE,
+        isIE: isIE
     }
 
     return _cache.ua
@@ -75,23 +75,23 @@ function debounce(fn, delay = 500) {
  * @param {Boolean} immediate 是否立即执行
  * @return null
  */
-let timeout = null;
+let timeout = null
 function uDebounce(func, wait = 500, immediate = false) {
-	// 清除定时器
-	if (timeout !== null) clearTimeout(timeout);
-	// 立即执行，此类情况一般用不到
-	if (immediate) {
-		var callNow = !timeout;
-		timeout = setTimeout(function() {
-			timeout = null;
-		}, wait);
-		if (callNow) typeof func === 'function' && func();
-	} else {
-		// 设置定时器，当最后一次操作后，timeout不会再被清除，所以在延时wait毫秒后执行func回调方法
-		timeout = setTimeout(function() {
-			typeof func === 'function' && func();
-		}, wait);
-	}
+    // 清除定时器
+    if (timeout !== null) clearTimeout(timeout)
+    // 立即执行，此类情况一般用不到
+    if (immediate) {
+        var callNow = !timeout
+        timeout = setTimeout(function () {
+            timeout = null
+        }, wait)
+        if (callNow) typeof func === 'function' && func()
+    } else {
+        // 设置定时器，当最后一次操作后，timeout不会再被清除，所以在延时wait毫秒后执行func回调方法
+        timeout = setTimeout(function () {
+            typeof func === 'function' && func()
+        }, wait)
+    }
 }
 
 /* 节流
@@ -113,15 +113,15 @@ function uDebounce(func, wait = 500, immediate = false) {
 // 	}
 // }
 function throttle(fn, delay = 500) {
-	let flag = true;
-	return function() {
-		if (!flag) return;
-		flag = false;
-		fn.apply(this, arguments);
-		setTimeout(() => {
-			flag = true;
-		}, delay);
-	}
+    let flag = true
+    return function () {
+        if (!flag) return
+        flag = false
+        fn.apply(this, arguments)
+        setTimeout(() => {
+            flag = true
+        }, delay)
+    }
 }
 /*
  *@param fn {Function}   实际要执行的函数
@@ -323,28 +323,30 @@ const color = {
         }
         return value
     },
-	
-	//转化颜色(rgba转16进制，主要目的是把透明度去掉)
-	// 例子： 值为：rgba(166, 115, 115, 0.3) ，转化16进制为： #e4d5d5 (把透明度去掉，在背景色为白色的情况下看上去是一样的)
-	// 	this.$utils.color.getHexColor(rgba(166, 115, 115, 0.3)) = '#e4d5d5'
-	getHexColor(color) { // 传的color须为字符串
-		if(/rgb?/.test(color)){
-			var values = String(color)
-				.replace(/rgba?\(/, '')  // 把 "rgba(" 去掉，变成  "194, 7, 15, 1)"
-				.replace(/\)/, '')		 // 把 ")" 去掉，变成 "194, 7, 15, 1"
-				.replace(/[\s+]/g, '')   // 把空格去掉，变成 "194,7,15,1"
-				.split(',')				 // 变成数组 [194,7,15,1]
-			var a = parseFloat(values[3] || 1), // values[3]是rgba中的a值，没有的话设置a为1，a可能为小数，所以用parseFloat函数
-			r = Math.floor(a * parseInt(values[0]) + (1 - a) * 255),  // 转换为16进制
-			g = Math.floor(a * parseInt(values[1]) + (1 - a) * 255),
-			b = Math.floor(a * parseInt(values[2]) + (1 - a) * 255)
-			color = '#' +
-				('0' + r.toString(16)).slice(-2) + // 转换后的16进制可能为一位，比如 7 就转换为 7 ， 15 转换为 f
-				('0' + g.toString(16)).slice(-2) + // 当为一位的时候就在前面加个 0，
-				('0' + b.toString(16)).slice(-2) // 若是为两位，加 0 后就变成了三位，所以要用 slice(-2) 截取后两位
-		}
-		return color
-	},
+
+    //转化颜色(rgba转16进制，主要目的是把透明度去掉)
+    // 例子： 值为：rgba(166, 115, 115, 0.3) ，转化16进制为： #e4d5d5 (把透明度去掉，在背景色为白色的情况下看上去是一样的)
+    // 	this.$utils.color.getHexColor(rgba(166, 115, 115, 0.3)) = '#e4d5d5'
+    getHexColor(color) {
+        // 传的color须为字符串
+        if (/rgb?/.test(color)) {
+            var values = String(color)
+                .replace(/rgba?\(/, '') // 把 "rgba(" 去掉，变成  "194, 7, 15, 1)"
+                .replace(/\)/, '') // 把 ")" 去掉，变成 "194, 7, 15, 1"
+                .replace(/[\s+]/g, '') // 把空格去掉，变成 "194,7,15,1"
+                .split(',') // 变成数组 [194,7,15,1]
+            var a = parseFloat(values[3] || 1), // values[3]是rgba中的a值，没有的话设置a为1，a可能为小数，所以用parseFloat函数
+                r = Math.floor(a * parseInt(values[0]) + (1 - a) * 255), // 转换为16进制
+                g = Math.floor(a * parseInt(values[1]) + (1 - a) * 255),
+                b = Math.floor(a * parseInt(values[2]) + (1 - a) * 255)
+            color =
+                '#' +
+                ('0' + r.toString(16)).slice(-2) + // 转换后的16进制可能为一位，比如 7 就转换为 7 ， 15 转换为 f
+                ('0' + g.toString(16)).slice(-2) + // 当为一位的时候就在前面加个 0，
+                ('0' + b.toString(16)).slice(-2) // 若是为两位，加 0 后就变成了三位，所以要用 slice(-2) 截取后两位
+        }
+        return color
+    }
 }
 // 数据效验
 const test = {
@@ -447,138 +449,160 @@ const string = {
         }
         return text.indexOf('.') != -1 ? text.split('.') : text.join('')
     },
-	
-	/* 只能输入整数(只处理input的type=number时的情况)
+
+    /* 只能输入整数(只处理input的type=number时的情况)
 	用法：
 		setTimeout(()=>{
 			this.params.num  = this.$utils.string.inputInteger(value)
 		},10) 
 	*/
-	inputInteger(value) {
-		if (value) {
-			if (value == '00') {
-				return '0';
-			}else if(String(value).indexOf(".")>-1){//把小数点.去掉
-				let valueTemp = String(value).replace('.','')
-				if (value.length > 1 && value[0] == '0') {//把0.1里的0去掉
-					valueTemp = valueTemp.slice(1)
-				}
-				return valueTemp
-			} else if (value.length > 1 && value[0] == '0') {//把01里的0去掉
-				return value.slice(1)
-			} else{
-				return String(value).replace('.', '').replace(/[^0-9]/g, '')
-			}
-		}
-	},
-	
-	/* 只能输小数点后precision(默认是2)位，可以输入负数(只处理input的type=number时的情况)
+    inputInteger(value) {
+        if (value) {
+            if (value == '00') {
+                return '0'
+            } else if (String(value).indexOf('.') > -1) {
+                //把小数点.去掉
+                let valueTemp = String(value).replace('.', '')
+                if (value.length > 1 && value[0] == '0') {
+                    //把0.1里的0去掉
+                    valueTemp = valueTemp.slice(1)
+                }
+                return valueTemp
+            } else if (value.length > 1 && value[0] == '0') {
+                //把01里的0去掉
+                return value.slice(1)
+            } else {
+                return String(value)
+                    .replace('.', '')
+                    .replace(/[^0-9]/g, '')
+            }
+        }
+    },
+
+    /* 只能输小数点后precision(默认是2)位，可以输入负数(只处理input的type=number时的情况)
 	用法：
 		setTimeout(()=>{
 			this.params.moneyu  = this.$utils.string.inputDigits(value,2)
 		},10) 
 	*/
-	inputDigits(value,digits = 2,min) {
-		if (value) {
-			if (value == '00') {
-				return '0';
-			} else {
-				// 如果要求输入的是正整数
-				if(digits===0||digits==="0"){
-					if(String(value).indexOf(".")>-1){//把小数点.去掉
-						let valueTemp = String(value).replace('.','')
-						if (value.length > 1 && value[0] == '0') {//把0.1里的0去掉
-							valueTemp = valueTemp.slice(1)
-						}
-						return valueTemp
-					} else if (value.length > 1 && value[0] == '0') {//把01里的0去掉
-						return value.slice(1)
-					} else{
-						return String(value).replace('.', '').replace(/[^0-9]/g, '')
-					}
-				//如果要求输入的是小数
-				}else{
-					if(Number(min)>=0&&(String(value).indexOf("-")>-1||String(value).indexOf("+")>-1)){//如果min>=0，则不准输入-，把负号+-去掉
-						return String(value).replace('-','').replace('+','')
-					} else if (value.length > 1 && value[0] == '0' && value[1] != '.') {//把01里的0去掉
-						return value.slice(1)
-					} else {
-						var regs1 = new RegExp(/[\.]{3,}/)
-						var regs2 = new RegExp(/[\.]([0-9]{2}).*$/)
-						// return String(value).replace(/[^\0-9.]/g, '').replace(/[\.]{2,}/, ".").replace(/[\.]([0-9]{2}).*$/, '.$1').replace(/[A-Z|a-z|\（|\）|[ ]|\s*|\(|\)|\【|\】|\u4e00-\u9fa5]{0,20}/, '')
-						return String(value).replace(/[^\0-9.]/g, '').replace(new RegExp(`[\.]{${digits},}`), ".").replace(new RegExp(`[\.]([0-9]{${digits}}).*$`), '.$1').replace(/[A-Z|a-z|\（|\）|[ ]|\s*|\(|\)|\【|\】|\u4e00-\u9fa5]{0,20}/, '')
-					}
-				}
-			}
+    inputDigits(value, digits = 2, min) {
+        if (value) {
+            if (value == '00') {
+                return '0'
+            } else {
+                // 如果要求输入的是正整数
+                if (digits === 0 || digits === '0') {
+                    if (String(value).indexOf('.') > -1) {
+                        //把小数点.去掉
+                        let valueTemp = String(value).replace('.', '')
+                        if (value.length > 1 && value[0] == '0') {
+                            //把0.1里的0去掉
+                            valueTemp = valueTemp.slice(1)
+                        }
+                        return valueTemp
+                    } else if (value.length > 1 && value[0] == '0') {
+                        //把01里的0去掉
+                        return value.slice(1)
+                    } else {
+                        return String(value)
+                            .replace('.', '')
+                            .replace(/[^0-9]/g, '')
+                    }
+                    //如果要求输入的是小数
+                } else {
+                    if (Number(min) >= 0 && (String(value).indexOf('-') > -1 || String(value).indexOf('+') > -1)) {
+                        //如果min>=0，则不准输入-，把负号+-去掉
+                        return String(value).replace('-', '').replace('+', '')
+                    } else if (value.length > 1 && value[0] == '0' && value[1] != '.') {
+                        //把01里的0去掉
+                        return value.slice(1)
+                    } else {
+                        var regs1 = new RegExp(/[\.]{3,}/)
+                        var regs2 = new RegExp(/[\.]([0-9]{2}).*$/)
+                        // return String(value).replace(/[^\0-9.]/g, '').replace(/[\.]{2,}/, ".").replace(/[\.]([0-9]{2}).*$/, '.$1').replace(/[A-Z|a-z|\（|\）|[ ]|\s*|\(|\)|\【|\】|\u4e00-\u9fa5]{0,20}/, '')
+                        return String(value)
+                            .replace(/[^\0-9.]/g, '')
+                            .replace(new RegExp(`[\.]{${digits},}`), '.')
+                            .replace(new RegExp(`[\.]([0-9]{${digits}}).*$`), '.$1')
+                            .replace(/[A-Z|a-z|\（|\）|[ ]|\s*|\(|\)|\【|\】|\u4e00-\u9fa5]{0,20}/, '')
+                    }
+                }
+            }
+        }
+    },
 
-		}
-	},
-	
-	/* 只能输小数点后两位，且只能输入正数
+    /* 只能输小数点后两位，且只能输入正数
 	用法：
 		setTimeout(()=>{
 			this.params.moneyu  = this.$utils.string.inputMoney(value)
 		},10) 
 	*/
-	inputMoney(value) {
-		if (value) {
-			if (value == '00') {
-				return '0';
-			} else if(String(value).indexOf("-")>-1){//把负号-去掉
-				return String(value).replace('-','')
-			} else if (value.length > 1 && value[0] == '0' && value[1] != '.') {//把01里的0去掉
-				return value.slice(1)
-			} else {
-				return String(value).replace(/[^\0-9.]/g, '').replace(/[\.]{2,}/, ".").replace(/[\.]([0-9]{2}).*$/, '.$1').replace(/[A-Z|a-z|\（|\）|[ ]|\s*|\(|\)|\【|\】|\u4e00-\u9fa5]{0,20}/, '')
-			}
-		}
-	},
-	
-	/* 只能输[0~9.9]的折扣数，如果要设置[0.1~9.9]的话，就要用到<ls-input :min="0.1">(只处理input的type=number时的情况)
+    inputMoney(value) {
+        if (value) {
+            if (value == '00') {
+                return '0'
+            } else if (String(value).indexOf('-') > -1) {
+                //把负号-去掉
+                return String(value).replace('-', '')
+            } else if (value.length > 1 && value[0] == '0' && value[1] != '.') {
+                //把01里的0去掉
+                return value.slice(1)
+            } else {
+                return String(value)
+                    .replace(/[^\0-9.]/g, '')
+                    .replace(/[\.]{2,}/, '.')
+                    .replace(/[\.]([0-9]{2}).*$/, '.$1')
+                    .replace(/[A-Z|a-z|\（|\）|[ ]|\s*|\(|\)|\【|\】|\u4e00-\u9fa5]{0,20}/, '')
+            }
+        }
+    },
+
+    /* 只能输[0~9.9]的折扣数，如果要设置[0.1~9.9]的话，就要用到<ls-input :min="0.1">(只处理input的type=number时的情况)
 	用法：
 		setTimeout(()=>{
 			this.params.discount  = this.$utils.string.inputDiscount(value)
 		},10) 
 	*/
-	inputDiscount(value) {
-		if (value) {
-			if (value == '00') {
-				return '0';
-			} else {
-				let reg = /^((0.[1-9]{1})|(([1-9]{1})(.\d{1})?))$/
-				if (value == 0) {//防止下面match报错
-					return value //0.1
-				} else if (value.length > 1 && value[0] == '0' && value[1] != '.') {
-					return value.slice(1)
-				} else if (String(value).match(reg)) {
-					return String(value).match(reg)[0]
-				} else if (value.length > 3) {
-					return value.slice(0, 3)
-				} else if (value > 9.9) {
-					return 9.9
-				// PC端输入1.后,会直接走下面的return undefined
-				} else if(value.length > 1 && value[1] == '.'){
-					return value.replace('..','.')//输入1..自动变为1.
-				}else {
-					return undefined
-				}
-			}
-		}
-	},
-	/**
-	 * 获取文件后缀名(扩展名)
-	 * @param  {str} :文件路径
-	 * 例如：getSuffix("file:///storage/emulated/0/opmark/User/Pic/hangge.png")，输出png
-	 * @return {String}
-	 */
-	getSuffix(str) {
-	    // 获取最后一个.的位置
-	    const index = str.lastIndexOf('.')
-	    // 获取后缀
-	    const ext = str.substr(index + 1)
-	    // 输出结果
-	    return ext
-	},
+    inputDiscount(value) {
+        if (value) {
+            if (value == '00') {
+                return '0'
+            } else {
+                let reg = /^((0.[1-9]{1})|(([1-9]{1})(.\d{1})?))$/
+                if (value == 0) {
+                    //防止下面match报错
+                    return value //0.1
+                } else if (value.length > 1 && value[0] == '0' && value[1] != '.') {
+                    return value.slice(1)
+                } else if (String(value).match(reg)) {
+                    return String(value).match(reg)[0]
+                } else if (value.length > 3) {
+                    return value.slice(0, 3)
+                } else if (value > 9.9) {
+                    return 9.9
+                    // PC端输入1.后,会直接走下面的return undefined
+                } else if (value.length > 1 && value[1] == '.') {
+                    return value.replace('..', '.') //输入1..自动变为1.
+                } else {
+                    return undefined
+                }
+            }
+        }
+    },
+    /**
+     * 获取文件后缀名(扩展名)
+     * @param  {str} :文件路径
+     * 例如：getSuffix("file:///storage/emulated/0/opmark/User/Pic/hangge.png")，输出png
+     * @return {String}
+     */
+    getSuffix(str) {
+        // 获取最后一个.的位置
+        const index = str.lastIndexOf('.')
+        // 获取后缀
+        const ext = str.substr(index + 1)
+        // 输出结果
+        return ext
+    }
 }
 
 // 处理object对象
@@ -618,20 +642,20 @@ const object = {
 
     //     return copy
     // },
-	
-	deepClone(originObj) {
-	    if (originObj == undefined || typeof originObj !== 'object') {
-	        return originObj
-	    }
-	    const target = new originObj.constructor()
-	
-	    for (let k in originObj) {
-	        if (originObj.hasOwnProperty(k)) {
-	            target[k] = object.deepClone(originObj[k])
-	        }
-	    }
-	    return target
-	},
+
+    deepClone(originObj) {
+        if (originObj == undefined || typeof originObj !== 'object') {
+            return originObj
+        }
+        const target = new originObj.constructor()
+
+        for (let k in originObj) {
+            if (originObj.hasOwnProperty(k)) {
+                target[k] = object.deepClone(originObj[k])
+            }
+        }
+        return target
+    },
 
     /**
      * 两个对象的深度合并
@@ -712,28 +736,28 @@ const array = {
         }
         return result
     },
-	
-	/**
-	 * 数组去重
-	 * arr：有可能是里面元素的id相同的数组
-	 * id：key值为id(当不传id值时，则arr数组内的元素为字符串，数组根据Set方法直接对比元素去重,传id则arr数组内的元素为对象，数组根据键值是唯一的来去重)
-	 * 用法：this.$utils.array.delRepeat(arr)--这时arr内的元素不是对象形式 或 this.$utils.array.delRepeat(arr,'name')--这时arr内的元素是对象形式
-	 * 备注：如果元素不是对象形式，则用Set来处理，例如：let newArr = new Set(['1','1','2'])来处理,得出newArr结果：['1','2']
-	 */
-	delRepeat(arr,id) {
-		// 如果arr内元素是对象
-		if(id){
-			const obj = {}
-			arr = arr.reduce((item, next) => {
-			    obj[next[id]] ? '' : (obj[next[id]] = true && item.push(next))
-			    return item
-			}, [])
-		// 如果arr内元素是字符串
-		}else{
-			arr = [...new Set(arr)]
-		}
-		return arr;
-	},
+
+    /**
+     * 数组去重
+     * arr：有可能是里面元素的id相同的数组
+     * id：key值为id(当不传id值时，则arr数组内的元素为字符串，数组根据Set方法直接对比元素去重,传id则arr数组内的元素为对象，数组根据键值是唯一的来去重)
+     * 用法：this.$utils.array.delRepeat(arr)--这时arr内的元素不是对象形式 或 this.$utils.array.delRepeat(arr,'name')--这时arr内的元素是对象形式
+     * 备注：如果元素不是对象形式，则用Set来处理，例如：let newArr = new Set(['1','1','2'])来处理,得出newArr结果：['1','2']
+     */
+    delRepeat(arr, id) {
+        // 如果arr内元素是对象
+        if (id) {
+            const obj = {}
+            arr = arr.reduce((item, next) => {
+                obj[next[id]] ? '' : (obj[next[id]] = true && item.push(next))
+                return item
+            }, [])
+            // 如果arr内元素是字符串
+        } else {
+            arr = [...new Set(arr)]
+        }
+        return arr
+    }
 }
 
 /**

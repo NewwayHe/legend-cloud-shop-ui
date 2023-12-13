@@ -48,8 +48,7 @@ export default {
                 })
             })
         },
-        update(data) {
-        }
+        update(data) {}
     }
 }
 </script>

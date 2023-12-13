@@ -4,13 +4,13 @@
         :class="className"
         :alt="alt"
         :style="optionstyle"
-		:preview-src-list="previewSrcListTemp"
+        :preview-src-list="previewSrcListTemp"
         :z-index="zIndex"
-		:fit="mode"
+        :fit="mode"
+        v-bind="$attrs"
         @click.self="stopPropagation"
         @dblclick="handleImg(currentUrl)"
-		v-bind="$attrs"
-		v-on="$listeners"
+        v-on="$listeners"
     >
         <div slot="error" class="w-100 h-100">
             <img class="w-100 h-100" :src="error" style="object-fit: contain; background-color: #f8f8f8" />
@@ -88,29 +88,31 @@ export default {
         return {
             currentUrl: '',
             photoServer: this.$photoServer,
-			initialIndex:0
+            initialIndex: 0
         }
     },
     computed: {
         previewSrcListTemp() {
-			let list = []
-			if (this.isPreview||this.previewSrcList?.length) {
-				// 如果只设了isPreview=true,但没传previewSrcList,则以预览当前图片
-				if (!this.previewSrcList?.length) {
-					list = [this.currentUrl&&this.currentUrl.split('?x-oss-process')[0]]
-				// 如果有传previewSrcList,则以传过来的图片为准
-				}else{
-					list = this.previewSrcList.map((item,index) => {
-					    if (item && item.indexOf('http') == -1 && item.indexOf('https') == -1 && item.indexOf('/assets/') == -1) {
-							if(this.currentUrl.indexOf(item)!=-1) { this.initialIndex = index }//获取当前图片的index
-					        item = this.$photoServer + item
-					    }
-						return item
-					})
-				}
-			}
-			// console.log(11,list);
-			return list
+            let list = []
+            if (this.isPreview || this.previewSrcList?.length) {
+                // 如果只设了isPreview=true,但没传previewSrcList,则以预览当前图片
+                if (!this.previewSrcList?.length) {
+                    list = [this.currentUrl && this.currentUrl.split('?x-oss-process')[0]]
+                    // 如果有传previewSrcList,则以传过来的图片为准
+                } else {
+                    list = this.previewSrcList.map((item, index) => {
+                        if (item && item.indexOf('http') == -1 && item.indexOf('https') == -1 && item.indexOf('/assets/') == -1) {
+                            if (this.currentUrl.indexOf(item) != -1) {
+                                this.initialIndex = index
+                            } //获取当前图片的index
+                            item = this.$photoServer + item
+                        }
+                        return item
+                    })
+                }
+            }
+            // console.log(11,list);
+            return list
         },
         // 由于:style只能绑定一个值(用官方写法,只有最后一个值会生效),所以要将所有值集中处理
         optionstyle() {

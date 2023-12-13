@@ -8,7 +8,11 @@
             </el-form-item>
             <el-form-item v-if="modelParams.upload == 1" key="pic" label="本地图片" :rules="rules.pic" prop="pic">
                 <upload ref="upload" key="modelParamsUpload" v-model="modelParams.pic" :floder-id="floderId" :limit="limit" />
-                <div style="color: #999; font-size: 12px">当次最多可上传&ensp;{{ limit }}&ensp;张，仍可上传<span style="color: #F56C6C; font-weight: 500;">&ensp;{{ limit - modelParams.pic.length }}&ensp;</span>张，支持jpg、png、gif等格式</div>
+                <div style="color: #999; font-size: 12px">
+                    当次最多可上传&ensp;{{ limit }}&ensp;张，仍可上传
+                    <span style="color: #f56c6c; font-weight: 500">&ensp;{{ limit - modelParams.pic.length }}&ensp;</span>
+                    张，支持jpg、png、gif等格式
+                </div>
             </el-form-item>
 
             <el-form-item v-if="modelParams.upload == 2" key="networkPic" label="网络图片" :rules="rules.networkPic" prop="networkPic">
@@ -44,7 +48,8 @@ export default {
             type: [Number, String],
             required: true
         },
-        treeValue: {        //这个也不知道有什么用
+        treeValue: {
+            //这个也不知道有什么用
             type: [String, Number],
             default: ''
         },
@@ -79,7 +84,8 @@ export default {
         this.modelParams.TreeValue = this.TreeValue
     },
     methods: {
-        check() {   //这个暂时用不上了
+        check() {
+            //这个暂时用不上了
             console.log(this.modelParams.upload, '123')
             this.$refs['pictureForm'].validate((valid) => {
                 if (valid) {
@@ -145,8 +151,8 @@ export default {
         },
         // resetFields会失效 使用这个resetData
         resetData() {
-            if(this.$refs.upload){
-                this.$refs.upload.clearFiles();
+            if (this.$refs.upload) {
+                this.$refs.upload.clearFiles()
             }
             this.modelParams = {
                 TreeValue: 0,

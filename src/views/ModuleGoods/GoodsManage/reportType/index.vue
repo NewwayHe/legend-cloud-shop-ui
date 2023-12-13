@@ -29,8 +29,17 @@
                     <el-button style="height: 32px" type="primary" size="small" @click="handleCreate">新增</el-button>
                 </el-row>
                 <!--列表-->
-				<el-table ref="multipleTable" v-loading="tableListLoading" :data="tableList" tooltip-effect="dark" class="w-100" header-row-class-name="headerRow" row-key="id" @selection-change="selectionChange">
-					<el-table-column type="selection" reserve-selection width="42"/>
+                <el-table
+                    ref="multipleTable"
+                    v-loading="tableListLoading"
+                    :data="tableList"
+                    tooltip-effect="dark"
+                    class="w-100"
+                    header-row-class-name="headerRow"
+                    row-key="id"
+                    @selection-change="selectionChange"
+                >
+                    <el-table-column type="selection" reserve-selection width="42" />
                     <el-table-column label="序号" type="index" width="100" />
                     <el-table-column prop="name" label="举报类型" />
                     <el-table-column prop="status" label="状态">
@@ -56,7 +65,14 @@
                 <el-row type="flex" justify="space-between" class="mt-20">
                     <el-col>
                         <el-button size="mini" class="allCheck">
-							<el-checkbox v-model="checkAll" label="全选" size="small" @change="selAll" :indeterminate="checkHalf" :disabled='!selectableList.length'/>
+                            <el-checkbox
+                                v-model="checkAll"
+                                label="全选"
+                                size="small"
+                                :indeterminate="checkHalf"
+                                :disabled="!selectableList.length"
+                                @change="selAll"
+                            />
                         </el-button>
                         <el-button size="small" @click="batchUpdateState(1)">批量上架</el-button>
                         <el-button size="small" @click="batchUpdateState(0)">批量下架</el-button>
@@ -152,10 +168,10 @@ export default {
         // 批量上下限
         batchUpdateState(status) {
             // console.log(this.mulSels)
-			if (!this.mulSels?.length) {
-			    this.$message.warning('请至少选择一条数据')
-			    return
-			}
+            if (!this.mulSels?.length) {
+                this.$message.warning('请至少选择一条数据')
+                return
+            }
             this.$confirm(
                 `${status ? '上线后，用户可以在商城中查看举报类型。确定上线？' : '下线后，用户不可在商城中查看举报类型。确定下线？'}`,
                 '提示',

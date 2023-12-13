@@ -1,7 +1,13 @@
 <template>
     <div class="print-wrapper">
         <div class="mb-20 pt-20">
-			<ls-image class="v-middle" :src="systemConfigTemp.pcUserLogo" :options="{ h: '50'}" :isPreview="false" v-if="systemConfigTemp&&systemConfigTemp.pcUserLogo"/>
+            <ls-image
+                v-if="systemConfigTemp && systemConfigTemp.pcUserLogo"
+                class="v-middle"
+                :src="systemConfigTemp.pcUserLogo"
+                :options="{ h: '50' }"
+                :is-preview="false"
+            />
         </div>
         <div class="print-info mb-20">
             <h1 class="info-title">{{ goodsData.receiver }}-购物清单</h1>
@@ -106,13 +112,13 @@
 
 <script>
 import { orderApi } from '@/api/ModuleOrder.js'
-export default {  
+export default {
     components: {},
     data() {
         return {
             goodsData: '',
-			systemConfigTemp:'',// 【用户】获取ICP备案号以及商城名称、登录页面logo、侧边栏左上角图标等
-			systemConfigFinally:false
+            systemConfigTemp: '', // 【用户】获取ICP备案号以及商城名称、登录页面logo、侧边栏左上角图标等
+            systemConfigFinally: false
         }
     },
     computed: {
@@ -134,10 +140,10 @@ export default {
         }
     },
     mounted() {
-        if(this.$route.query.data){
+        if (this.$route.query.data) {
             this.goodsData = JSON.parse(this.$route.query.data)
             console.log(JSON.parse(this.$route.query.data), '打印')
-        }else if(this.$route.query.id){
+        } else if (this.$route.query.id) {
             orderApi
                 .getOrderDetails({
                     orderId: this.$route.query.id
@@ -151,25 +157,25 @@ export default {
                     console.log(err)
                 })
         }
-		
-		let systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
-		// 如果main.js里面执行了方法获取到系统设置
-		if (systemConfig&&systemConfig.id) {
-			this.systemConfigTemp = systemConfig
-			this.systemConfigFinally = true
-		// 如果VUEX里没有设置systemConfig(系统设置)
-		}else{
-			this.$store
-			    .dispatch('user/getSystemConfig')
-			    .then((res) => {
-					this.systemConfigTemp = res
-					// console.log('systemConfig:',this.systemConfigTemp);
-			    })
-			    .catch(() => {
-			    }).finally(()=>{
-					this.systemConfigFinally = true
-				})
-		}
+
+        let systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
+        // 如果main.js里面执行了方法获取到系统设置
+        if (systemConfig && systemConfig.id) {
+            this.systemConfigTemp = systemConfig
+            this.systemConfigFinally = true
+            // 如果VUEX里没有设置systemConfig(系统设置)
+        } else {
+            this.$store
+                .dispatch('user/getSystemConfig')
+                .then((res) => {
+                    this.systemConfigTemp = res
+                    // console.log('systemConfig:',this.systemConfigTemp);
+                })
+                .catch(() => {})
+                .finally(() => {
+                    this.systemConfigFinally = true
+                })
+        }
     },
     methods: {
         print() {

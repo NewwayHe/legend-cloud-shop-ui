@@ -1,7 +1,7 @@
 <template>
     <div v-if="!item.hidden">
         <template v-if="hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
-            <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)" :id="setId(onlyOneChild.path)">
+            <app-link v-if="onlyOneChild.meta" :id="setId(onlyOneChild.path)" :to="resolvePath(onlyOneChild.path)">
                 <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{ 'submenu-title-noDropdown': !isNest }">
                     <item :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)" :title="onlyOneChild.meta.title" />
                 </el-menu-item>
@@ -74,31 +74,31 @@ export default {
             return false
         },
         resolvePath(routePath) {
-			if (this.$checkInfo([{ type: 'isExternal', value: routePath }])) {
-			    return routePath
-			}
-			if (this.$checkInfo([{ type: 'isExternal', value: this.basePath }])) {
-			    return this.basePath
-			}
+            if (this.$checkInfo([{ type: 'isExternal', value: routePath }])) {
+                return routePath
+            }
+            if (this.$checkInfo([{ type: 'isExternal', value: this.basePath }])) {
+                return this.basePath
+            }
             return path.resolve(this.basePath, routePath)
         },
-        setId(routePath){
-            if(this.resolvePath(routePath)=='/ModuleSystem/orderSystem/logistics'){
+        setId(routePath) {
+            if (this.resolvePath(routePath) == '/ModuleSystem/orderSystem/logistics') {
                 return 'guide-step2'
             }
-            if(this.resolvePath(routePath)=='/ModuleSystem/orderSystem/freightTemplate'){
+            if (this.resolvePath(routePath) == '/ModuleSystem/orderSystem/freightTemplate') {
                 return 'guide-step3'
             }
-            if(this.resolvePath(routePath)=='/ModuleSystem/shopManage/ortherSet'){
+            if (this.resolvePath(routePath) == '/ModuleSystem/shopManage/ortherSet') {
                 return 'guide-step4'
             }
-            if(this.resolvePath(routePath)=='/ModuleGoods/GoodsManage/goodList'){
+            if (this.resolvePath(routePath) == '/ModuleGoods/GoodsManage/goodList') {
                 return 'guide-step5'
             }
-            if(this.resolvePath(routePath)=='/ModuleOperate/businessManage/order'){
+            if (this.resolvePath(routePath) == '/ModuleOperate/businessManage/order') {
                 return 'guide-step6'
             }
-            if(this.resolvePath(routePath)=='/ModuleFinance/billList'){
+            if (this.resolvePath(routePath) == '/ModuleFinance/billList') {
                 return 'guide-step7'
             }
         }

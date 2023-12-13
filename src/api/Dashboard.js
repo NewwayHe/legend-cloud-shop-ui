@@ -16,7 +16,7 @@ const indexApi = {
 
     //首页当前账单结算订单
     currentBill: (data) => request.get('/order/s/shop/order/bill/current/bill', data),
-    newBier:(data) => request.get('/shop/admin/shop/detail/newBier',data)
+    newBier: (data) => request.get('/shop/admin/shop/detail/newBier', data)
 }
 
 export { indexApi }

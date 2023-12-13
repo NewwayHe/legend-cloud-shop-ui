@@ -2,10 +2,18 @@
  * @Descripttion:查看示例
 */ -->
 <template>
-	<el-popover popper-class="atooltip" :trigger="trigger" :disabled="disabled" :offset="offset" :placement="placement" class="ml-5" :class="className">
-	    <img :width="width" :height="height" :src="src" alt="" />
-	    <el-button type="text" slot="reference" class="p-0 font-12">{{ text }}</el-button>
-	</el-popover>
+    <el-popover
+        popper-class="atooltip"
+        :trigger="trigger"
+        :disabled="disabled"
+        :offset="offset"
+        :placement="placement"
+        class="ml-5"
+        :class="className"
+    >
+        <img :width="width" :height="height" :src="src" alt="" />
+        <el-button slot="reference" type="text" class="p-0 font-12">{{ text }}</el-button>
+    </el-popover>
 </template>
 
 <script>
@@ -34,27 +42,28 @@ export default {
             type: String,
             default: 'right'
         },
-        disabled: {//Popover 是否可用
+        disabled: {
+            //Popover 是否可用
             type: Boolean,
             default: false
         },
-        offset: {//出现位置的偏移量	
+        offset: {
+            //出现位置的偏移量
             type: Number,
             default: 0
         },
         src: String,
-		className:String,
+        className: String
     },
     data() {
-        return {
-        }
+        return {}
     },
-	computed: {},
+    computed: {},
     mounted() {},
     methods: {}
 }
 </script>
-<style lang='scss'>
+<style lang="scss">
 /* 修改popover样式 不能加scoped */
 .el-popover.atooltip {
     padding: 10px;

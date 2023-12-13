@@ -1,6 +1,6 @@
 <template>
     <div class="d-inline-block">
-        <div class="lsUpload" v-if="!isLookData">
+        <div v-if="!isLookData" class="lsUpload">
             <el-upload
                 :headers="headers"
                 name="file"
@@ -24,7 +24,7 @@
             <div v-show="tempUrl" id="newPlayer" ref="newPlayer"></div>
             <i v-if="tempUrl" class="lsUpload__vedioClose el-icon-error" @click="delVideo" />
         </div>
-        <div class="lsUpload" v-else>
+        <div v-else class="lsUpload">
             <el-upload
                 :headers="headers"
                 name="file"
@@ -71,9 +71,9 @@ export default {
             type: [String, Object],
             default: ''
         },
-        isLookData:{
-            type:Boolean,
-            dafault:false
+        isLookData: {
+            type: Boolean,
+            dafault: false
         }
     },
     data() {

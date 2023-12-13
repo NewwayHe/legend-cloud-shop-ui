@@ -1,11 +1,16 @@
 <template>
     <div class="shopMoveIn">
         <div class="navbar d-flex a-center j-sb">
-           <div class="d-flex a-center ml-30">
-				<img :src="$photoServer+systemConfigTemp.shopSmallLogo" style="max-width: 200px;height: 50px;object-fit: contain;" :onerror="$defaultImg" v-if="systemConfigTemp&&systemConfigTemp.shopSmallLogo">
-				<img style="width: 150px;height: 50px;" src="@/assets/images/shopMoveIn_logo.png" alt="" v-else-if="systemConfigFinally"/>
-				<div style="width: 150px;height: 50px;" v-else></div>
-           </div>
+            <div class="d-flex a-center ml-30">
+                <img
+                    v-if="systemConfigTemp && systemConfigTemp.shopSmallLogo"
+                    :src="$photoServer + systemConfigTemp.shopSmallLogo"
+                    style="max-width: 200px; height: 50px; object-fit: contain"
+                    :onerror="$defaultImg"
+                />
+                <img v-else-if="systemConfigFinally" style="width: 150px; height: 50px" src="@/assets/images/shopMoveIn_logo.png" alt="" />
+                <div v-else style="width: 150px; height: 50px"></div>
+            </div>
             <div class="right-menu flex-center text-999">
                 <div class="m-10">V 1.0.0</div>
                 <div class="mx-10 font-14">
@@ -15,15 +20,10 @@
                 </div>
                 <el-dropdown class="avatar-container ml-10 mr-30" trigger="click">
                     <div class="avatar-wrapper">
-                        <ls-image
-                            :src="userInfo.avatar"
-                            :isPreview="false"
-                            :options="{ w: '40', h: '40', br: '20' }"
-                            class="mt-20"
-                        ></ls-image>
+                        <ls-image :src="userInfo.avatar" :is-preview="false" :options="{ w: '40', h: '40', br: '20' }" class="mt-20"></ls-image>
                     </div>
                     <el-dropdown-menu slot="dropdown" class="user-dropdown">
-                        <el-dropdown-item  @click.native="logout">
+                        <el-dropdown-item @click.native="logout">
                             <span style="display: block">退出登录</span>
                         </el-dropdown-item>
                     </el-dropdown-menu>
@@ -52,28 +52,14 @@
             </el-steps>
             <!-- 底下部分 -->
             <template v-if="status == 0">
-                <el-form
-                    v-show="step == 1"
-                    class="formWarp m-auto mt-100"
-                    style="width: 600px"
-                    label-width="130px"
-                    size="small"
-                >
+                <el-form v-show="step == 1" class="formWarp m-auto mt-100" style="width: 600px" label-width="130px" size="small">
                     <div class="text-center">
                         <div class="d-inline-block mr-40 cursor-pointer">
-                            <img
-                                class="w-100p h-100p"
-                                src="@/assets/images/defaultPerson.png"
-                                @click="changeType(0)"
-                            />
+                            <img class="w-100p h-100p" src="@/assets/images/defaultPerson.png" @click="changeType(0)" />
                             <div class="font-14 text-666 pt-30">个人入驻</div>
                         </div>
                         <div class="d-inline-block ml-40 cursor-pointer">
-                            <img
-                                class="w-100p h-100p"
-                                src="@/assets/images/defaultStore.png"
-                                @click="changeType(1)"
-                            />
+                            <img class="w-100p h-100p" src="@/assets/images/defaultStore.png" @click="changeType(1)" />
                             <div class="font-14 text-666 pt-30">企业入驻</div>
                         </div>
                     </div>
@@ -102,17 +88,14 @@
                             />
                         </el-form-item>
                         <el-form-item label="统一社会信用代码：" prop="unifiedSocialCreditCode">
-                            <el-input
-                                v-model="params.unifiedSocialCreditCode"
-                                style="width: 450px"
-                                placeholder="请输入"
-                                maxlength="18"
-                            />
+                            <el-input v-model="params.unifiedSocialCreditCode" style="width: 450px" placeholder="请输入" maxlength="18" />
                         </el-form-item>
                         <el-form-item label="营业执照：" prop="idCardPic">
                             <div class="d-flex a-start">
                                 <Upload v-model="params.businessLicense" />
-                                <span class="ml-10 text-999 v-top" style="line-height: 20px;">图片仅支持JPG、GIF、PNG、JPEG、BMP格式，大小不超过5Mb</span>
+                                <span class="ml-10 text-999 v-top" style="line-height: 20px">
+                                    图片仅支持JPG、GIF、PNG、JPEG、BMP格式，大小不超过5Mb
+                                </span>
                             </div>
                         </el-form-item>
                         <el-form-item label="营业执照开始时间：" prop="businessStartTime">
@@ -120,20 +103,18 @@
                                 v-model="params.businessStartTime"
                                 type="date"
                                 value-format="yyyy-MM-dd HH:mm:ss"
-                                placeholder="选择日期">
-                            </el-date-picker>
+                                placeholder="选择日期"
+                            ></el-date-picker>
                         </el-form-item>
                         <el-form-item label="营业执照到期时间：" prop="businessEndTime">
                             <el-date-picker
                                 v-model="params.businessEndTime"
                                 type="date"
                                 value-format="yyyy-MM-dd HH:mm:ss"
-                                placeholder="选择日期">
-                            </el-date-picker>
+                                placeholder="选择日期"
+                            ></el-date-picker>
                             <el-tooltip class="item" placement="top" append-to-body>
-                                <div slot="content">
-                                    不填营业执照到期时间则设为永久有效
-                                </div>
+                                <div slot="content">不填营业执照到期时间则设为永久有效</div>
                                 <i class="el-icon-question text-000 font-16 opacity-3 ml-5"></i>
                             </el-tooltip>
                         </el-form-item>
@@ -171,27 +152,24 @@
                         <el-form-item label="法人身份证正面：" prop="idCardPic">
                             <div class="d-flex a-start">
                                 <Upload v-model="params.idCardPic" />
-                                <span class="text-999 v-top ml-10" style="line-height: 20px;">图片仅支持JPG、GIF、PNG、JPEG、BMP格式，大小不超过5Mb</span>
+                                <span class="text-999 v-top ml-10" style="line-height: 20px">
+                                    图片仅支持JPG、GIF、PNG、JPEG、BMP格式，大小不超过5Mb
+                                </span>
                             </div>
                         </el-form-item>
                         <el-form-item label="法人身份证反面：" prop="idCardBackPic">
                             <div class="d-flex a-start">
                                 <Upload v-model="params.idCardBackPic" />
-                                <span class="text-999 v-top ml-10" style="line-height: 20px;">图片仅支持JPG、GIF、PNG、JPEG、BMP格式，大小不超过5Mb</span>
+                                <span class="text-999 v-top ml-10" style="line-height: 20px">
+                                    图片仅支持JPG、GIF、PNG、JPEG、BMP格式，大小不超过5Mb
+                                </span>
                             </div>
                         </el-form-item>
                     </template>
                     <template>
                         <div class="form-title">联系人信息</div>
                         <el-form-item label="联系人姓名：" prop="contactName">
-                            <el-input
-                                v-model="params.contactName"
-                                class="mb-10"
-                                style="width: 450px"
-                                placeholder="请输入"
-                                clearable
-                                maxlength="10"
-                            />
+                            <el-input v-model="params.contactName" class="mb-10" style="width: 450px" placeholder="请输入" clearable maxlength="10" />
                         </el-form-item>
                         <el-form-item label="联系人手机号码：" prop="contactPhone">
                             <el-input
@@ -209,13 +187,17 @@
                         <el-form-item label="身份证正面：" prop="idCardPic">
                             <div class="d-flex a-start">
                                 <Upload v-model="params.idCardPic" />
-                                <span class="text-999 v-top ml-10" style="line-height: 20px;">图片仅支持JPG、GIF、PNG、JPEG、BMP格式，大小不超过5Mb</span>
+                                <span class="text-999 v-top ml-10" style="line-height: 20px">
+                                    图片仅支持JPG、GIF、PNG、JPEG、BMP格式，大小不超过5Mb
+                                </span>
                             </div>
                         </el-form-item>
                         <el-form-item label="身份证反面：" prop="idCardBackPic">
                             <div class="d-flex a-start">
                                 <Upload v-model="params.idCardBackPic" />
-                                <span class="text-999 v-top ml-10" style="line-height: 20px;">图片仅支持JPG、GIF、PNG、JPEG、BMP格式，大小不超过5Mb</span>
+                                <span class="text-999 v-top ml-10" style="line-height: 20px">
+                                    图片仅支持JPG、GIF、PNG、JPEG、BMP格式，大小不超过5Mb
+                                </span>
                             </div>
                         </el-form-item>
                     </template>
@@ -248,20 +230,17 @@
                         />
                     </el-form-item>
                     <el-form-item label="店铺头像：" prop="shopAvatar">
-						<div class="d-flex a-start">
-						    <Upload v-model="params.shopAvatar" />
-						    <span class="text-999 v-top ml-10" style="line-height: 20px;">图片仅支持JPG、GIF、PNG、JPEG、BMP格式，建议尺寸：100*100px</span>
-						</div>
+                        <div class="d-flex a-start">
+                            <Upload v-model="params.shopAvatar" />
+                            <span class="text-999 v-top ml-10" style="line-height: 20px">
+                                图片仅支持JPG、GIF、PNG、JPEG、BMP格式，建议尺寸：100*100px
+                            </span>
+                        </div>
                     </el-form-item>
-                    <el-form-item label="店铺地址：" prop='region'>
-						<input-cascader
-							ref="region"
-							v-model="params.region"
-							style="width: 305px"
-							@input="$refs.formStep3.validateField('region')"
-						/>
+                    <el-form-item label="店铺地址：" prop="region">
+                        <input-cascader ref="region" v-model="params.region" style="width: 305px" @input="$refs.formStep3.validateField('region')" />
                     </el-form-item>
-                    <el-form-item label=' ' prop='shopAddress'>
+                    <el-form-item label=" " prop="shopAddress">
                         <el-input
                             v-model="params.shopAddress"
                             type="textarea"
@@ -275,19 +254,13 @@
                     </el-form-item>
                     <el-row class="text-center mt-100">
                         <el-button plain @click="stepBack('formStep3')">上一步</el-button>
-                        <el-button type="primary" @click="nextStep('formStep3')" :loading='submitLoading' :disabled='submitDisabled'>提交</el-button>
+                        <el-button type="primary" :loading="submitLoading" :disabled="submitDisabled" @click="nextStep('formStep3')">提交</el-button>
                     </el-row>
                 </el-form>
             </template>
 
             <template v-if="status == 1">
-                <el-form
-                    ref="form"
-                    class="formWarp m-auto mt-100"
-                    style="width: 600px"
-                    label-width="130px"
-                    size="small"
-                >
+                <el-form ref="form" class="formWarp m-auto mt-100" style="width: 600px" label-width="130px" size="small">
                     <div class="text-center">
                         <i class="el-icon-success text-main" style="font-size: 120px"></i>
                         <div class="font-24 mt-50">审核通过</div>
@@ -297,48 +270,31 @@
                 </el-form>
             </template>
             <template v-if="status == 2">
-                <el-form
-                    ref="form"
-                    class="formWarp m-auto mt-100"
-                    style="width: 600px"
-                    label-width="130px"
-                    size="small"
-                >
+                <el-form ref="form" class="formWarp m-auto mt-100" style="width: 600px" label-width="130px" size="small">
                     <div class="text-center">
-                        <img style="width:132px;height:132px;" src="@/assets/images/wait-for.png" />
+                        <img style="width: 132px; height: 132px" src="@/assets/images/wait-for.png" />
                         <div class="font-24 mt-50">等待审核</div>
                         <div class="font-14 text-999 mt-15 mb-60">信息提交成功，将在1-3个工作日内完成审核</div>
                     </div>
                 </el-form>
             </template>
             <template v-if="status == -1">
-                <el-form
-                    ref="form"
-                    class="formWarp m-auto mt-100"
-                    style="width: 600px"
-                    label-width="130px"
-                    size="small"
-                >
+                <el-form ref="form" class="formWarp m-auto mt-100" style="width: 600px" label-width="130px" size="small">
                     <div class="text-center">
-                        <img style="width:132px;height:132px;" src="@/assets/images/warn.png" />
+                        <img style="width: 132px; height: 132px" src="@/assets/images/warn.png" />
                         <div class="font-24 mt-50">很抱歉！您的入驻申请被拒绝</div>
                         <div class="font-14 text-999 mt-20 mb-60">审核意见：{{ openShopMsg }}</div>
                         <el-button type="primary" @click="goEdit">重新编辑</el-button>
                     </div>
                 </el-form>
             </template>
-            <div v-if="isCheck " class="flex-center mb-30 mt-30">
+            <div v-if="isCheck" class="flex-center mb-30 mt-30">
                 <el-checkbox v-model="agreement" @change="isSelect">勾选即同意</el-checkbox>
                 <span class="text-main cursor-pointer" @click="agreeMent()">《商家入驻协议》</span>
             </div>
             <!-- 如果点击了‘入驻协议’右上角的关闭按钮，则加一个按钮重新申请 -->
             <template v-if="openShopMsg && step == 0 && !showDialog">
-                <el-button
-                    class="center-x"
-                    type="primary"
-                    :disabled="isDisabled"
-                    @click="settled"
-                >申请入驻</el-button>
+                <el-button class="center-x" type="primary" :disabled="isDisabled" @click="settled">申请入驻</el-button>
             </template>
         </div>
 
@@ -369,7 +325,7 @@ import { mapGetters } from 'vuex'
 import { debounce } from '@/utils/utils.js'
 export default {
     name: 'ApplyResidence',
-    components: { Navbar, Upload, InputCascader,upload },
+    components: { Navbar, Upload, InputCascader, upload },
     data() {
         return {
             isCheck: true, //是否展示注册协议
@@ -417,7 +373,7 @@ export default {
                 idCardPic: '', // 负责人身份证正面
                 idCardBackPic: '', // 负责人身份证反面
                 region: [],
-                enterprisePermissionDTOList:[]
+                enterprisePermissionDTOList: []
             },
             showDialog: false,
             rules: {
@@ -434,35 +390,35 @@ export default {
                 shopName: [{ required: true, message: `请输入店铺名称`, trigger: 'blur' }],
                 shopAvatar: [{ required: true, message: `请输入店铺头像`, trigger: 'blur' }],
                 region: [{ required: true, message: `请选择地址`, trigger: 'change' }],
-                businessStartTime:[{ required: true, message: `请选择开始日期`, trigger: 'change' }]
+                businessStartTime: [{ required: true, message: `请选择开始日期`, trigger: 'change' }]
             },
-            submitLoading: false,   //提交时的按钮加载状态
-            submitDisabled: false,  //提交时的按钮禁止状态
-			systemConfigTemp:'',// 【用户】获取ICP备案号以及商城名称、登录页面logo、侧边栏左上角图标等
-			systemConfigFinally:false
+            submitLoading: false, //提交时的按钮加载状态
+            submitDisabled: false, //提交时的按钮禁止状态
+            systemConfigTemp: '', // 【用户】获取ICP备案号以及商城名称、登录页面logo、侧边栏左上角图标等
+            systemConfigFinally: false
         }
     },
     watch: {},
     created() {
-		let systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
-		// 如果main.js里面执行了方法获取到系统设置
-		if (systemConfig&&systemConfig.id) {
-			this.systemConfigTemp = systemConfig
-			this.systemConfigFinally = true
-		// 如果VUEX里没有设置systemConfig(系统设置)
-		}else{
-			this.$store
-			    .dispatch('user/getSystemConfig')
-			    .then((res) => {
-					this.systemConfigTemp = res
-					// console.log('systemConfig:',this.systemConfig);
-			    })
-			    .catch(() => {
-			    }).finally(()=>{
-					this.systemConfigFinally = true
-				})
-		}
-	},
+        let systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
+        // 如果main.js里面执行了方法获取到系统设置
+        if (systemConfig && systemConfig.id) {
+            this.systemConfigTemp = systemConfig
+            this.systemConfigFinally = true
+            // 如果VUEX里没有设置systemConfig(系统设置)
+        } else {
+            this.$store
+                .dispatch('user/getSystemConfig')
+                .then((res) => {
+                    this.systemConfigTemp = res
+                    // console.log('systemConfig:',this.systemConfig);
+                })
+                .catch(() => {})
+                .finally(() => {
+                    this.systemConfigFinally = true
+                })
+        }
+    },
     mounted() {
         // this.status = 0
         // this.step = 1
@@ -572,10 +528,10 @@ export default {
                     }
                     if (this.step == 3) {
                         // 提交审核页面
-                        this.params.provinceId = this.params.region[0];
-                        this.params.cityId = this.params.region[1];
-                        this.params.areaId = this.params.region[2];
-                        this.params.streetId = this.params.region[3];
+                        this.params.provinceId = this.params.region[0]
+                        this.params.cityId = this.params.region[1]
+                        this.params.areaId = this.params.region[2]
+                        this.params.streetId = this.params.region[3]
                         this.submitSave()
                         return
                     }
@@ -599,23 +555,27 @@ export default {
             this.step++
             this.params.applyForType = type
         },
-        submitSave: debounce(function() {
-            this.submitLoading = true;
-            this.submitDisabled = true;
-            shopMoveIn.saveShopInfo(this.params).then((res) => {
-                if (res.code == 1) {
-                    this.step++
-                    this.status = 2
-                    this.$message.success('提交成功！')
-                }
-            }).catch((err) => {
-                console.error('提交失败--',err)
-                // this.$message.error('提交失败！')
-            }).finally(()=> {
-                this.submitLoading = false;
-                this.submitDisabled = false;
-            })
-        }),
+        submitSave: debounce(function () {
+            this.submitLoading = true
+            this.submitDisabled = true
+            shopMoveIn
+                .saveShopInfo(this.params)
+                .then((res) => {
+                    if (res.code == 1) {
+                        this.step++
+                        this.status = 2
+                        this.$message.success('提交成功！')
+                    }
+                })
+                .catch((err) => {
+                    console.error('提交失败--', err)
+                    // this.$message.error('提交失败！')
+                })
+                .finally(() => {
+                    this.submitLoading = false
+                    this.submitDisabled = false
+                })
+        })
     }
 }
 </script>
@@ -716,7 +676,6 @@ body {
         }
 
         .avatar-container {
-
             .avatar-wrapper {
                 position: relative;
 

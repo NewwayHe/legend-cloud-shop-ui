@@ -148,7 +148,7 @@ export default {
                         },
                         data: this.allList.frequency
                     },
-                   /*  {
+                    /*  {
                         smooth: false,
                         name: 'PC端商品访问量',
                         type: 'line',

@@ -41,7 +41,7 @@ export default {
     },
     data() {
         return {
-            chart: null,
+            chart: null
         }
     },
     watch: {
@@ -148,8 +148,7 @@ export default {
                         handleSize: '50%',
                         handleStyle: {
                             color: '#fff'
-                        },
-
+                        }
                     }
                 ],
                 series: [

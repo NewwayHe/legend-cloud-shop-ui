@@ -43,14 +43,14 @@
                             <span v-else>{{ scope.row.parentName }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="seq" label="权重"  min-width="80"/>
+                    <el-table-column prop="seq" label="权重" min-width="80" />
                     <el-table-column prop="icon" label="状态">
                         <template slot-scope="scope">
-                            <span class="status-pass" v-if="scope.row.status">上线</span>
-                            <span class="status-done" v-else>下线</span>
+                            <span v-if="scope.row.status" class="status-pass">上线</span>
+                            <span v-else class="status-done">下线</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="操作" align="left" fixed="right" width="300px" >
+                    <el-table-column label="操作" align="left" fixed="right" width="300px">
                         <template slot-scope="scope">
                             <span class="table__action">
                                 <el-link :underline="false" type="primary" @click="checkDetail(scope.row)">查看</el-link>

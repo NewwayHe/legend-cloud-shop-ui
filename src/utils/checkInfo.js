@@ -33,21 +33,23 @@
 import { Message } from 'element-ui'
 const checkinput = (data) => {
     let state = true
-	let ruleMsg = ''
+    let ruleMsg = ''
     for (const i in data) {
         switch (data[i].type) {
-			case 'test':
-			    state = data[i].options.test(data[i].value) //自定义 正则
-			    break
+            case 'test':
+                state = data[i].options.test(data[i].value) //自定义 正则
+                break
             case 'number':
                 state = /^[0-9]*$/.test(data[i].value) // 或者用这个：/^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(data[i].value)
                 break
             case 'phone': // 手机号码 (  /^(\(\d{3,4}\)|\d{3,4}-)?\d{7,8}$/:旧的,已验证不行  )
                 state = /^1[0-9][0-9]{9}$/.test(data[i].value)
                 break
-			case 'phoneNum': //电话号码正则表达式（支持手机号码，3-4位区号，7-8位直播号码，1－4位分机号
-				state = /((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)/.test(data[i].value)
-				break
+            case 'phoneNum': //电话号码正则表达式（支持手机号码，3-4位区号，7-8位直播号码，1－4位分机号
+                state = /((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)/.test(
+                    data[i].value
+                )
+                break
             case 'name': // 名字:2-20位中英文字符
                 state = /^[\u4E00-\u9FA5A-Za-z0-9_]{2,20}$/.test(data[i].value)
                 break
@@ -67,20 +69,24 @@ const checkinput = (data) => {
                 state = /^\d{6}$/.test(data[i].value)
                 break
             case 'password': // 密码应为6-20位字母、数字和标点符号的组合
-                state = /^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)]|[\(\)])+$)([^(0-9a-zA-Z)]|[\(\)]|[a-z]|[A-Z]|[0-9]){6,20}$/.test(data[i].value)
+                state = /^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)]|[\(\)])+$)([^(0-9a-zA-Z)]|[\(\)]|[a-z]|[A-Z]|[0-9]){6,20}$/.test(
+                    data[i].value
+                )
                 break
-			case 'loginPassword': // 5-16个字符长度，支持数字、英文字符，区分大小写;不支持标点符号和空格符号；
-				state = /^[0-9a-zA-Z]{5,16}$/.test(data[i].value)
-				ruleMsg = '密码应由5-16位字母、数字不含特殊符号组成'
-				break
-			 case 'payPassword': // 6位字符长度，支持数字、英文字符，区分大小写；不支持标点符号和空格符号；
-				state = /^[0-9a-zA-Z]{6}$/.test(data[i].value)
-				break
+            case 'loginPassword': // 5-16个字符长度，支持数字、英文字符，区分大小写;不支持标点符号和空格符号；
+                state = /^[0-9a-zA-Z]{5,16}$/.test(data[i].value)
+                ruleMsg = '密码应由5-16位字母、数字不含特殊符号组成'
+                break
+            case 'payPassword': // 6位字符长度，支持数字、英文字符，区分大小写；不支持标点符号和空格符号；
+                state = /^[0-9a-zA-Z]{6}$/.test(data[i].value)
+                break
             case 'email': // 邮箱
                 state = /^([a-zA-Z\d][\w-]{2,})@(\w{2,})\.([a-z]{2,})(\.[a-z]{2,})?$/.test(data[i].value)
                 break
             case 'checkeFace': // 表情符号(如果带有表情符号则返回false)
-				state = !/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g.test(data[i].value)
+                state = !/[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g.test(
+                    data[i].value
+                )
                 break
             case 'hasValue': // 是否有值，true：有值，false：无值
                 if (
@@ -191,22 +197,22 @@ const checkinput = (data) => {
                     state = false
                 }
                 break
-			case 'bankAccount': // 验证银行卡号（ 10 到30位, 覆盖对公 / 私账户, 参考微信支付）
-			    state = /^[1-9]\d{9,29}$/g.test(data[i].value)
-			    break
-			case 'tax': // 验证税号:15或者17或者18或者20位字母、数字组成
-			    state = /^[A-Z0-9]{15}$|^[A-Z0-9]{17}$|^[A-Z0-9]{18}$|^[A-Z0-9]{20}$/.test(data[i].value)
-			    break
-			case 'isExternal': // 是否是外部的
-			    state = /^(https?:|mailto:|tel:)/.test(data[i].value)
-			    break
+            case 'bankAccount': // 验证银行卡号（ 10 到30位, 覆盖对公 / 私账户, 参考微信支付）
+                state = /^[1-9]\d{9,29}$/g.test(data[i].value)
+                break
+            case 'tax': // 验证税号:15或者17或者18或者20位字母、数字组成
+                state = /^[A-Z0-9]{15}$|^[A-Z0-9]{17}$|^[A-Z0-9]{18}$|^[A-Z0-9]{20}$/.test(data[i].value)
+                break
+            case 'isExternal': // 是否是外部的
+                state = /^(https?:|mailto:|tel:)/.test(data[i].value)
+                break
             default:
                 state = false
                 break
         }
         if (!state) {
             if (data[i].msg) {
-				Message({ message: data[i].msg===true? ruleMsg : data[i].msg, type: 'error' })
+                Message({ message: data[i].msg === true ? ruleMsg : data[i].msg, type: 'error' })
             }
             return false
         }
@@ -214,5 +220,3 @@ const checkinput = (data) => {
     return true
 }
 export default checkinput
-
-

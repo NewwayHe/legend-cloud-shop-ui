@@ -56,19 +56,19 @@
                 tooltip-effect="dark"
                 class="w-100"
                 header-row-class-name="headerRow"
-				row-key="id"
+                row-key="id"
                 @sort-change="changeSort"
             >
                 <template slot="empty">
                     <empty />
                 </template>
                 <el-table-column label="序号" type="index" width="48" />
-                <el-table-column prop="time" label="统计日期"  width="140" />
-                <el-table-column prop="dealAmount" sortable="true" label="当天成交金额" align="center" >
-                    <template slot-scope="scope">{{ scope.row.dealAmount+'' | priceRangeFilters }}</template>
+                <el-table-column prop="time" label="统计日期" width="140" />
+                <el-table-column prop="dealAmount" sortable="true" label="当天成交金额" align="center">
+                    <template slot-scope="scope">{{ (scope.row.dealAmount + '') | priceRangeFilters }}</template>
                 </el-table-column>
-                <el-table-column prop="totalDealAmount" sortable="true" label="累计成交金额" align="center" >
-                     <template slot-scope="scope">{{ scope.row.totalDealAmount+'' | priceRangeFilters }}</template>
+                <el-table-column prop="totalDealAmount" sortable="true" label="累计成交金额" align="center">
+                    <template slot-scope="scope">{{ (scope.row.totalDealAmount + '') | priceRangeFilters }}</template>
                 </el-table-column>
                 <el-table-column prop="dealGoodNum" sortable="true" label="当天成交商品数量" align="center" />
                 <el-table-column prop="totalDealGoodNum" sortable="true" label="累计成交商品数量" align="center" />

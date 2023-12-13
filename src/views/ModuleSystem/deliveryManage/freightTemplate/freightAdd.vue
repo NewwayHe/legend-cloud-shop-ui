@@ -36,7 +36,7 @@
                                     </div>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="name" label="操作" align="center"  width="200">
+                            <el-table-column prop="name" label="操作" align="center" width="200">
                                 <template slot-scope="scope">
                                     <el-link :underline="false" type="primary" @click="editSelect('locationSalesTemp', scope.row, scope.$index)">
                                         编辑
@@ -85,7 +85,7 @@
                                         :prop="'transFeeDTOList.' + scope.$index + '.firstNum'"
                                         :rules="{ required: true, message: '不能为空', trigger: 'blur' }"
                                     >
-										<lsInput v-model="scope.row.firstNum" :precision="form.transType==1?2:3" :min="0" :max="999999"/>
+                                        <lsInput v-model="scope.row.firstNum" :precision="form.transType == 1 ? 2 : 3" :min="0" :max="999999" />
                                     </el-form-item>
                                 </template>
                             </el-table-column>
@@ -101,7 +101,7 @@
                                         :prop="'transFeeDTOList.' + scope.$index + '.firstPrice'"
                                         :rules="{ required: true, message: '不能为空', trigger: 'blur' }"
                                     >
-										<lsInput v-model="scope.row.firstPrice" :precision="2" :min="0" :max="999999"/>
+                                        <lsInput v-model="scope.row.firstPrice" :precision="2" :min="0" :max="999999" />
                                     </el-form-item>
                                 </template>
                             </el-table-column>
@@ -117,7 +117,7 @@
                                         :prop="'transFeeDTOList.' + scope.$index + '.addNum'"
                                         :rules="{ required: true, message: '不能为空', trigger: 'blur' }"
                                     >
-										<lsInput v-model="scope.row.addNum" :precision="form.transType==1?2:3" :min="0" :max="999999"/>
+                                        <lsInput v-model="scope.row.addNum" :precision="form.transType == 1 ? 2 : 3" :min="0" :max="999999" />
                                     </el-form-item>
                                 </template>
                             </el-table-column>
@@ -133,11 +133,11 @@
                                         :prop="'transFeeDTOList.' + scope.$index + '.addPrice'"
                                         :rules="{ required: true, message: '不能为空', trigger: 'blur' }"
                                     >
-										<lsInput v-model="scope.row.addPrice" :precision="2" :min="0" :max="999999"/>
+                                        <lsInput v-model="scope.row.addPrice" :precision="2" :min="0" :max="999999" />
                                     </el-form-item>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="name" label="操作" align="center"  width="200">
+                            <el-table-column prop="name" label="操作" align="center" width="200">
                                 <template slot-scope="scope">
                                     <template v-if="scope.$index + 1 != form.transFeeDTOList.length">
                                         <el-link :underline="false" type="primary" @click="delTypeList('transFeeDTOList', scope.$index)">
@@ -185,7 +185,7 @@
                                     </el-form-item>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="name" label="操作" align="center"  width="200">
+                            <el-table-column prop="name" label="操作" align="center" width="200">
                                 <template slot-scope="scope">
                                     <template v-if="scope.$index + 1 != form.transConstFeeDTOList.length">
                                         <el-link :underline="false" type="primary" @click="delTypeList('transConstFeeDTOList', scope.$index)">
@@ -220,7 +220,7 @@
                                 :header-cell-style="{ background: '#fafafa' }"
                             >
                                 <el-table-column prop="area" label="地区" align="center" />
-                                <el-table-column prop="name" label="操作" align="center" >
+                                <el-table-column prop="name" label="操作" align="center">
                                     <template slot="header">
                                         <div class="d-flex a-center j-center">
                                             <i class="text-danger font-18 v-middle mr-10">*</i>
@@ -245,7 +245,7 @@
                                         </el-form-item>
                                     </template>
                                 </el-table-column>
-                                <el-table-column prop="name" label="操作" align="center"  width="200">
+                                <el-table-column prop="name" label="操作" align="center" width="200">
                                     <template slot-scope="scope">
                                         <template v-if="scope.$index + 1 != form.transFreeDTOList.length">
                                             <el-link :underline="false" type="primary" @click="delTypeList('transFreeDTOList', scope.$index)">
@@ -270,7 +270,7 @@
                 </template>
                 <el-form-item>
                     <el-button @click="onCancel">取消</el-button>
-                    <ls-button type="primary" :asyncFunction="onSubmit">确定</ls-button>
+                    <ls-button type="primary" :async-function="onSubmit">确定</ls-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -288,9 +288,9 @@ import { freightTemplate } from '@/api/ModuleSystem'
 import dialogAreaSelect from './components/dialogAreaSelect.vue'
 
 export default {
-    name:'freightAdd',
+    name: 'FreightAdd',
     components: {
-        dialogAreaSelect,
+        dialogAreaSelect
     },
     data() {
         return {
@@ -494,32 +494,34 @@ export default {
         },
         // 提交
         onSubmit() {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 this.$refs.form.validate((valid) => {
                     if (valid) {
                         if (this.form.locationSalesTemp && this.form.locationSalesTemp.length) {
                             this.form.locationRestrictedSalesList = this.form.locationSalesTemp[0].provinceList
                             this.form.area = this.form.locationSalesTemp[0].area
                         }
-                        freightTemplate[this.isEdit ? 'transportEdit' : 'transportAdd'](this.form).then((res) => {
-                            if (res.code) {
-                                // 如果选择包邮或者固定运费
-                                if (this.form.freeFlag || this.form.transType == '4') {
-                                    let transQueryType = ''
-                                    this.form.freeFlag ? (transQueryType = 3) : (transQueryType = 2)
-                                    // 保存参数以便返回查询
-                                    sessionStorage.setItem('type', transQueryType)
+                        freightTemplate[this.isEdit ? 'transportEdit' : 'transportAdd'](this.form)
+                            .then((res) => {
+                                if (res.code) {
+                                    // 如果选择包邮或者固定运费
+                                    if (this.form.freeFlag || this.form.transType == '4') {
+                                        let transQueryType = ''
+                                        this.form.freeFlag ? (transQueryType = 3) : (transQueryType = 2)
+                                        // 保存参数以便返回查询
+                                        sessionStorage.setItem('type', transQueryType)
+                                    }
+                                    setTimeout(() => {
+                                        this.$router.push({
+                                            name: 'freightTemplate'
+                                        })
+                                    }, 1500)
                                 }
-                                setTimeout(() => {
-                                    this.$router.push({
-                                        name: 'freightTemplate'
-                                    })
-                                }, 1500)
-                            }
-                        }).finally(_=>{
-                            resolve()
-                        })
-                    }else{
+                            })
+                            .finally((_) => {
+                                resolve()
+                            })
+                    } else {
                         resolve()
                     }
                 })

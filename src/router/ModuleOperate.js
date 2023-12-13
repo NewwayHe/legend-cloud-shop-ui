@@ -31,7 +31,7 @@ const ModuleOperate = [
                         meta: { title: '订单详情' },
                         hidden: true
                     },
-                    
+
                     {
                         path: 'serviceOrderList',
                         component: () => import('@/views/ModuleOperate/businessManage/serviceOrderList'),
@@ -59,7 +59,7 @@ const ModuleOperate = [
                         meta: { title: '发票管理' }
                     },
                     {
-                        path:'batchSend',
+                        path: 'batchSend',
                         component: () => import('@/views/ModuleOperate/businessManage/order/batchSend'),
                         name: 'batchSend',
                         meta: { title: '批量发货' }
@@ -93,7 +93,7 @@ const ModuleOperate = [
                         hidden: true
                     }
                 ]
-            },
+            }
         ]
     },
     {

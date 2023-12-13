@@ -26,7 +26,13 @@
             </el-form-item>
             <el-form-item label="评论图片：">
                 <template v-if="commentContent.photos && commentContent.photos.length">
-                    <ls-image v-for="(item, index) in commentContent.photos" :key="index" class="mr-20" :src="item" :options="{ w: '100', h: '100' }"/>
+                    <ls-image
+                        v-for="(item, index) in commentContent.photos"
+                        :key="index"
+                        class="mr-20"
+                        :src="item"
+                        :options="{ w: '100', h: '100' }"
+                    />
                 </template>
                 <template v-else>-</template>
             </el-form-item>
@@ -34,14 +40,20 @@
                 <p>{{ commentContent.addTime || '-' }}</p>
             </el-form-item>
             <!-- 用户追评 -->
-            <div v-if="commentType == 2" style="margin-bottom: 18px;">
+            <div v-if="commentType == 2" style="margin-bottom: 18px">
                 <div class="form-title font-14 mb-10">用户追评</div>
                 <el-form-item label="评论内容：">
                     <p class="line-clamp4">{{ commentContent.addContent || '-' }}</p>
                 </el-form-item>
                 <el-form-item label="评论图片：">
                     <div v-if="commentContent.addPhotos && commentContent.addPhotos.length > 0">
-                        <ls-image v-for="(item, index) in commentContent.addPhotos" :key="index" class="mr-20" :src="item" :options="{ w: '100', h: '100' }" />
+                        <ls-image
+                            v-for="(item, index) in commentContent.addPhotos"
+                            :key="index"
+                            class="mr-20"
+                            :src="item"
+                            :options="{ w: '100', h: '100' }"
+                        />
                     </div>
                     <div v-else>-</div>
                 </el-form-item>
@@ -55,7 +67,7 @@
             </el-form-item>
             <el-form-item class="text-centent">
                 <el-button @click="dialogVisible = false">取消</el-button>
-                <ls-button type="primary" :asyncFunction="()=>submint('form')">确定</ls-button>
+                <ls-button type="primary" :async-function="() => submint('form')">确定</ls-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -102,41 +114,46 @@ export default {
         },
         // 回复
         submint(form) {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 this.$refs[form].validate((valid) => {
-                if (valid) {
-                    if (this.commentType == 1) {
-                        // 回复初评
-                        let content = this.commentContent.replyContent
-                        commentApi.postFirstComment({ id: this.commentId, content }).then((res) => {
-                            if (res.code == 1) {
-                                this.$message.success('回复成功')
-                                this.dialogVisible = false
-                                this.$emit('getData')
-                            }
-                        }).finally(_=>{
-                            resolve()
-                        })
-                    } else if (this.commentType == 2) {
-                        // 回复追评
-                        let content = this.commentContent.replyContent
-                        commentApi.postReplyComment({ addId: this.commentAddId, content }).then((res) => {
-                            if (res.code == 1) {
-                                this.$message.success('回复成功')
-                                this.dialogVisible = false
-                                this.$emit('getData')
-                            }
-                        }).finally(_=>{
-                            resolve()
-                        })
+                    if (valid) {
+                        if (this.commentType == 1) {
+                            // 回复初评
+                            let content = this.commentContent.replyContent
+                            commentApi
+                                .postFirstComment({ id: this.commentId, content })
+                                .then((res) => {
+                                    if (res.code == 1) {
+                                        this.$message.success('回复成功')
+                                        this.dialogVisible = false
+                                        this.$emit('getData')
+                                    }
+                                })
+                                .finally((_) => {
+                                    resolve()
+                                })
+                        } else if (this.commentType == 2) {
+                            // 回复追评
+                            let content = this.commentContent.replyContent
+                            commentApi
+                                .postReplyComment({ addId: this.commentAddId, content })
+                                .then((res) => {
+                                    if (res.code == 1) {
+                                        this.$message.success('回复成功')
+                                        this.dialogVisible = false
+                                        this.$emit('getData')
+                                    }
+                                })
+                                .finally((_) => {
+                                    resolve()
+                                })
+                        }
+                    } else {
+                        resolve()
+                        console.log('err')
                     }
-                } else {
-                    resolve()
-                    console.log('err')
-                }
+                })
             })
-            })
-            
         }
     }
 }

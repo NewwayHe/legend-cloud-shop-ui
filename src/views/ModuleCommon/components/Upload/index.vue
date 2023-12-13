@@ -3,17 +3,17 @@
         <div class="lsUpload">
             <template v-if="multiple">
                 <div class="d-flex flex-wrap">
-                    <div class="text-center mb-5" v-for="(item, index) in tempUrl" :key="index + 1">
+                    <div v-for="(item, index) in tempUrl" :key="index + 1" class="text-center mb-5">
                         <div class="lsUpload__imgWarp flex-center" :style="uploadStyle">
                             <ls-image
                                 mode="contain"
                                 :src="item.url"
-                                :osOptions="{ w: '100', h: '100' }"
+                                :os-options="{ w: '100', h: '100' }"
                                 style="border-radius: 6px; width: 100%; height: 100%"
                             />
                             <i class="lsUpload__imgClose el-icon-error" @click="delImg(index)" />
                         </div>
-                        <el-input size="small" class="mt-5" v-model="item.permissionImgName" :style="{ width: uploadStyle.width }"></el-input>
+                        <el-input v-model="item.permissionImgName" size="small" class="mt-5" :style="{ width: uploadStyle.width }"></el-input>
                     </div>
                     <el-upload
                         v-if="multiple ? tempUrl.length < limit : true"
@@ -35,12 +35,12 @@
                     >
                         <div :class="{ lsUpload__box: !isHiddenImg && (!button || (!multiple && tempUrl)) }" :style="uploadStyle">
                             <ls-image
-                                :isPreview="false"
-                                class="lsUpload__img w-100 h-100"
                                 v-if="!isHiddenImg && !multiple && tempUrl"
+                                :is-preview="false"
+                                class="lsUpload__img w-100 h-100"
                                 mode="contain"
                                 :src="tempUrl"
-                                :osOptions="{ w: '100', h: '100' }"
+                                :os-options="{ w: '100', h: '100' }"
                                 style="border-radius: 6px; width: 100%; height: 100%"
                             />
                             <el-button v-else-if="isHiddenImg && tempUrl" type="primary" size="small">
@@ -219,7 +219,7 @@ export default {
                 if (this.uploadSize == 2) {
                     this.$message.error('上传图片大小不能超过 2MB!')
                 } else {
-                    this.$message.error('上传头像图片大小不能超过 '+this.uploadSize+'MB!')
+                    this.$message.error('上传头像图片大小不能超过 ' + this.uploadSize + 'MB!')
                 }
             }
             return isLt5M

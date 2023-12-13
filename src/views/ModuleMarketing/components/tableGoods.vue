@@ -13,7 +13,9 @@
             <el-table-column prop="name" class="pr-4" label="商品" align="center" min-width="200">
                 <template slot-scope="scope">
                     <el-popover placement="top" width="500" trigger="hover" :title="scope.row.name">
-                        <el-link target="_blank" :underline="false" :href="$shareRedirectUrl + '?detailsType=good&id=' + scope.row.id">{{$shareRedirectUrl + '?detailsType=good&id=' + scope.row.id}}</el-link>
+                        <el-link target="_blank" :underline="false" :href="$shareRedirectUrl + '?detailsType=good&id=' + scope.row.id">
+                            {{ $shareRedirectUrl + '?detailsType=good&id=' + scope.row.id }}
+                        </el-link>
                         <el-link
                             slot="reference"
                             :underline="false"

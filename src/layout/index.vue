@@ -1,6 +1,6 @@
 <template>
     <div :class="classObj" class="app-wrapper">
-        <noobGuide ref="noobGuide" v-if="guide && userInfo.userType=='SHOP'" :key="refresh" @refresh="test" />
+        <noobGuide v-if="guide && userInfo.userType == 'SHOP'" ref="noobGuide" :key="refresh" @refresh="test" />
         <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
         <sidebar class="sidebar-container" @updated="test" />
         <div class="main-container">
@@ -36,13 +36,13 @@ export default {
     data() {
         return {
             show: true,
-            refresh:0,
-            showw:true
+            refresh: 0,
+            showw: true
         }
     },
-    created(){ },
+    created() {},
     computed: {
-        ...mapGetters(['userInfo','shopInfo']),
+        ...mapGetters(['userInfo', 'shopInfo']),
 
         sidebar() {
             return this.$store.state.app.sidebar
@@ -72,11 +72,10 @@ export default {
         handleClickOutside() {
             this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
         },
-        test(){
-            this.$nextTick(()=>{
+        test() {
+            this.$nextTick(() => {
                 this.refresh++
             })
-            
         }
     }
 }

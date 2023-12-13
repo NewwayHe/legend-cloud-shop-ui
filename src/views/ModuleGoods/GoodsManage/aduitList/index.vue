@@ -4,7 +4,7 @@
 <template>
     <section class="">
         <!-- 查询 -->
-        <el-card shadow :body-style="{padding:`20px 20px 10px 20px`}">
+        <el-card shadow :body-style="{ padding: `20px 20px 10px 20px` }">
             <div class="search">
                 <el-form :inline="true" :model="searchFilters" size="small">
                     <el-form-item label="商品名称">
@@ -19,7 +19,7 @@
                         <el-button size="small" @click.stop="dbnSearch">搜索</el-button>
                         <el-button size="small" @click.stop="dbnResetSearch(['opStatus'])">重置</el-button>
                     </el-form-item>
-                </el-form> 
+                </el-form>
             </div>
             <div class="table">
                 <el-row type="flex" class="mb-20">
@@ -55,8 +55,15 @@
                                             <span class="line-clamp2">{{ scope.row.name }}</span>
                                         </el-link>
                                     </template>
-                                    <div>{{scope.row.name}}</div>
-                                    <el-link  class="text-blue" :underline="false"  target="_blank" :href="$shareRedirectUrl+'?detailsType=good&id='+scope.row.id">{{ $shareRedirectUrl+'?detailsType=good&id='+scope.row.id }}</el-link> 
+                                    <div>{{ scope.row.name }}</div>
+                                    <el-link
+                                        class="text-blue"
+                                        :underline="false"
+                                        target="_blank"
+                                        :href="$shareRedirectUrl + '?detailsType=good&id=' + scope.row.id"
+                                    >
+                                        {{ $shareRedirectUrl + '?detailsType=good&id=' + scope.row.id }}
+                                    </el-link>
                                 </el-popover>
                             </div>
                         </template>
@@ -68,13 +75,21 @@
                     <el-table-column sortable="custom" prop="price" label="销售价" width="224" align="left">
                         <template slot-scope="scope">{{ scope.row.price | priceRangeFilters }}</template>
                     </el-table-column>
-                    <el-table-column sortable="custom" prop="buys" label="销量" align="left"/>
+                    <el-table-column sortable="custom" prop="buys" label="销量" align="left" />
                     <el-table-column prop="siteName" label="店铺名称" width="140" align="left" />
                     <el-table-column prop="status" label="状态" align="left">
                         <template slot-scope="scope">
                             <span v-if="scope.row.opStatus == -1 || scope.row.draftStatus == -1" class="status-veto">审核不通过</span>
                             <span v-if="scope.row.opStatus == 0 || scope.row.draftStatus == 0" class="status-wait">待审核</span>
-                            <span v-if="(scope.row.opStatus == 1 && (scope.row.draftStatus == null || scope.row.draftStatus == -10)) || scope.row.draftStatus == 1 " class="status-pass">通过审核</span>
+                            <span
+                                v-if="
+                                    (scope.row.opStatus == 1 && (scope.row.draftStatus == null || scope.row.draftStatus == -10)) ||
+                                    scope.row.draftStatus == 1
+                                "
+                                class="status-pass"
+                            >
+                                通过审核
+                            </span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="auditOpinion" label="备注" show-overflow-tooltip min-width="100">
@@ -96,11 +111,16 @@
                         </template>
                     </el-table-column>
                 </el-table>
-				<LsSticky :data="tableList">
-					<el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
-						<pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
-					</el-row>
-				</LsSticky>
+                <LsSticky :data="tableList">
+                    <el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
+                        <pagination
+                            :current-page="page.curPage"
+                            :total="tableTotal"
+                            @size-change="pageSizeChange"
+                            @current-change="currentPageChange"
+                        />
+                    </el-row>
+                </LsSticky>
             </div>
         </el-card>
 
@@ -111,7 +131,7 @@
             :user-params="{ ids: 'idList', status: 'opStatus', content: 'auditOpinion' }"
             @finish="getData"
         />
-        <dialogPreview ref="dialogPreview"/>
+        <dialogPreview ref="dialogPreview" />
     </section>
 </template>
 <script>
@@ -141,19 +161,19 @@ export default {
             auditList: [], // 提交审核的数组
             url: {
                 getData: '/product/s/product/auditPage'
-            },
+            }
         }
     },
-    watch: { },
+    watch: {},
     mounted() {
         // this.getShop()
         this.getBrand()
     },
     methods: {
-         //预览
-         proPreview(row) {
-			this.$refs.dialogPreview.showDialog({id:row.id,viewDraft:[0,-1,'0','-1'].includes(row.opStatus)?true:false});
-		},
+        //预览
+        proPreview(row) {
+            this.$refs.dialogPreview.showDialog({ id: row.id, viewDraft: [0, -1, '0', '-1'].includes(row.opStatus) ? true : false })
+        },
         editGood(row) {
             this.$router.push({
                 name: 'addGood',
@@ -277,7 +297,7 @@ export default {
 <!--
     表格内容过长显示tooltip时的最大宽度设置 不能使用scoped
 -->
-<style >
+<style>
 .el-tooltip__popper {
     max-width: 60vw;
 }

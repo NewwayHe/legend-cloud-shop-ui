@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-card >
+        <el-card>
             <el-row slot="header" type="flex" justify="space-between" align="middle">
                 <div class="d-flex a-center">
                     <span>商品概况</span>
@@ -83,13 +83,20 @@
             </el-row>
             <el-row type="flex">
                 <el-col :span="13">
-                    <pie height="400px"  :chart-data="chartData" />
+                    <pie height="400px" :chart-data="chartData" />
                 </el-col>
                 <el-col :span="11">
                     <el-row>类目商品数量前五:</el-row>
                     <el-row class="mt-15">
                         <div class="table">
-                            <el-table ref="multipleTable" v-loading="tableListLoading" header-row-class-name="headerRow" :data="skuCategory" tooltip-effect="dark" class="w-100">
+                            <el-table
+                                ref="multipleTable"
+                                v-loading="tableListLoading"
+                                header-row-class-name="headerRow"
+                                :data="skuCategory"
+                                tooltip-effect="dark"
+                                class="w-100"
+                            >
                                 <template slot="empty">
                                     <empty empty-type="pro" />
                                 </template>

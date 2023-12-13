@@ -1,5 +1,5 @@
 <template>
-    <el-card shadow :body-style="{padding:`20px 20px 10px 20px`}" v-loading="tableListLoading">
+    <el-card v-loading="tableListLoading" shadow :body-style="{ padding: `20px 20px 10px 20px` }">
         <el-radio-group v-model="radioCur" class="my-10" size="medium" @change="changeStatus">
             <el-radio-button label="0">系统通知</el-radio-button>
             <el-radio-button label="1">我的公告</el-radio-button>
@@ -31,15 +31,29 @@
                 <empty empty-type="pro" text="暂无内容" />
             </el-col>
         </el-row>
-		<LsSticky :data="list">
-			<el-row type="flex" :justify="radioCur == '0'?'space-between':'end'" class="w-100 overflow-h py-10 mt-10 bg-white">
-				<el-button size="small" type="primary" @click="cleanUnread" v-if="radioCur == '0'">清除未读</el-button>
-				 <!-- 分页- 系统通知-->
-				<pagination :current-page="pages1.curPage" :page-size="pages1.pageSize" :total="pages1.total" @size-change="pageSizeChange" @current-change="currentPageChange" v-if="radioCur == '0'"/>
-				<!-- 分页- 我的公告 -->
-				<pagination :current-page="pages2.curPage" :page-size="pages2.pageSize" :total="pages2.total" @size-change="pageSizeChange" @current-change="currentPageChange" v-else/>
-			</el-row>
-		</LsSticky>
+        <LsSticky :data="list">
+            <el-row type="flex" :justify="radioCur == '0' ? 'space-between' : 'end'" class="w-100 overflow-h py-10 mt-10 bg-white">
+                <el-button v-if="radioCur == '0'" size="small" type="primary" @click="cleanUnread">清除未读</el-button>
+                <!-- 分页- 系统通知-->
+                <pagination
+                    v-if="radioCur == '0'"
+                    :current-page="pages1.curPage"
+                    :page-size="pages1.pageSize"
+                    :total="pages1.total"
+                    @size-change="pageSizeChange"
+                    @current-change="currentPageChange"
+                />
+                <!-- 分页- 我的公告 -->
+                <pagination
+                    v-else
+                    :current-page="pages2.curPage"
+                    :page-size="pages2.pageSize"
+                    :total="pages2.total"
+                    @size-change="pageSizeChange"
+                    @current-change="currentPageChange"
+                />
+            </el-row>
+        </LsSticky>
         <dialogMessage ref="dialogMessage" :msg-id="msgId" @closeMsg="closeMsg" />
     </el-card>
 </template>
@@ -79,7 +93,7 @@ export default {
             imgSrc2: require('@/assets/images/message-icon.png'), // 我的公告图标
             msgId: '',
             curCheckItem: null, //当前查看项
-			tableListLoading: false, // 表格请求loading
+            tableListLoading: false // 表格请求loading
         }
     },
     created() {
@@ -91,12 +105,12 @@ export default {
     methods: {
         // 切换状态
         changeStatus() {
-			this.list = []
+            this.list = []
             this.getData()
         },
         // 获取数据
         getData() {
-			this.tableListLoading = true
+            this.tableListLoading = true
             if (this.radioCur == '0') {
                 // 系统通知
                 messageApi
@@ -111,9 +125,10 @@ export default {
                             this.pages1.pageSize = res?.data?.pageSize || 10
                             this.list = res?.data?.resultList || []
                         }
-                    }).finally(() => {
-						this.tableListLoading = false
-					})
+                    })
+                    .finally(() => {
+                        this.tableListLoading = false
+                    })
             } else {
                 // 我的公告
                 messageApi
@@ -128,17 +143,18 @@ export default {
                             this.pages2.pageSize = res?.data?.pageSize || 10
                             this.list = res?.data?.resultList || []
                         }
-                    }).finally(() => {
-						this.tableListLoading = false
-					})
+                    })
+                    .finally(() => {
+                        this.tableListLoading = false
+                    })
             }
         },
         // 去详情
         goMessageDetail(item) {
             if (this.radioCur == '0') {
-                this.msgId = item.id;
-                this.curCheckItem = item;
-                this.$refs.dialogMessage.showDialog();
+                this.msgId = item.id
+                this.curCheckItem = item
+                this.$refs.dialogMessage.showDialog()
             } else {
                 this.$router.push({ name: 'messageDetail', query: { pubId: item.id } })
             }
@@ -163,26 +179,28 @@ export default {
             this.getData()
         },
         closeMsg() {
-            if(this.curCheckItem.status == 0) {
-                this.curCheckItem.status = 1;
-                this.$nextTick(() => {  //刷新未读消息数
+            if (this.curCheckItem.status == 0) {
+                this.curCheckItem.status = 1
+                this.$nextTick(() => {
+                    //刷新未读消息数
                     this.$store.dispatch('user/getMsgInfo')
                 })
             }
         },
-		cleanUnread(){
-			this.$confirm('是否清除所有未读消息?', '提示', { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning' }).then(() => {
-				messageApi.cleanUnread().then(res => {
-					if(res.code) {
-						this.$message({type: 'success',message: '操作成功!'})
-						this.getData()
-						this.$nextTick(() => {  //刷新未读消息数
-						    this.$store.dispatch('user/getMsgInfo')
-						})
-					}
-				})
-			})
-		}
+        cleanUnread() {
+            this.$confirm('是否清除所有未读消息?', '提示', { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning' }).then(() => {
+                messageApi.cleanUnread().then((res) => {
+                    if (res.code) {
+                        this.$message({ type: 'success', message: '操作成功!' })
+                        this.getData()
+                        this.$nextTick(() => {
+                            //刷新未读消息数
+                            this.$store.dispatch('user/getMsgInfo')
+                        })
+                    }
+                })
+            })
+        }
     }
 }
 </script>

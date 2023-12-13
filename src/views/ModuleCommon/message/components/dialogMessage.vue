@@ -21,15 +21,15 @@
                                 {{ list.productName }}
                             </p>
                         </div>
-                        <el-link style="color: #006dc7" :underline="false" class="font-12 mt-10" @click="goPage(list.detailId,list.type)">
+                        <el-link style="color: #006dc7" :underline="false" class="font-12 mt-10" @click="goPage(list.detailId, list.type)">
                             去查看&nbsp;&gt;&gt;
                         </el-link>
                     </div>
                 </div>
-                <el-link v-if="list.type == 2" style="color: #006dc7" :underline="false" class="font-12" @click="goPage(list.detailId,list.type)">
+                <el-link v-if="list.type == 2" style="color: #006dc7" :underline="false" class="font-12" @click="goPage(list.detailId, list.type)">
                     去查看&nbsp;&gt;&gt;
                 </el-link>
-                <el-link v-if="list.type == 3" style="color: #006dc7" :underline="false" class="font-12" @click="goPage(list.detailId,list.type)">
+                <el-link v-if="list.type == 3" style="color: #006dc7" :underline="false" class="font-12" @click="goPage(list.detailId, list.type)">
                     去查看&nbsp;&gt;&gt;
                 </el-link>
             </el-col>
@@ -69,21 +69,24 @@ export default {
             this.$emit('closeMsg')
         },
         // 跳转页面
-        goPage(id,MsgType) {
+        goPage(id, MsgType) {
             //1:商品 2：订单 3:售后 0：其他
-            if(MsgType === 0){
-                this.$router.push({name:'marketing'})
-            }if(MsgType == 1){
-                this.isVisible = false
-                this.$router.push({name:'goodList'})
-            }if(MsgType == 2){
-                this.isVisible = false
-                this.$router.push({name:'orderDetail', query:{ DetailId:id }})
-            }if(MsgType == 3){
-                this.isVisible = false
-                this.$router.push({name:'refuseDetail', query:{ id:id }})
+            if (MsgType === 0) {
+                this.$router.push({ name: 'marketing' })
             }
-            console.log(id,MsgType)
+            if (MsgType == 1) {
+                this.isVisible = false
+                this.$router.push({ name: 'goodList' })
+            }
+            if (MsgType == 2) {
+                this.isVisible = false
+                this.$router.push({ name: 'orderDetail', query: { DetailId: id } })
+            }
+            if (MsgType == 3) {
+                this.isVisible = false
+                this.$router.push({ name: 'refuseDetail', query: { id: id } })
+            }
+            console.log(id, MsgType)
         },
         // 获取数据
         getData() {

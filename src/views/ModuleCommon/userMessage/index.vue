@@ -1,7 +1,7 @@
 <template>
     <div>
         <Navbar :is-hidden-logo="true" />
-        <el-card shadow :body-style="{padding:`20px 20px 10px 20px`}">
+        <el-card shadow :body-style="{ padding: `20px 20px 10px 20px` }">
             <el-radio-group v-model="radioCur" class="my-10" size="medium" @change="changeStatus">
                 <el-radio-button label="0">系统通知</el-radio-button>
                 <el-radio-button label="1">我的公告</el-radio-button>
@@ -30,14 +30,28 @@
                     </section>
                 </el-col>
             </el-row>
-			<LsSticky :data="list">
-				<el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
-					 <!-- 分页- 系统通知-->
-					<pagination :current-page="pages1.curPage" :page-size="pages1.pageSize" :total="pages1.total" @size-change="pageSizeChange" @current-change="currentPageChange" v-if="radioCur == '0'"/>
-					<!-- 分页- 我的公告 -->
-					<pagination :current-page="pages2.curPage" :page-size="pages2.pageSize" :total="pages2.total" @size-change="pageSizeChange" @current-change="currentPageChange" v-else/>
-				</el-row>
-			</LsSticky>
+            <LsSticky :data="list">
+                <el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
+                    <!-- 分页- 系统通知-->
+                    <pagination
+                        v-if="radioCur == '0'"
+                        :current-page="pages1.curPage"
+                        :page-size="pages1.pageSize"
+                        :total="pages1.total"
+                        @size-change="pageSizeChange"
+                        @current-change="currentPageChange"
+                    />
+                    <!-- 分页- 我的公告 -->
+                    <pagination
+                        v-else
+                        :current-page="pages2.curPage"
+                        :page-size="pages2.pageSize"
+                        :total="pages2.total"
+                        @size-change="pageSizeChange"
+                        @current-change="currentPageChange"
+                    />
+                </el-row>
+            </LsSticky>
             <dialogMessage ref="dialogMessage" :msg-id="msgId" @closeMsg="closeDialogMessage" />
         </el-card>
     </div>

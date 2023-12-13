@@ -68,14 +68,14 @@ const freightTemplate = {
 const materialCenter = {
     getResourceList: (data) => request.get('/basic/s/file/queryPageByShop', data), //获取文件夹及多媒体资源列表
     changeResourceName: (data) => request.get('/basic/s/file/updateFileFolderName', data, { isShowMessage: false }), //修改文件夹或图片名字
-    tempUpload: (data) => request.postFile('/basic/s/file/uploadNew',data), //临时上传
+    tempUpload: (data) => request.postFile('/basic/s/file/uploadNew', data), //临时上传
     confirmUpload: (data) => request.put('/basic/s/file/updateManagedFlage', data), //确认上传
     deleteResource: (data) => request.delete(`/basic/s/file/delectFileByIdList`, data), //删除文件夹或多媒体资源
     createFloder: (data) => request.post('/basic/s/file/saveFileFolder', data),
     getParentFloderList: (data) => request.get('/basic/s/file/getIdList', data),
     getFloderTree: (data) => request.get('/basic/s/file/queryFileFolderList', data), //获取文件夹列表树
     moveResource: (data) => request.put('/basic/s/file/updateFileFolderList', data),
-    getSaveHistory: (data) => request.post('/basic/file/saveHistoryNew', data),//图片中心历史记录
+    getSaveHistory: (data) => request.post('/basic/file/saveHistoryNew', data) //图片中心历史记录
 }
 
 export { menuAuthManage, orderSet, version, shopManage, infoGetAndEdit, logisticsManage, freightTemplate, editPersonInfo, materialCenter }

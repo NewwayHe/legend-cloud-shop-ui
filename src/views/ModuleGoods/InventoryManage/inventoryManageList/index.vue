@@ -44,10 +44,18 @@
                             <div class="d-flex a-center">
                                 <ls-image style="flex: 0 0 50px" :src="scope.row.pic" :options="{ w: '50', h: '50', br: '4' }" />
                                 <el-popover placement="top-start" width="450" trigger="hover" :title="scope.row.name">
-                                    <el-link class="text-blue" type="primary" target="_blank" :underline="false" :href="$shareRedirectUrl + '?detailsType=good&id=' + scope.row.productId">{{$shareRedirectUrl + '?detailsType=good&id=' + scope.row.productId}}</el-link>
+                                    <el-link
+                                        class="text-blue"
+                                        type="primary"
+                                        target="_blank"
+                                        :underline="false"
+                                        :href="$shareRedirectUrl + '?detailsType=good&id=' + scope.row.productId"
+                                    >
+                                        {{ $shareRedirectUrl + '?detailsType=good&id=' + scope.row.productId }}
+                                    </el-link>
                                     <template slot="reference">
                                         <el-link class="ml-10 text-blue goodPic" :underline="false" type="primary">
-                                            <span class="line-clamp2"  @click="proPreview(scope.row.productId)">{{ scope.row.name || '-'}}</span>
+                                            <span class="line-clamp2" @click="proPreview(scope.row.productId)">{{ scope.row.name || '-' }}</span>
                                         </el-link>
                                     </template>
                                 </el-popover>
@@ -57,25 +65,25 @@
                     <el-table-column prop="cnProperties" label="规格" min-width="120">
                         <template slot-scope="scope">{{ scope.row.cnProperties || '-' }}</template>
                     </el-table-column>
-                    <el-table-column prop="price" label="销售价"  width="224" >
-                         <template slot-scope="scope">{{ scope.row.price+'' | priceRangeFilters }}</template>
-                        </el-table-column>
-                    <el-table-column prop="buys" label="销量" >
-                         <template slot-scope="scope">{{ scope.row.buys || '-' }}</template>
+                    <el-table-column prop="price" label="销售价" width="224">
+                        <template slot-scope="scope">{{ (scope.row.price + '') | priceRangeFilters }}</template>
                     </el-table-column>
-                    <el-table-column sortable prop="actualStocks" label="实际库存" width="130" >
-                          <template slot-scope="scope">{{ scope.row.actualStocks || '-' }}</template>
+                    <el-table-column prop="buys" label="销量">
+                        <template slot-scope="scope">{{ scope.row.buys || '-' }}</template>
                     </el-table-column>
-                    <el-table-column sortable prop="stocks" label="销售库存"  width="130">
+                    <el-table-column sortable prop="actualStocks" label="实际库存" width="130">
+                        <template slot-scope="scope">{{ scope.row.actualStocks || '-' }}</template>
+                    </el-table-column>
+                    <el-table-column sortable prop="stocks" label="销售库存" width="130">
                         <template slot-scope="scope">{{ scope.row.stocks || '-' }}</template>
                     </el-table-column>
-                    <el-table-column sortable prop="stocksArm" label="库存预警" width="130" >
+                    <el-table-column sortable prop="stocksArm" label="库存预警" width="130">
                         <template slot-scope="scope">{{ scope.row.stocksArm || '-' }}</template>
                     </el-table-column>
                     <el-table-column prop="status" label="状态">
                         <template slot-scope="scope">
-                            <span class="status-done" v-if="scope.row.status == 0" >下线</span>
-                            <span class="status-pass" v-else>上线</span>
+                            <span v-if="scope.row.status == 0" class="status-done">下线</span>
+                            <span v-else class="status-pass">上线</span>
                         </template>
                     </el-table-column>
                     <el-table-column label="操作" fixed="right" width="200px">
@@ -87,17 +95,29 @@
                         </template>
                     </el-table-column>
                 </el-table>
-				<LsSticky :data="tableList">
-					<el-row type="flex" justify="space-between" class="w-100 overflow-h py-10 mt-10 bg-white">
-						<el-col>
-						    <el-button size="mini" class="allCheck pl-10 pr-10">
-								<el-checkbox v-model="checkAll" label="全选" size="small" @change="selAll" :indeterminate="checkHalf" :disabled='!selectableList.length'/>
-						    </el-button>
-						    <el-button size="small" @click="toBatchEdit">批量编辑库存</el-button>
-						</el-col>
-						<pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
-					</el-row>
-				</LsSticky>
+                <LsSticky :data="tableList">
+                    <el-row type="flex" justify="space-between" class="w-100 overflow-h py-10 mt-10 bg-white">
+                        <el-col>
+                            <el-button size="mini" class="allCheck pl-10 pr-10">
+                                <el-checkbox
+                                    v-model="checkAll"
+                                    label="全选"
+                                    size="small"
+                                    :indeterminate="checkHalf"
+                                    :disabled="!selectableList.length"
+                                    @change="selAll"
+                                />
+                            </el-button>
+                            <el-button size="small" @click="toBatchEdit">批量编辑库存</el-button>
+                        </el-col>
+                        <pagination
+                            :current-page="page.curPage"
+                            :total="tableTotal"
+                            @size-change="pageSizeChange"
+                            @current-change="currentPageChange"
+                        />
+                    </el-row>
+                </LsSticky>
                 <div class="tip mt-20">
                     <div class="tip-wrapper">
                         <h2 class="title">说明</h2>
@@ -109,59 +129,52 @@
                 </div>
             </div>
         </el-card>
-		<!-- 编辑 -->
-		<el-dialog title="编辑库存" custom-class="dialog-form" :visible.sync="dialogForm.isVisible" width="445px">
-		    <el-form
-		        ref="myForm"
-		        :model="dialogForm.formData"
-		        :rules="dialogForm.formRule"
-		        label-width="95px"
-		        label-position="right"
-		        size="small"
-		    >
-		        <el-row>
-		            <el-col>
-		                <el-form-item label="编辑库存" prop="stocks">
-		                    <el-input v-model="dialogForm.formData.stocks" placeholder="请输入库存" />
-		                </el-form-item>
-		            </el-col>
-		        </el-row>
-		    </el-form>
-		    <div slot="footer" class="dialog-footer">
-		        <el-button size="small" @click.stop="dialogForm.isVisible = false">取 消</el-button>
-		        <el-button size="small" type="primary" @click.stop="batchEdit('myForm')">保 存</el-button>
-		    </div>
-		</el-dialog>
-		
-		<el-dialog title="库存历史" :visible.sync="dialogVisible" custom-class="dialog-form-small">
-		    <el-row class="mb-20">
-		        <el-table :data="tableData" class="w-100 dialog-form-table mt-15" header-row-class-name="headerRow" size='small'>
-		            <el-table-column type="index" label="序号" width="48" />
-		            <el-table-column prop="cnProperties" label="增加库存">
-		                <template slot-scope="scope">
-		                    {{ scope.row.afterStock - scope.row.beforeStock > 0 ? '+' : '' }} {{ scope.row.afterStock - scope.row.beforeStock }}
-		                </template>
-		            </el-table-column>
-		            <el-table-column prop="updateTime" label="编辑时间" width="140"/>
-		        </el-table>
-		    </el-row>
-		    <el-row type="flex" justify="end" align="middle" class="mt-10">
-		        <el-pagination
-		            small
-		            layout="prev, pager, next"
-		            :current-page="dialogPage.curPage"
-		            :page-size="5"
-		            :total="dialogTotal"
-		            @size-change="dialogPageSizeChange"
-		            @current-change="dialogPageChange"
-		        ></el-pagination>
-		    </el-row>
-		    <span slot="footer" class="dialog-footer">
-		        <el-button size="small" type="primary" @click="dialogVisible = false">确 定</el-button>
-		    </span>
-		</el-dialog>
-		<dialogStock ref="dialogStock" :product-id="currentId" type="sku" />
-		<dialogPreview ref="dialogPreview" />
+        <!-- 编辑 -->
+        <el-dialog title="编辑库存" custom-class="dialog-form" :visible.sync="dialogForm.isVisible" width="445px">
+            <el-form ref="myForm" :model="dialogForm.formData" :rules="dialogForm.formRule" label-width="95px" label-position="right" size="small">
+                <el-row>
+                    <el-col>
+                        <el-form-item label="编辑库存" prop="stocks">
+                            <el-input v-model="dialogForm.formData.stocks" placeholder="请输入库存" />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button size="small" @click.stop="dialogForm.isVisible = false">取 消</el-button>
+                <el-button size="small" type="primary" @click.stop="batchEdit('myForm')">保 存</el-button>
+            </div>
+        </el-dialog>
+
+        <el-dialog title="库存历史" :visible.sync="dialogVisible" custom-class="dialog-form-small">
+            <el-row class="mb-20">
+                <el-table :data="tableData" class="w-100 dialog-form-table mt-15" header-row-class-name="headerRow" size="small">
+                    <el-table-column type="index" label="序号" width="48" />
+                    <el-table-column prop="cnProperties" label="增加库存">
+                        <template slot-scope="scope">
+                            {{ scope.row.afterStock - scope.row.beforeStock > 0 ? '+' : '' }} {{ scope.row.afterStock - scope.row.beforeStock }}
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="updateTime" label="编辑时间" width="140" />
+                </el-table>
+            </el-row>
+            <el-row type="flex" justify="end" align="middle" class="mt-10">
+                <el-pagination
+                    small
+                    layout="prev, pager, next"
+                    :current-page="dialogPage.curPage"
+                    :page-size="5"
+                    :total="dialogTotal"
+                    @size-change="dialogPageSizeChange"
+                    @current-change="dialogPageChange"
+                ></el-pagination>
+            </el-row>
+            <span slot="footer" class="dialog-footer">
+                <el-button size="small" type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+        </el-dialog>
+        <dialogStock ref="dialogStock" :product-id="currentId" type="sku" />
+        <dialogPreview ref="dialogPreview" />
     </section>
 </template>
 <script>
@@ -206,16 +219,16 @@ export default {
             dialogTotal: 0,
             tableData: [],
             stocksIds: [],
-            player: null,
+            player: null
         }
     },
     watch: {},
     mounted() {},
     methods: {
-		//预览
-		 proPreview(id) {
-			this.$refs.dialogPreview.showDialog({id:id});
-		},
+        //预览
+        proPreview(id) {
+            this.$refs.dialogPreview.showDialog({ id: id })
+        },
         exportData(list) {
             inventoryManage.stocksExport({
                 name: this.searchFilters.name,

@@ -99,7 +99,7 @@ import { GoodsManage } from '@/api/ModuleGoods'
 
 export default {
     name: 'ArrivalNotice',
-    components: { },
+    components: {},
     mixins: [common],
     data() {
         return {

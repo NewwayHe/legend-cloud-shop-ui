@@ -277,7 +277,7 @@ export default {
                         : JSON.stringify({ x: moveLeftDistance, y: 5.0 }),
                     token: this.backToken
                 }
-                this.$store.dispatch('user/saveRepeatVerify',data); //存一份用于做登录二次校验
+                this.$store.dispatch('user/saveRepeatVerify', data) //存一份用于做登录二次校验
                 reqCheck(data).then((res) => {
                     if (res.code === 1) {
                         this.moveBlockBackgroundColor = '#5cb85c'

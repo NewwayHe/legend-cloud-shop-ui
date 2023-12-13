@@ -228,7 +228,7 @@ export default {
 
         //spu选择框改变
         spuItemChange(spuItem, value) {
-			// console.log(111,spuItem, value);
+            // console.log(111,spuItem, value);
             spuItem.checkAll = value
             this.changeCheckState(spuItem, value)
         },
@@ -280,7 +280,7 @@ export default {
         },
 
         checkboxChange(spuItem, skuItem, value) {
-			// console.log(111,spuItem,skuItem,value);
+            // console.log(111,spuItem,skuItem,value);
             if (!value) {
                 spuItem.checkAll = value
             }
@@ -313,7 +313,7 @@ export default {
             request
                 .get(this.goodUrl, { ...this.dialogSearchFilters, ...this.dialogPage, [this.activityType]: this.id })
                 .then((res) => {
-                    if (res.code&&res.data&&res.data.resultList) {
+                    if (res.code && res.data && res.data.resultList) {
                         this.templateList = this.initList(res.data.resultList)
                         this.dialogPage.total = res.data.total
                     }
@@ -340,7 +340,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .expandTable ::v-deep .el-table__expanded-cell {
-	padding-right: 0 !important;
+    padding-right: 0 !important;
 }
 ::v-deep .child_table.el-table::before {
     background-color: transparent;

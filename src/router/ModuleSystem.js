@@ -11,12 +11,12 @@ const ModuleSystem = [
             icon: 'huiyuan'
         },
         children: [
-			{
-			    path: 'baseSet',
-			    component: () => import('@/views/ModuleSystem/shopManage/baseSet.vue'), // Parent router-view
-			    name: 'baseSet',
-			    meta: { title: '店铺设置' }
-			},
+            {
+                path: 'baseSet',
+                component: () => import('@/views/ModuleSystem/shopManage/baseSet.vue'), // Parent router-view
+                name: 'baseSet',
+                meta: { title: '店铺设置' }
+            },
             {
                 path: 'orderSystem',
                 component: () => import('@/views/ModuleSystem/orderSystem/index'), // Parent router-view

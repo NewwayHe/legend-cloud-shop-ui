@@ -69,7 +69,7 @@ export const constantRoutes = [
                 meta: {
                     title: '首页',
                     icon: 'shouye',
-                    text:'首页'
+                    text: '首页'
                 }
             }
         ]
@@ -78,19 +78,19 @@ export const constantRoutes = [
         path: '/excelCenter',
         component: Layout,
         hidden: true,
-        children:[
-            { 
+        children: [
+            {
                 path: 'excelCenter',
                 component: () => import('@/views/excelCenter'),
                 hidden: true,
-                name:'excelCenter',
+                name: 'excelCenter',
                 meta: {
-                    title: '文件导出中心',
+                    title: '文件导出中心'
                     // icon: 'shouye'
                 }
             }
         ]
-    },
+    }
 
     /*
      * 注意事项:如果这里有一个需要非常注意的地方就是 404 页面一定要最后加载，如果放在 constantRoutes 一同声明了 404 ，后面的所有页面都会被拦截到404
@@ -115,7 +115,7 @@ export const asyncRoutes = [
     ...ModuleUser, // 用户管理
     ...ModuleOperate, // 运营模块
     ...ModulePerson, // 个人信息
-    ...ModuleFinance, // 账单管理
+    ...ModuleFinance // 账单管理
     // {
     //     path: '*',
     //     redirect: '/404',

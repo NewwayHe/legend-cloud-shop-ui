@@ -73,10 +73,7 @@
                             <template slot-scope="scope">
                                 <el-form :ref="'tablePicForm' + scope.$index" inline-message :model="scope.row" :rules="rules" size="small">
                                     <el-form-item prop="pic">
-                                        <imgCenter
-                                            v-model="scope.row.pic"
-                                            :uploadStyle="{ width: '80px' }"
-                                        ></imgCenter>
+                                        <imgCenter v-model="scope.row.pic" :upload-style="{ width: '80px' }"></imgCenter>
                                     </el-form-item>
                                 </el-form>
                             </template>
@@ -88,13 +85,11 @@
                         </el-table-column>
                     </el-table>
                 </el-form-item>
-             </el-form>
-			<el-row type="flex" justify="center" class="py-10">
-				<el-button size="small" @click="onCancel">取消</el-button>
-				<ls-button size="small" type="primary" @click="onSubmit">
-					保存
-				</ls-button>
-			</el-row>
+            </el-form>
+            <el-row type="flex" justify="center" class="py-10">
+                <el-button size="small" @click="onCancel">取消</el-button>
+                <ls-button size="small" type="primary" @click="onSubmit">保存</ls-button>
+            </el-row>
         </el-card>
 
         <dialog-group

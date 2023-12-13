@@ -4,19 +4,27 @@
 <template>
     <section class="">
         <div class="table">
-            <el-table ref="multipleTable" v-loading="tableListLoading" row-key="id" :data="tableList" tooltip-effect="dark" header-row-class-name="headerRow" class="w-100">
+            <el-table
+                ref="multipleTable"
+                v-loading="tableListLoading"
+                row-key="id"
+                :data="tableList"
+                tooltip-effect="dark"
+                header-row-class-name="headerRow"
+                class="w-100"
+            >
                 <template slot="empty">
                     <empty empty-type="pro" text="暂无活动信息" />
                 </template>
-                <el-table-column label="序号" type="index" width="48"  />
-                <el-table-column prop="couponCode" show-overflow-tooltip label="券号" ></el-table-column>
+                <el-table-column label="序号" type="index" width="48" />
+                <el-table-column prop="couponCode" show-overflow-tooltip label="券号"></el-table-column>
                 <el-table-column prop="mobile" label="用户手机号码" />
                 <el-table-column prop="getTime" label="领取时间" width="140">
                     <template slot-scope="scope">
                         {{ scope.row.getTime || '-' }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="useTime" label="使用时间"  width="140">
+                <el-table-column prop="useTime" label="使用时间" width="140">
                     <template slot-scope="scope">
                         {{ scope.row.useTime || '-' }}
                     </template>
@@ -31,7 +39,7 @@
                         {{ scope.row.status | getLabelText(couponStatus) }}
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" align="left" fixed="right" >
+                <el-table-column label="操作" align="left" fixed="right">
                     <template slot-scope="scope">
                         <span v-if="scope.row.status == 1" class="table__action flex-center">
                             <el-link :underline="false" type="primary" @click="forceInvalid(scope.row)">强制失效</el-link>

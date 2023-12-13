@@ -45,7 +45,6 @@ export const filterAsyncRouter = (routers, isRewrite = false) => {
 
             router.meta.title = router.name
 
-
             // router.name = router.path
             if (router.path.startsWith('/')) {
                 router.name = router.path.slice(1)
@@ -183,7 +182,6 @@ const state = {
     routes: [],
     addRoutes: [],
     accessedRoutes: []
-
 }
 
 const mutations = {

@@ -39,10 +39,10 @@
                         <span>{{ params.mobile }}</span>
                     </el-form-item>
                     <div class="d-flex a-center">
-                        <el-form-item v-if="type == 1" label="短信验证码：" prop="code" class="flex-1" style="margin:0">
+                        <el-form-item v-if="type == 1" label="短信验证码：" prop="code" class="flex-1" style="margin: 0">
                             <el-input ref="password" v-model="params.code" name="password" tabindex="2" auto-complete="on" />
                         </el-form-item>
-                        <el-form-item v-if="type == 2" label="短信验证码：" prop="code" class="flex-1" style="margin:0">
+                        <el-form-item v-if="type == 2" label="短信验证码：" prop="code" class="flex-1" style="margin: 0">
                             <el-input ref="password" v-model="phoneNum.code" name="password" tabindex="2" auto-complete="on" />
                         </el-form-item>
                         <codeVerify
@@ -144,11 +144,11 @@
 
                     <el-row v-if="type == 1" class="text-center mt-30">
                         <el-button plain @click="$router.push({ name: 'personal' })">返回</el-button>
-                        <ls-button type="primary" :asyncFunction="()=>nextStep('formStep2')">完成</ls-button>
+                        <ls-button type="primary" :async-function="() => nextStep('formStep2')">完成</ls-button>
                     </el-row>
                     <el-row v-if="type == 2" class="text-center mt-30">
                         <el-button plain @click="$router.push({ name: 'personal' })">返回</el-button>
-                        <ls-button type="primary" :asyncFunction="()=>nextStep2('formStep2')">完成</ls-button>
+                        <ls-button type="primary" :async-function="() => nextStep2('formStep2')">完成</ls-button>
                     </el-row>
                 </el-form>
             </template>
@@ -239,12 +239,10 @@ export default {
                 mobile: '',
                 password: '', //密码
                 userType: 'SHOP',
-				oldCode:'',//
+                oldCode: '' //
             },
             rules: {
-                password: [
-                    { required: true, trigger: 'blur', validator: validatePassword }
-                ],
+                password: [{ required: true, trigger: 'blur', validator: validatePassword }],
                 shopName: [{ required: true, message: `请输入店铺名称`, trigger: 'blur' }],
                 codeType: [{ validator: validateCode, required: true }]
             },
@@ -313,7 +311,7 @@ export default {
                         editPersonInfo
                             .resetPassword(this.params)
                             .then((res) => {
-                                this.step=3
+                                this.step = 3
                                 if (res.code == 1) {
                                     // this.step++
                                     this.status = 1
@@ -334,48 +332,51 @@ export default {
         },
         //修改新手机号码
         nextStep2(formName) {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    //修改手机号码
-                    if (this.step == 0 && this.type == 2) {
-                        //修改手机号码验证码请求
-                        editPersonInfo.codeUpdate(this.phoneNum).then((res) => {
-                            if (res.code == 1) {
-                                this.step++
-								this.phoneNum.oldCode = res.data
-                            }
-                            this.phoneNum.code = ''
-                            this.phoneNum.mobile = ''
-                        }).finally(_=>{
-                            resolve()
-                        })
-                    } else if (this.step == 1 && this.type == 2) {
-                        //更改新手机号码
-                        editPersonInfo
-                            .phoneUpdate(this.phoneNum)
-                            .then((res) => {
-                                this.step=3
-                                if (res.code == 1) {
-                                    this.status = 1
-                                } else {
+                    if (valid) {
+                        //修改手机号码
+                        if (this.step == 0 && this.type == 2) {
+                            //修改手机号码验证码请求
+                            editPersonInfo
+                                .codeUpdate(this.phoneNum)
+                                .then((res) => {
+                                    if (res.code == 1) {
+                                        this.step++
+                                        this.phoneNum.oldCode = res.data
+                                    }
+                                    this.phoneNum.code = ''
+                                    this.phoneNum.mobile = ''
+                                })
+                                .finally((_) => {
+                                    resolve()
+                                })
+                        } else if (this.step == 1 && this.type == 2) {
+                            //更改新手机号码
+                            editPersonInfo
+                                .phoneUpdate(this.phoneNum)
+                                .then((res) => {
+                                    this.step = 3
+                                    if (res.code == 1) {
+                                        this.status = 1
+                                    } else {
+                                        this.status = -1
+                                    }
+                                })
+                                .catch((err) => {
+                                    this.step++
                                     this.status = -1
-                                }
-                            })
-                            .catch((err) => {
-                                this.step++
-                                this.status = -1
-                            }).finally(_=>{
-                                resolve()
-                            })
+                                })
+                                .finally((_) => {
+                                    resolve()
+                                })
+                        }
+                    } else {
+                        resolve()
+                        return false
                     }
-                } else {
-                    resolve()
-                    return false
-                }
+                })
             })
-            })
-            
         },
 
         stepBack(formName) {

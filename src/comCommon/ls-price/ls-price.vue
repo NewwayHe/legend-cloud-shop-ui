@@ -3,15 +3,15 @@
         :class="className"
         :style="{ 'font-size': optionstyle.ds + 'px', color: optionstyle.dc, 'font-weight': optionstyle.dw, 'font-family': 'arial' }"
     >
-        <span :class="{ 'font-weight': moneyIconWeight }" v-if="!noMoneyIcon">￥</span>
+        <span v-if="!noMoneyIcon" :class="{ 'font-weight': moneyIconWeight }">￥</span>
         <span :style="{ 'font-size': optionstyle.is + 'px', color: optionstyle.ic, 'font-weight': optionstyle.iw }">{{ priceTemp(price)[0] }}</span>
-        <span :style="{ 'font-weight': optionstyle.dw }" v-if="priceTemp(price)[1]">.{{ priceTemp(price)[1] }}</span>
+        <span v-if="priceTemp(price)[1]" :style="{ 'font-weight': optionstyle.dw }">.{{ priceTemp(price)[1] }}</span>
     </span>
 </template>
 
 <script>
 export default {
-    name: 'ls-price',
+    name: 'LsPrice',
     props: {
         // 价格
         price: {
@@ -49,23 +49,22 @@ export default {
         moneyIconWeight: {
             type: [Boolean, String],
             default: false
-        },
+        }
     },
     data() {
-        return {
-        }
+        return {}
     },
     computed: {
         optionstyle() {
             let options2 = {}
             if (this.options) {
                 options2 = {
-                    is: this.options.is||14, // integer-size,整数字体大小
-                    ic: this.options.ic?this.options.ic:'', // integer-color,整数字体颜色
-                    iw: this.options.iw||500, // integer-weight,整数字体字重
-                    ds: this.options.ds||12, // decimal-size,小数字体大小
-                    dc: this.options.dc?this.options.dc:'', // decimal-color,小数字体颜色
-                    dw: this.options.dw||500 // decimal-weight,小数字体字重
+                    is: this.options.is || 14, // integer-size,整数字体大小
+                    ic: this.options.ic ? this.options.ic : '', // integer-color,整数字体颜色
+                    iw: this.options.iw || 500, // integer-weight,整数字体字重
+                    ds: this.options.ds || 12, // decimal-size,小数字体大小
+                    dc: this.options.dc ? this.options.dc : '', // decimal-color,小数字体颜色
+                    dw: this.options.dw || 500 // decimal-weight,小数字体字重
                 }
             } else {
                 options2 = {
@@ -73,24 +72,26 @@ export default {
                     ic: '', // integer-color,整数字体颜色
                     iw: 500, // integer-weight,整数字体字重
                     ds: 12, // decimal-size,小数字体大小
-                    dc:'', // decimal-color,小数字体颜色
+                    dc: '', // decimal-color,小数字体颜色
                     dw: 500 // decimal-weight,小数字体字重
                 }
             }
             return options2
         },
-        
-        priceTemp() {//统一管理商品价格
-            return function(price) {
+
+        priceTemp() {
+            //统一管理商品价格
+            return function (price) {
                 let arr = []
-                if (price&&price.toString().indexOf("~")!=-1) {//判断money是否为1.00~2.00的模式
-                    arr = [price,'']
-                }else{
+                if (price && price.toString().indexOf('~') != -1) {
+                    //判断money是否为1.00~2.00的模式
+                    arr = [price, '']
+                } else {
                     arr = this.$utils.string.formatNumber(price ? price : 0)
                 }
-                return  arr
+                return arr
             }
-        },
+        }
     },
     created() {},
 

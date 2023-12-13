@@ -16,20 +16,12 @@
                     <el-table-column prop="brandName" label="品牌名称" />
                     <el-table-column prop="brandPic" label="品牌LOGO">
                         <template slot-scope="scope">
-                            <ls-image
-                                style="vertical-align: middle"
-                                :src="scope.row.brandPic"
-                                :options="{ w: '50', h: '50', br: '6' }"
-                            />
+                            <ls-image style="vertical-align: middle" :src="scope.row.brandPic" :options="{ w: '50', h: '50', br: '6' }" />
                         </template>
                     </el-table-column>
                     <el-table-column prop="bigImage" label="品牌大图">
                         <template slot-scope="scope">
-                            <ls-image
-                                style="vertical-align: middle"
-                                :src="scope.row.bigImage"
-                                :options="{ w: '50', h: '50', br: '6' }"
-                            />
+                            <ls-image style="vertical-align: middle" :src="scope.row.bigImage" :options="{ w: '50', h: '50', br: '6' }" />
                         </template>
                     </el-table-column>
                     <el-table-column prop="brief" label="品牌介绍" />
@@ -66,11 +58,7 @@
                     <el-table-column label="序号" type="index" width="100" />
                     <el-table-column prop="pic" label="商品主图">
                         <template slot-scope="scope">
-                            <ls-image
-                                style="vertical-align: middle"
-                                :src="scope.row.pic"
-                                :options="{ w: '50', h: '50', br: '6' }"
-                            />
+                            <ls-image style="vertical-align: middle" :src="scope.row.pic" :options="{ w: '50', h: '50', br: '6' }" />
                         </template>
                     </el-table-column>
                     <el-table-column prop="name" label="商品名称" show-overflow-tooltip>

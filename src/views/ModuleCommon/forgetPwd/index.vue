@@ -77,7 +77,7 @@ import Verifition from '@/components/Verifition/Verify'
 import codeVerify from '@/components/codeVerify'
 import { loginPage } from '@/api/ModuleCommon'
 export default {
-    name: 'forgetPwd',
+    name: 'ForgetPwd',
     components: {
         Verifition,
         codeVerify
@@ -244,11 +244,11 @@ $light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-    .login-container{
-		::v-deep .el-input input {
-		    color: $cursor;
-		}
-	} 
+    .login-container {
+        ::v-deep .el-input input {
+            color: $cursor;
+        }
+    }
 }
 .login__Active {
     position: relative;

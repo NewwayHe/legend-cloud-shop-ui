@@ -13,12 +13,12 @@
         </div>
         <el-form ref="myForm" class="mt-30" :model="formData" :rules="formRule" label-width="80px" size="small">
             <el-form-item label="权重：" prop="seq">
-				<lsInput class="w-200p" v-model="formData.seq" :precision="0" :min="1" :max="100000"/>
+                <lsInput v-model="formData.seq" class="w-200p" :precision="0" :min="1" :max="100000" />
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button size="small" @click.stop="cancel">取 消</el-button>
-            <ls-button type="primary" size="small" :asyncFunction="sumbit">确 定</ls-button>
+            <ls-button type="primary" size="small" :async-function="sumbit">确 定</ls-button>
         </div>
     </el-dialog>
 </template>
@@ -39,7 +39,7 @@ export default {
         id: {
             type: [String, Number],
             default: ''
-        },
+        }
     },
     data() {
         var weightValidate = (rule, value, callback) => {
@@ -85,7 +85,7 @@ export default {
         },
         // 提交
         sumbit() {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 this.$refs['myForm'].validate((valid) => {
                     if (valid) {
                         this.$confirm('确定覆盖原有数据？', '消息确认', {
@@ -106,21 +106,19 @@ export default {
                                     .catch((err) => {
                                         this.$message.error(err.msg)
                                     })
-                                    .finally(_=>{
+                                    .finally((_) => {
                                         resolve()
                                     })
                             })
                             .catch(() => {})
-                            .finally(_=>{
+                            .finally((_) => {
                                 resolve()
                             })
-                            
-                    }else{
+                    } else {
                         resolve()
                     }
                 })
             })
-            
         },
         // 取消
         cancel() {

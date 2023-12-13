@@ -1,5 +1,5 @@
 <template>
-    <el-cascader 
+    <el-cascader
         ref="cascaderAddr"
         v-model="cascaderValue"
         :props="props"
@@ -46,7 +46,7 @@ export default {
                     resolve(nodes)
                 }
             },
-            refreshKey: 0,
+            refreshKey: 0
         }
     },
     watch: {
@@ -58,7 +58,7 @@ export default {
                 })
             },
             immediate: true,
-            deep: true,
+            deep: true
         },
         cascaderValue(newValue) {
             this.$emit('input', newValue)
@@ -105,7 +105,7 @@ export default {
         // 确定一个节点item
         changeCity() {
             let nodes = this.$refs['cascaderAddr'].getCheckedNodes()
-            this.cascaderLabel = (nodes && !!nodes[0]) ? nodes[0].pathLabels : [];
+            this.cascaderLabel = nodes && !!nodes[0] ? nodes[0].pathLabels : []
             this.$emit('getAddrLabel', this.cascaderLabel)
         }
     }

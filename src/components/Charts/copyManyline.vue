@@ -41,7 +41,7 @@ export default {
     },
     data() {
         return {
-            chart: null,
+            chart: null
         }
     },
     watch: {
@@ -81,7 +81,7 @@ export default {
                 // ],
                 tooltip: {
                     trigger: 'axis',
-                     show:false,
+                    show: false
                 },
                 grid: {
                     left: 0,
@@ -92,7 +92,7 @@ export default {
                 },
                 xAxis: {
                     type: 'category',
-                    show:false,
+                    show: false,
                     boundaryGap: true,
                     axisLine: {
                         lineStyle: {
@@ -103,7 +103,7 @@ export default {
                 },
                 yAxis: {
                     type: 'value',
-                    show:false,
+                    show: false,
                     // 坐标轴轴线配置
                     axisLine: {
                         show: false,
@@ -151,8 +151,7 @@ export default {
                         handleSize: '50%',
                         handleStyle: {
                             color: '#fff'
-                        },
-
+                        }
                     }
                 ],
                 series: [

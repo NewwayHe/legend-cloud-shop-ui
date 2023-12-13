@@ -9,8 +9,8 @@
         </template>
         <div class="right-menu flex-center text-fff">
             <div class="m-10">V1.0.0</div>
-            <div class="w-50p h-100 flex-center" @click.stop="$router.push({name:'excelCenter'})">
-                <i class="iconfont icon-backtop1 font-20 cursor-pointer" style="transform:rotate(180deg)"></i>
+            <div class="w-50p h-100 flex-center" @click.stop="$router.push({ name: 'excelCenter' })">
+                <i class="iconfont icon-backtop1 font-20 cursor-pointer" style="transform: rotate(180deg)"></i>
             </div>
             <div class="m-10 font-14 flex-center">
                 <!-- <router-link  to="/userHelpCenter">帮助中心</router-link> -->
@@ -20,17 +20,17 @@
             </div>
             <div class="m-10 font-14">
                 <router-link :to="isHiddenLogo ? '/userMessage' : '/messageManage/message'">
-                <div class="position-relative">
-                    <img class="v-bottom" style="width:20px;height:20px" src="@/assets/icons/index/message.png" alt="">
-                    <span v-if="messegeNum" class="position-absolute _message font" style="right: -8px; top: -12px;">
-                        {{ messegeNum > 99 ? '99+' : messegeNum }}
-                    </span>
-                </div>
+                    <div class="position-relative">
+                        <img class="v-bottom" style="width: 20px; height: 20px" src="@/assets/icons/index/message.png" alt="" />
+                        <span v-if="messegeNum" class="position-absolute _message font" style="right: -8px; top: -12px">
+                            {{ messegeNum > 99 ? '99+' : messegeNum }}
+                        </span>
+                    </div>
                 </router-link>
             </div>
-            <el-dropdown class="avatar-container ml-10" trigger="click" >
+            <el-dropdown class="avatar-container ml-10" trigger="click">
                 <div class="avatar-wrapper flex-center">
-                    <ls-image :src="userInfo.avatar" :key="userInfo.avatar" :isPreview="false" :options="{ w: '40', h: '40', br: '20' }"></ls-image>
+                    <ls-image :key="userInfo.avatar" :src="userInfo.avatar" :is-preview="false" :options="{ w: '40', h: '40', br: '20' }"></ls-image>
                 </div>
                 <el-dropdown-menu slot="dropdown" class="user-dropdown">
                     <router-link to="/ModulePerson/personal">
@@ -39,7 +39,7 @@
                     <el-dropdown-item divided @click.native="logout">
                         <span style="display: block">退出登录</span>
                     </el-dropdown-item>
-                    <el-dropdown-item divided @click.native="startGuide" v-if="userInfo.userType=='SHOP'">
+                    <el-dropdown-item v-if="userInfo.userType == 'SHOP'" divided @click.native="startGuide">
                         <span style="display: block">新手指引</span>
                     </el-dropdown-item>
                 </el-dropdown-menu>
@@ -59,7 +59,7 @@ export default {
     components: {
         Breadcrumb,
         Hamburger,
-        Logo,
+        Logo
     },
     props: {
         isHiddenLogo: {
@@ -67,34 +67,34 @@ export default {
             default: false
         }
     },
-    data(){
+    data() {
         return {
             systemConfigTemp: null,
-            systemConfigFinally: false,
+            systemConfigFinally: false
         }
     },
     computed: {
-        ...mapGetters(['sidebar', 'userInfo', 'messegeNum']),
+        ...mapGetters(['sidebar', 'userInfo', 'messegeNum'])
     },
     created() {
         let systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
-		// 如果main.js里面执行了方法获取到系统设置
-		if (systemConfig&&systemConfig.id) {
-			this.systemConfigTemp = systemConfig
-			this.systemConfigFinally = true
-		// 如果VUEX里没有设置systemConfig(系统设置)
-		}else{
-			this.$store
-			    .dispatch('user/getSystemConfig')
-			    .then((res) => {
-					this.systemConfigTemp = res
-					// console.log('systemConfig:',this.systemConfigTemp);
-			    })
-			    .catch(() => {
-			    }).finally(()=>{
-					this.systemConfigFinally = true
-				})
-		}
+        // 如果main.js里面执行了方法获取到系统设置
+        if (systemConfig && systemConfig.id) {
+            this.systemConfigTemp = systemConfig
+            this.systemConfigFinally = true
+            // 如果VUEX里没有设置systemConfig(系统设置)
+        } else {
+            this.$store
+                .dispatch('user/getSystemConfig')
+                .then((res) => {
+                    this.systemConfigTemp = res
+                    // console.log('systemConfig:',this.systemConfigTemp);
+                })
+                .catch(() => {})
+                .finally(() => {
+                    this.systemConfigFinally = true
+                })
+        }
     },
     methods: {
         toggleSideBar() {
@@ -103,12 +103,13 @@ export default {
         async logout() {
             await this.$store.dispatch('user/logout')
             this.$router.push(`/login`)
-			this.$store.dispatch('tagsView/delAllVisitedViews')//不把标签视图清空的话，切换另一个没权限的角色，他仍然能通过标签进入他没权限的页面
+            this.$store.dispatch('tagsView/delAllVisitedViews') //不把标签视图清空的话，切换另一个没权限的角色，他仍然能通过标签进入他没权限的页面
         },
-        startGuide(){ //开启新手指引
-            window.localStorage.setItem('guide',true)
+        startGuide() {
+            //开启新手指引
+            window.localStorage.setItem('guide', true)
             this.$store.dispatch('app/setGuide', true)
-        },
+        }
     }
 }
 </script>
@@ -137,11 +138,11 @@ export default {
     .breadcrumb-container {
         float: left;
     }
-    ._message{
+    ._message {
         display: block;
         padding: 2px 4px;
         line-height: 1.2;
-        background:#F56C6C;
+        background: #f56c6c;
         border-radius: 100px;
         text-align: center;
     }

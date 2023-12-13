@@ -5,7 +5,7 @@
                 <span>{{ btnText }}</span>
                 <i class="el-icon-upload el-icon--right"></i>
             </el-button>
-            <div v-if="isBtnShow && !button" class="lsUpload__box mr-5" :class="disabled?'':'cursor-pointer'" :style="uploadStyle" @click="show">
+            <div v-if="isBtnShow && !button" class="lsUpload__box mr-5" :class="disabled ? '' : 'cursor-pointer'" :style="uploadStyle" @click="show">
                 <div :style="uploadStyle" class="position-relative">
                     <i class="el-icon-plus uploader-icon center-xy" />
                 </div>
@@ -14,26 +14,28 @@
             <div
                 v-if="!mult && tempUrl.length && isShowSelected"
                 class="lsUpload__imgWarp flex-center"
-                :class="[mult ? '' : 'mx-0',disabled?'':'cursor-pointer']"
-                :style="[uploadStyle,{margin:0}]"
+                :class="[mult ? '' : 'mx-0', disabled ? '' : 'cursor-pointer']"
+                :style="[uploadStyle, { margin: 0 }]"
                 @click.stop="handleClickImg"
             >
                 <ls-image
                     v-if="uploadType == 'PHOTO'"
                     :src="tempUrl"
-                    :isPreview="isPreview"
-                    :previewSrcList="[tempUrl]"
+                    :is-preview="isPreview"
+                    :preview-src-list="[tempUrl]"
                     style="border-radius: 6px"
                     :class="['w-100', 'h-100', { 'cursor-pointer': !disabled }]"
                 />
-                <video v-else :src="tempUrl" 
-                    :class="['w-100', 'h-100', { 'cursor-pointer': !disabled }]" 
-                    style="border-radius: 6px; background-color: #000;"
+                <video
+                    v-else
+                    :src="tempUrl"
+                    :class="['w-100', 'h-100', { 'cursor-pointer': !disabled }]"
+                    style="border-radius: 6px; background-color: #000"
                 />
                 <i
-                    v-if="!disabled&&showClose"
+                    v-if="!disabled && showClose"
                     class="lsUpload__imgClose el-icon-error bg-white rounded-circle"
-					:class="disabled?'':'cursor-pointer'"
+                    :class="disabled ? '' : 'cursor-pointer'"
                     style="display: none"
                     @click.stop="tempUrl = ''"
                 />
@@ -56,16 +58,16 @@
                         <div v-for="(item, index) in tempUrl" :key="index + 1" class="lsUpload__imgWarp flex-center" :style="uploadStyle">
                             <ls-image
                                 :src="item"
-                                :isPreview="isPreview"
-                                :previewSrcList="tempUrl"
+                                :is-preview="isPreview"
+                                :preview-src-list="tempUrl"
                                 style="border-radius: 6px"
                                 class="w-100 h-100"
-								:class="disabled?'':'cursor-pointer'"
+                                :class="disabled ? '' : 'cursor-pointer'"
                             />
                             <i
-                                v-if="!disabled&&showClose"
+                                v-if="!disabled && showClose"
                                 class="lsUpload__imgClose el-icon-error bg-white rounded-circle"
-								:class="disabled?'':'cursor-pointer'"
+                                :class="disabled ? '' : 'cursor-pointer'"
                                 style="display: none"
                                 @click="delImg(index)"
                             />
@@ -76,24 +78,24 @@
             <dialog-store
                 ref="dialogStore"
                 :multiple="mult"
-                :tempUrl.sync="tempUrl"
-                :limit="limit - (typeof tempUrl == 'object'?tempUrl.length:0)"
+                :temp-url.sync="tempUrl"
+                :limit="limit - (typeof tempUrl == 'object' ? tempUrl.length : 0)"
                 :upload-type="uploadType"
                 :in-rich-text="inRichText"
-                :isEcho="isEcho"
+                :is-echo="isEcho"
                 @success="successHandle"
                 @transfers3="transfers4"
             />
         </div>
 
         <!-- 视频放大预览 -->
-        <div v-if="isPreviewVideo" class="el-image-viewer__wrapper" style="z-index: 3333;">
-            <div class="el-image-viewer__mask" style="opacity: .2;"></div>
+        <div v-if="isPreviewVideo" class="el-image-viewer__wrapper" style="z-index: 3333">
+            <div class="el-image-viewer__mask" style="opacity: 0.2"></div>
             <span class="el-image-viewer__btn el-image-viewer__close" @click.stop="isPreviewVideo = false">
                 <i class="el-icon-circle-close"></i>
             </span>
             <div class="el-image-viewer__canvas">
-                <video :src="tempUrl" controls autoplay style="width: 80vw; height: 80vh;"></video>
+                <video :src="tempUrl" controls autoplay style="width: 80vw; height: 80vh"></video>
             </div>
         </div>
     </div>
@@ -154,35 +156,36 @@ export default {
             type: Boolean,
             default: true
         },
-		showClose: {
-		    //上存后的图片是否显示删除按钮(默认：显示)
-		    type: Boolean,
-		    default: true
-		},
-        isPreview: {
-			//点击图片是否能够预览图片，如果设置了:isPreview="false"，点击已经上存图片时，是打开选择框重新选图,mult为false时此项为false:点击图片无法预览图片而是打开图片中心重新选择图片，且右上角删除图标消失
+        showClose: {
+            //上存后的图片是否显示删除按钮(默认：显示)
             type: Boolean,
             default: true
         },
-        isShowSelected:{
-            //选择图片后是否展示该图片，如果设置了:isShowSelected="false"，选择图片后不会展示图片，只会通过this.$emit('input')传递给父组件。适用于选择图片后需要将图片在其他地方展示或不展示的情况（例Tinymce富文本插件）
-            type:Boolean,
-            default:true
-        },
-        inRichText: {   //如果是在富文本里 则可以选择图片和视频 否则其余页面 应该只选择单一类型
+        isPreview: {
+            //点击图片是否能够预览图片，如果设置了:isPreview="false"，点击已经上存图片时，是打开选择框重新选图,mult为false时此项为false:点击图片无法预览图片而是打开图片中心重新选择图片，且右上角删除图标消失
             type: Boolean,
-            default: false,
+            default: true
+        },
+        isShowSelected: {
+            //选择图片后是否展示该图片，如果设置了:isShowSelected="false"，选择图片后不会展示图片，只会通过this.$emit('input')传递给父组件。适用于选择图片后需要将图片在其他地方展示或不展示的情况（例Tinymce富文本插件）
+            type: Boolean,
+            default: true
+        },
+        inRichText: {
+            //如果是在富文本里 则可以选择图片和视频 否则其余页面 应该只选择单一类型
+            type: Boolean,
+            default: false
         },
         // true：为了防止客户上传完图片后在列表里找不到刚才上传的图片，上传完图片并点击【上传】后，立即选中上传的数据并且关闭弹窗(这时不用点击【确定】)[例子：商品发布上传图片]
         isEcho: {
             type: Boolean,
-            default: true,
+            default: true
         }
     },
     data() {
         return {
-            tempUrl: (typeof this.value == 'object' || this.mult) ? [] : '',
-            isPreviewVideo: false,  //视频预览
+            tempUrl: typeof this.value == 'object' || this.mult ? [] : '',
+            isPreviewVideo: false //视频预览
         }
     },
     computed: {
@@ -203,13 +206,14 @@ export default {
             if (this.mult && newVal && newVal.length > this.limit) {
                 newVal.length = this.limit
             }
-            if(this.uploadType == 'VIDEO' && !this.mult) {    //如果是上传视频
+            if (this.uploadType == 'VIDEO' && !this.mult) {
+                //如果是上传视频
                 if (newVal && newVal.indexOf('http') == -1 && newVal.indexOf('https') == -1 && newVal.indexOf('/assets/') == -1) {
                     this.$emit('input', this.$photoServer + newVal)
-                }else {
+                } else {
                     this.$emit('input', newVal)
                 }
-            }else {
+            } else {
                 this.$emit('input', newVal)
             }
         },
@@ -218,9 +222,8 @@ export default {
             handler(newVal) {
                 if (!this.$utils.test.isEmpty(newVal)) {
                     this.tempUrl = newVal
-                }
-                else{
-                    if(!this.mult){
+                } else {
+                    if (!this.mult) {
                         this.tempUrl = ''
                     }
                 }
@@ -261,15 +264,16 @@ export default {
                     this.$emit('videoItem', selectItem)
                 }
             } else {
-                this.tempUrl = this.tempUrl.concat(imgList)   
+                this.tempUrl = this.tempUrl.concat(imgList)
                 if (this.tempUrl.length > this.limit) {
                     this.tempUrl.length = this.limit
                     this.$message.error('您最多可以上传' + this.limit + '张图片')
                 }
             }
             this.$emit('selectItem', selectItem)
-            if(!this.isShowSelected) {  //如果不展示回显图片 则将tempUrl做清除[富文本]
-                this.$nextTick(()=>{
+            if (!this.isShowSelected) {
+                //如果不展示回显图片 则将tempUrl做清除[富文本]
+                this.$nextTick(() => {
                     this.tempUrl = []
                 })
             }
@@ -291,9 +295,9 @@ export default {
         handleClickImg() {
             if (!this.isPreview) {
                 this.show()
-            }else {
-                if(this.uploadType == 'VIDEO') {
-                    this.isPreviewVideo = true;
+            } else {
+                if (this.uploadType == 'VIDEO') {
+                    this.isPreviewVideo = true
                 }
             }
         }
@@ -344,47 +348,47 @@ export default {
         height: 100px;
         margin: 0 6px;
         position: relative;
-		background-color: #f8f8f8;// 防止传透明的PNG图片时看不到该图片
-		&:hover {
-		    .lsUpload__imgClose {
-		        display: block !important;
-		    }
-		}
+        background-color: #f8f8f8; // 防止传透明的PNG图片时看不到该图片
+        &:hover {
+            .lsUpload__imgClose {
+                display: block !important;
+            }
+        }
     }
     &__imgClose {
         position: absolute;
         top: 0;
-		right: 0px;
+        right: 0px;
         transform: translate(50%, -50%);
-		color: #999999;
+        color: #999999;
         font-size: 21px;
-		display: none;
-		&:hover {
-			color: #666666;
-		}
+        display: none;
+        &:hover {
+            color: #666666;
+        }
     }
-	//上传外框
-	.lsUpload__box {
-	    border: 1px dashed #d9d9d9;
-	    border-radius: 6px;
-	    position: relative;
-	    overflow: hidden;
-	    width: 100px;
-	    display: flex;
-	    align-items: center;
-	    justify-content: center;
-		background-color: #f8f8f8;// 防止传透明的PNG图片时看不到该图片
-	    &:hover {
-	        border-color: #409eff;
-	    }
-	    &::before {
-	        content: '';
-	        padding-top: 100%;
-	        box-sizing: border-box;
-	        display: block;
-	        width: 0;
-	    }
-	}
+    //上传外框
+    .lsUpload__box {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        position: relative;
+        overflow: hidden;
+        width: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f8f8; // 防止传透明的PNG图片时看不到该图片
+        &:hover {
+            border-color: #409eff;
+        }
+        &::before {
+            content: '';
+            padding-top: 100%;
+            box-sizing: border-box;
+            display: block;
+            width: 0;
+        }
+    }
     //上传组件内图片
     .uploader-img {
         width: 100%;

@@ -1,5 +1,5 @@
 <template>
-    <div class="dialog-form ">
+    <div class="dialog-form">
         <el-dialog title="增值税专票" width="500px" :visible.sync="isVisible">
             <el-form ref="ruleForm" :model="ruleForm" label-width="100px">
                 <el-form-item label="注册地址：">

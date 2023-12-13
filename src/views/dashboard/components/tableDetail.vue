@@ -21,13 +21,13 @@
             </el-col>
             <!-- 左侧信息 -->
             <!-- 右侧信息 -->
-            <el-col class="table ml-15" style="width: 420px;">
+            <el-col class="table ml-15" style="width: 420px">
                 <el-card shadow>
                     <div slot="header">
                         <span>库存预警</span>
                         <span class="ml-10 font-12 font-weight-400 status-veto" style="line-height: 17px">商品库存过低（{{ tableTotal || 0 }}）</span>
                     </div>
-                    <el-table ref="multipleTable" :data="tableList" tooltip-effect="dark"  header-row-class-name="headerRow">
+                    <el-table ref="multipleTable" :data="tableList" tooltip-effect="dark" header-row-class-name="headerRow">
                         <el-table-column label="序号" type="index" width="48" />
                         <el-table-column prop="productName" label="商品信息">
                             <template slot-scope="scope">
@@ -37,14 +37,14 @@
                                         <div class="d-flex flex-column">
                                             <el-popover placement="top-start" width="300" trigger="hover" :content="scope.row.name">
                                                 <div slot="reference">
-                                                    <span class="text-333 font-12 line-clamp1" style="line-height: 18px;">
+                                                    <span class="text-333 font-12 line-clamp1" style="line-height: 18px">
                                                         {{ scope.row.name }}
                                                     </span>
                                                 </div>
                                             </el-popover>
                                             <el-popover placement="top-start" width="300" trigger="hover" :content="scope.row.cnProperties">
                                                 <div slot="reference">
-                                                    <span class="text-999 line-clamp1 font-12" style="line-height: 18px;">
+                                                    <span class="text-999 line-clamp1 font-12" style="line-height: 18px">
                                                         {{ scope.row.cnProperties }}
                                                     </span>
                                                 </div>
@@ -129,8 +129,7 @@ export default {
         toInventoryManageList() {
             this.$router.push('ModuleGoods/InventoryManage/inventoryManageList')
         },
-        update(data) {
-        }
+        update(data) {}
     }
 }
 </script>

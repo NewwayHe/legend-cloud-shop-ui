@@ -5,15 +5,27 @@
     <section class="formWarp">
         <el-card shadow>
             <el-form ref="form" :model="form" :rules="rules" label-width="132px" size="small" @submit.native.prevent>
-				<el-form-item label="规格标题：" prop="propName">
-					<el-input v-model.trim="form.propName" maxlength="20" show-word-limit class="w-450p" @input="form.propName = form.propName.replace(/\:/g, '：').replace(/\;/g, '；')" placeholder="请输入"/>
-					<el-tooltip class="item" effect="dark" content="注：新增规格标题时，‘:’和‘;’是系统特殊字符，使用的话会强行转为中文符号。" placement="top">
-						<i class="el-icon-question ml-10 text-000 font-16 opacity-3" style="font-size: 16px;"></i>
-					</el-tooltip>
-					<span class="ml-10 text-999">规格标题会显示在用户端的商品详情页中，最多20字</span>
-				</el-form-item>
+                <el-form-item label="规格标题：" prop="propName">
+                    <el-input
+                        v-model.trim="form.propName"
+                        maxlength="20"
+                        show-word-limit
+                        class="w-450p"
+                        placeholder="请输入"
+                        @input="form.propName = form.propName.replace(/\:/g, '：').replace(/\;/g, '；')"
+                    />
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        content="注：新增规格标题时，‘:’和‘;’是系统特殊字符，使用的话会强行转为中文符号。"
+                        placement="top"
+                    >
+                        <i class="el-icon-question ml-10 text-000 font-16 opacity-3" style="font-size: 16px"></i>
+                    </el-tooltip>
+                    <span class="ml-10 text-999">规格标题会显示在用户端的商品详情页中，最多20字</span>
+                </el-form-item>
                 <el-form-item label="规格副标题：" prop="memo">
-                    <el-input v-model.trim="form.memo" class="w-450p" maxlength="50" show-word-limit placeholder="请输入"/>
+                    <el-input v-model.trim="form.memo" class="w-450p" maxlength="50" show-word-limit placeholder="请输入" />
                     <span class="ml-10 text-999">
                         类似于备注的功能，不显示在用户端，仅显示在后台中，建议名称为 "将要绑定的商品类目全路径名称 + 标题"
                     </span>
@@ -21,7 +33,7 @@
                 <el-form-item label="规格值：" prop="groupList">
                     <el-button type="primary" @click="addSpe">添加规格值</el-button>
                     <span class="ml-10 text-999">一个规格可添加多个规格值（拖动可以改变顺序）</span>
-					<imgPreview class="ml-10" :src="require('@/assets/images/exampleImgs/speOperate.png')" />
+                    <imgPreview class="ml-10" :src="require('@/assets/images/exampleImgs/speOperate.png')" />
                 </el-form-item>
                 <el-form-item class="btn_lastItem">
                     <el-table
@@ -32,24 +44,35 @@
                         :data="form.groupList"
                         header-row-class-name="headerRow"
                     >
-						<el-table-column prop="name" align="center" width="300">
-							<template slot="header">
-								<el-row type="flex" align="middle" justify="center">
-									规格值
-									<el-tooltip class="item" effect="dark" content="注：新增规则值时，‘:’和‘;’是系统特殊字符，使用的话会强行转为中文符号。" placement="top">
-										<i class="el-icon-question ml-5 mb-3 text-000 font-16 opacity-3" style="font-size: 16px;"></i>
-									</el-tooltip>
-								</el-row>
-							</template>
-							
-							<template slot-scope="scope">
-								<el-form :ref="'tableForm' + scope.$index" :model="scope.row" :rules="rules" size="small" @submit.native.prevent>
-									<el-form-item prop="name">
-										<el-input v-model.trim="scope.row.name" maxlength="50" show-word-limit @input="scope.row.name = scope.row.name.replace(/\:/g, '：').replace(/\;/g, '；')" placeholder="请输入"/>
-									</el-form-item>
-								</el-form>
-							</template>
-						</el-table-column>
+                        <el-table-column prop="name" align="center" width="300">
+                            <template slot="header">
+                                <el-row type="flex" align="middle" justify="center">
+                                    规格值
+                                    <el-tooltip
+                                        class="item"
+                                        effect="dark"
+                                        content="注：新增规则值时，‘:’和‘;’是系统特殊字符，使用的话会强行转为中文符号。"
+                                        placement="top"
+                                    >
+                                        <i class="el-icon-question ml-5 mb-3 text-000 font-16 opacity-3" style="font-size: 16px"></i>
+                                    </el-tooltip>
+                                </el-row>
+                            </template>
+
+                            <template slot-scope="scope">
+                                <el-form :ref="'tableForm' + scope.$index" :model="scope.row" :rules="rules" size="small" @submit.native.prevent>
+                                    <el-form-item prop="name">
+                                        <el-input
+                                            v-model.trim="scope.row.name"
+                                            maxlength="50"
+                                            show-word-limit
+                                            placeholder="请输入"
+                                            @input="scope.row.name = scope.row.name.replace(/\:/g, '：').replace(/\;/g, '；')"
+                                        />
+                                    </el-form-item>
+                                </el-form>
+                            </template>
+                        </el-table-column>
                         <el-table-column prop="name" label="操作" align="center">
                             <template slot-scope="scope">
                                 <el-link class="text-blue" :underline="false" type="primary" @click="delItem(scope)">删除</el-link>
@@ -58,13 +81,11 @@
                     </el-table>
                 </el-form-item>
             </el-form>
-			
-			<el-row type="flex" justify="center" class="py-10">
-				<el-button size="small" @click="onCancel">取消</el-button>
-				<ls-button size="small" type="primary" :asyncFunction="onSubmit">
-					保存
-				</ls-button>
-			</el-row>
+
+            <el-row type="flex" justify="center" class="py-10">
+                <el-button size="small" @click="onCancel">取消</el-button>
+                <ls-button size="small" type="primary" :async-function="onSubmit">保存</ls-button>
+            </el-row>
         </el-card>
 
         <dialog-group
@@ -127,14 +148,14 @@ export default {
         }
     },
     beforeRouteEnter(to, from, next) {
-        let type = to.query.type;
+        let type = to.query.type
         let title = to.meta.title.split('/')
-        if(type === 'add' || type === 'similar') {
-            to.meta.text = '新增规格'   //面包屑
-            title[1] = '新增规格'       //顶部导航栏[黑色区显示]
-        }else {
+        if (type === 'add' || type === 'similar') {
+            to.meta.text = '新增规格' //面包屑
+            title[1] = '新增规格' //顶部导航栏[黑色区显示]
+        } else {
             to.meta.text = '编辑规格'
-            title[1] = '编辑规格'   
+            title[1] = '编辑规格'
         }
         to.meta.title = title.join('/')
 
@@ -246,7 +267,7 @@ export default {
 
         // 提交
         onSubmit() {
-            return new Promise(async resolve=>{
+            return new Promise(async (resolve) => {
                 console.log(this.form)
                 await this.$refs.form.validate(async (valid) => {
                     if (valid) {
@@ -269,20 +290,20 @@ export default {
                             })
                             .catch((err) => {
                                 console.log('验证失败', err)
-                            }).finally(_=>{
+                            })
+                            .finally((_) => {
                                 resolve()
                             })
-                    }else{
+                    } else {
                         resolve()
                     }
                 })
             })
-            
         },
 
         // 添加
         addItem() {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 specifications
                     .add({
                         propName: this.form.propName,
@@ -299,41 +320,42 @@ export default {
                             type: 'success'
                         })
                         this.$router.push({ path: '/ModuleGoods/attributeManage/specifications' })
-                    }).finally(_=>{
+                    })
+                    .finally((_) => {
                         resolve()
-                })
+                    })
             })
         },
 
         // 编辑
         editItem() {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 specifications
-                .edit({
-                    id: this.form.id,
-                    propName: this.form.propName,
-                    memo: this.form.memo,
-                    type: this.form.type,
-                    attributeType: 'S',
-                    prodPropList: this.form.groupList,
-                    aggIdList: this.form.relatedGroup.map((item) => item.id),
-                    source: 'USER' // 这个写死
-                })
-                .then((res) => {
-                    console.log(res)
-                    this.$message({
-                        message: '编辑成功',
-                        type: 'success'
+                    .edit({
+                        id: this.form.id,
+                        propName: this.form.propName,
+                        memo: this.form.memo,
+                        type: this.form.type,
+                        attributeType: 'S',
+                        prodPropList: this.form.groupList,
+                        aggIdList: this.form.relatedGroup.map((item) => item.id),
+                        source: 'USER' // 这个写死
                     })
-                    this.$router.push({ path: '/ModuleGoods/attributeManage/specifications' })
-                })
-                .catch((err) => {
-                    console.log(err)
-                }).finally(_=>{
-                    resolve()
-                })
+                    .then((res) => {
+                        console.log(res)
+                        this.$message({
+                            message: '编辑成功',
+                            type: 'success'
+                        })
+                        this.$router.push({ path: '/ModuleGoods/attributeManage/specifications' })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+                    .finally((_) => {
+                        resolve()
+                    })
             })
-            
         },
 
         // 回去规格列表页
@@ -390,7 +412,7 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 /* 修改popover样式 不能加scoped */
 .el-popover.atooltip {
     padding: 10px;

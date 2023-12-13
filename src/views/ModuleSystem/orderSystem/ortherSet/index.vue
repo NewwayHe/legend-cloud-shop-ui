@@ -1,6 +1,6 @@
 <template>
     <section class="formWarp h-100">
-        <el-card class="h-100" shadow :body-style="{padding:`20px 20px 0 20px`}">
+        <el-card class="h-100" shadow :body-style="{ padding: `20px 20px 0 20px` }">
             <el-form ref="form" :model="form" :rules="rules" size="small" label-position="right" autocomplete="off">
                 <el-form-item label="支持订单开具发票:" label-width="150px">
                     <el-switch v-model="form.invoiceFlag" active-color="#FFA800"></el-switch>
@@ -18,17 +18,17 @@
                     <el-input v-model="form.returnShopAddr" autocomplete="off" :maxlength="50" class="w-450p" />
                 </el-form-item>
                 <el-form-item label="退货联系人姓名：" prop="returnConsignee" label-width="150px">
-                    <el-input v-model="form.returnConsignee" autocomplete="off"  :maxlength="10" class="w-450p" />
+                    <el-input v-model="form.returnConsignee" autocomplete="off" :maxlength="10" class="w-450p" />
                 </el-form-item>
                 <el-form-item label="退货联系人手机号码：" prop="returnConsigneePhone" label-width="150px">
                     <el-input v-model="form.returnConsigneePhone" autocomplete="off" :maxlength="11" class="w-450p" />
                 </el-form-item>
             </el-form>
-			<LsSticky :data="form">
-				<el-row type="flex" justify="center" class="w-100 overflow-h py-10 mt-10 bg-white">
-					<el-button size="small" type="primary" @click="saveSet('form')">保存订单设置</el-button>
-				</el-row>
-			</LsSticky>
+            <LsSticky :data="form">
+                <el-row type="flex" justify="center" class="w-100 overflow-h py-10 mt-10 bg-white">
+                    <el-button size="small" type="primary" @click="saveSet('form')">保存订单设置</el-button>
+                </el-row>
+            </LsSticky>
         </el-card>
     </section>
 </template>

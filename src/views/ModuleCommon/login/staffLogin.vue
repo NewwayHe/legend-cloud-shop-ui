@@ -9,12 +9,17 @@
             auto-complete="on"
             label-position="left"
         >
-			<div class="w-100 flex-center mb-30" v-loading="!systemConfigFinally">
-				<img :src="$photoServer+systemConfigTemp.shopBigLogo" style="max-width: 200px;height: 50px;object-fit: contain;" :onerror="$defaultImg" v-if="systemConfigTemp&&systemConfigTemp.shopBigLogo">
-				<img style="width: 150px;height: 50px;" src="@/assets/images/login__logo.png" alt="" v-else-if="systemConfigFinally"/>
-				<div style="width: 150px;height: 50px;" v-else></div>
-				<h3 class="ml-20 text-nowrap">员工端</h3>
-			</div>
+            <div v-loading="!systemConfigFinally" class="w-100 flex-center mb-30">
+                <img
+                    v-if="systemConfigTemp && systemConfigTemp.shopBigLogo"
+                    :src="$photoServer + systemConfigTemp.shopBigLogo"
+                    style="max-width: 200px; height: 50px; object-fit: contain"
+                    :onerror="$defaultImg"
+                />
+                <img v-else-if="systemConfigFinally" style="width: 150px; height: 50px" src="@/assets/images/login__logo.png" alt="" />
+                <div v-else style="width: 150px; height: 50px"></div>
+                <h3 class="ml-20 text-nowrap">员工端</h3>
+            </div>
             <el-form-item prop="principal">
                 <el-input
                     ref="principal"
@@ -24,7 +29,7 @@
                     type="text"
                     tabindex="1"
                     auto-complete="on"
-					maxlength="11"
+                    maxlength="11"
                 />
             </el-form-item>
             <el-form-item prop="principal">
@@ -36,7 +41,7 @@
                     type="text"
                     tabindex="1"
                     auto-complete="on"
-					maxlength="30"
+                    maxlength="30"
                 />
             </el-form-item>
             <el-form-item prop="credentials">
@@ -95,7 +100,7 @@ export default {
                 principal: '',
                 credentials: '',
                 user_type: 'SHOP_SUB_USER',
-                auth_type: 'PASSWORD',
+                auth_type: 'PASSWORD'
             },
             loginRules: {
                 phone: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -105,12 +110,11 @@ export default {
             loading: false,
             passwordType: 'password',
             redirect: undefined,
-			systemConfigTemp:'',// 【用户】获取ICP备案号以及商城名称、登录页面logo、侧边栏左上角图标等
-			systemConfigFinally:false
+            systemConfigTemp: '', // 【用户】获取ICP备案号以及商城名称、登录页面logo、侧边栏左上角图标等
+            systemConfigFinally: false
         }
     },
-	computed: {
-	},
+    computed: {},
     watch: {
         $route: {
             handler: function (route) {
@@ -119,28 +123,27 @@ export default {
             immediate: true
         }
     },
-    created() {
-	},
-	mounted() {
-		let systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
-		// 如果main.js里面执行了方法获取到系统设置
-		if (systemConfig&&systemConfig.id) {
-			this.systemConfigTemp = systemConfig
-			this.systemConfigFinally = true
-		// 如果VUEX里没有设置systemConfig(系统设置)
-		}else{
-			this.$store
-			    .dispatch('user/getSystemConfig')
-			    .then((res) => {
-					this.systemConfigTemp = res
-					// console.log('systemConfig:',this.systemConfig);
-			    })
-			    .catch(() => {
-			    }).finally(()=>{
-					this.systemConfigFinally = true
-				})
-		}
-	},
+    created() {},
+    mounted() {
+        let systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
+        // 如果main.js里面执行了方法获取到系统设置
+        if (systemConfig && systemConfig.id) {
+            this.systemConfigTemp = systemConfig
+            this.systemConfigFinally = true
+            // 如果VUEX里没有设置systemConfig(系统设置)
+        } else {
+            this.$store
+                .dispatch('user/getSystemConfig')
+                .then((res) => {
+                    this.systemConfigTemp = res
+                    // console.log('systemConfig:',this.systemConfig);
+                })
+                .catch(() => {})
+                .finally(() => {
+                    this.systemConfigFinally = true
+                })
+        }
+    },
     methods: {
         swithchLogin(name) {
             this.loginMethod = name
@@ -194,11 +197,11 @@ $light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-    .login-container{
-		::v-deep .el-input input {
-			color: $cursor;
-		}
-	} 
+    .login-container {
+        ::v-deep .el-input input {
+            color: $cursor;
+        }
+    }
 }
 .login__Active {
     position: relative;

@@ -28,5 +28,5 @@ const couponApi = {
 }
 
 export {
-    couponApi, // 优惠券
+    couponApi // 优惠券
 }

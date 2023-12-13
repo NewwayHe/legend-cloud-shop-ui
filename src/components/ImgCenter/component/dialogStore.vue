@@ -16,8 +16,8 @@
                 :mult="multiple"
                 :limit="limit"
                 :upload-tab="uploadTab"
-				:tempUrl.sync="tempUrlTemp"
-                :isEcho="isEcho"
+                :temp-url.sync="tempUrlTemp"
+                :is-echo="isEcho"
                 @transfers-select="transfersSelect"
                 @echo-success="echoSuccess"
             />
@@ -53,14 +53,15 @@ export default {
             type: String,
             default: 'PHOTO'
         },
-        inRichText: {   //如果是在富文本里 则可以选择图片和视频 否则其余页面 应该只选择单一类型
+        inRichText: {
+            //如果是在富文本里 则可以选择图片和视频 否则其余页面 应该只选择单一类型
             type: Boolean,
-            default: false,
+            default: false
         },
         // true：为了防止客户上传完图片后在列表里找不到刚才上传的图片，上传完图片并点击【上传】后，立即选中上传的数据并且关闭弹窗(这时不用点击【确定】)[例子：商品发布上传图片]
         isEcho: {
             type: Boolean,
-            default: true,
+            default: true
         }
     },
     data() {
@@ -77,8 +78,8 @@ export default {
             isVisible: false,
 
             selectItem: [], // 选中的item
-			
-			tempUrlTemp:''
+
+            tempUrlTemp: ''
         }
     },
 
@@ -88,98 +89,104 @@ export default {
             return this.inRichText ? 'BOTH' : this.uploadType == 'PHOTO' ? 'IMG' : 'VIDEO'
         }
     },
-	watch:{
-		tempUrl: {
-		    handler(newValue) {
-		       this.tempUrlTemp = newValue
-		    },
-			immediate: true,
-		},
-	    tempUrlTemp(newValue){
-	        this.$emit('update:tempUrl', newValue)
-	    },
-	},
-    created() {
+    watch: {
+        tempUrl: {
+            handler(newValue) {
+                this.tempUrlTemp = newValue
+            },
+            immediate: true
+        },
+        tempUrlTemp(newValue) {
+            this.$emit('update:tempUrl', newValue)
+        }
     },
-    mounted() {
-    },
+    created() {},
+    mounted() {},
     methods: {
         //选中图片点击确定
         success() {
             this.$refs['materialCenter'].handleEmit()
-            if(!this.filterSrc.length&&!this.tempUrl.length) {
+            if (!this.filterSrc.length && !this.tempUrl.length) {
                 return this.$message.warning('请先进行选择~')
             }
             const checkType = (src, showMsg = true) => {
                 let picExt = src.split('.').slice(-1)
-                if(this.diffPicOrVideo(`.${picExt}`)) {     //视频
-                    if(this.uploadType == "PHOTO") {
-                        showMsg && this.$message.warning('请选择正确格式的图片');
-                        return false;
+                if (this.diffPicOrVideo(`.${picExt}`)) {
+                    //视频
+                    if (this.uploadType == 'PHOTO') {
+                        showMsg && this.$message.warning('请选择正确格式的图片')
+                        return false
                     }
-                }else {     //图片
-                    if(this.uploadType == "VIDEO") {
-                        showMsg && this.$message.warning('请选择正确格式的视频');
-                        return false;
+                } else {
+                    //图片
+                    if (this.uploadType == 'VIDEO') {
+                        showMsg && this.$message.warning('请选择正确格式的视频')
+                        return false
                     }
                 }
-                return true;
+                return true
             }
-            if(!this.inRichText) {
-                if(this.multiple) {     //多选
+            if (!this.inRichText) {
+                if (this.multiple) {
+                    //多选
                     // let count = 0        //这是循环剔除遇到视频后的每一项 第一种做法
-                    for(let each of this.filterSrc) {
-                        if(!checkType(each, false)) {
+                    for (let each of this.filterSrc) {
+                        if (!checkType(each, false)) {
                             // this.filterSrc.length = count;  //在此截断 否则filterSrc会一直堆积
                             // 第二种做法 是剔除选择中含有的视频
-                            const rawLen = this.filterSrc.length;
-                            this.filterSrc = this.filterSrc.filter(item => checkType(item, false)); //截断
-                            if(this.filterSrc.length) {
-                                this.$message.warning(`当前选择${rawLen}个文件，已自动过滤不符合正确格式的${this.filterSrc.length}个${this.uploadType == "PHOTO" ? '视频' : '图片'}`)
+                            const rawLen = this.filterSrc.length
+                            this.filterSrc = this.filterSrc.filter((item) => checkType(item, false)) //截断
+                            if (this.filterSrc.length) {
+                                this.$message.warning(
+                                    `当前选择${rawLen}个文件，已自动过滤不符合正确格式的${this.filterSrc.length}个${
+                                        this.uploadType == 'PHOTO' ? '视频' : '图片'
+                                    }`
+                                )
                                 this.isVisible = false
                                 this.$emit('success', this.filterSrc, this.selectItem)
                             }
-                            return;      //如果有一个不符合 直接跳出函数
+                            return //如果有一个不符合 直接跳出函数
                         }
                         // ++count;
                     }
-                }else {     //单选
-                    if(!checkType(this.filterSrc[0])) return;
+                } else {
+                    //单选
+                    if (!checkType(this.filterSrc[0])) return
                 }
             }
             this.isVisible = false
             this.$emit('success', this.filterSrc, this.selectItem)
         },
         transfersSelect(arr) {
-			arr = this.$utils.array.delRepeat(arr,'key')//去重
-			// console.log('arr~~~~',this.filterSrc)
+            arr = this.$utils.array.delRepeat(arr, 'key') //去重
+            // console.log('arr~~~~',this.filterSrc)
             if (this.multiple) {
                 this.filterSrc = arr.map((v) => {
-					if(this.diffPicOrVideo(`.${v.ext}`)) {
-						return v.videoUrl
-					}else {
-						return v.url
-					}
-				})
+                    if (this.diffPicOrVideo(`.${v.ext}`)) {
+                        return v.videoUrl
+                    } else {
+                        return v.url
+                    }
+                })
             } else {
                 this.filterSrc = arr.map((v) => {
-                    if(this.diffPicOrVideo(`.${v.ext}`)) {
+                    if (this.diffPicOrVideo(`.${v.ext}`)) {
                         return v.videoUrl
-                    }else {
+                    } else {
                         return v.url
                     }
                 })
             }
             this.selectItem = arr
-			this.filterSrc = this.$utils.array.delRepeat(this.filterSrc)//去重
-            console.log('filterSrc~~~~~~',this.filterSrc)
+            this.filterSrc = this.$utils.array.delRepeat(this.filterSrc) //去重
+            console.log('filterSrc~~~~~~', this.filterSrc)
         },
         //显示对话框事件，判断请求类型，执行不同getdata()
         showDialog(fileType) {
             this.isVisible = true
             this.fileType = fileType
-            this.$nextTick(()=> {
-                this.$refs['materialCenter'].getSaveHistory(); //在弹窗中的imgCenter打开时要刷新历史数据
+            this.$nextTick(() => {
+                this.$refs['materialCenter'].getSaveHistory() //在弹窗中的imgCenter打开时要刷新历史数据
             })
         },
         //传递事件  第三步
@@ -207,9 +214,9 @@ export default {
         },
         // 关闭前动作
         closeDialog() {
-            const materialCenter = this.$refs.materialCenter;   //要清空所选内容
+            const materialCenter = this.$refs.materialCenter //要清空所选内容
             this.$nextTick(() => {
-                materialCenter.filterKeys = [];
+                materialCenter.filterKeys = []
             })
         },
         //关闭对话框清空
@@ -239,16 +246,34 @@ export default {
 
         // 区分 视频Or图片 true为视频 false为图片
         diffPicOrVideo(ext) {
-            const videoExt = ['.wmv', '.asf', '.asx', '.rm', '.rmvb', '.MPEG', '.mp4', '.3gp', '.mov', '.m4v', '.avi', '.dat', '.mkv', '.flv', '.vob', '.webm', '.ogg'];
+            const videoExt = [
+                '.wmv',
+                '.asf',
+                '.asx',
+                '.rm',
+                '.rmvb',
+                '.MPEG',
+                '.mp4',
+                '.3gp',
+                '.mov',
+                '.m4v',
+                '.avi',
+                '.dat',
+                '.mkv',
+                '.flv',
+                '.vob',
+                '.webm',
+                '.ogg'
+            ]
             return videoExt.includes(ext.toLowerCase())
         },
 
         // 立即回显
         echoSuccess(files) {
-            this.filterSrc = files;
+            this.filterSrc = files
             this.$emit('success', this.filterSrc, [])
             this.isVisible = false
-        },
+        }
     }
 }
 </script>

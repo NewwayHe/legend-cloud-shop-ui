@@ -3,10 +3,10 @@
 */ -->
 <template>
     <section class="">
-        <el-card shadow :body-style="{padding:`20px 20px 10px 20px`}">
+        <el-card shadow :body-style="{ padding: `20px 20px 10px 20px` }">
             <!-- 查询 -->
             <div class="search">
-                <el-form :inline="true" :model="searchFilters" size="small" ref="formWrapBtn">
+                <el-form ref="formWrapBtn" :inline="true" :model="searchFilters" size="small">
                     <el-form-item label="订单编号">
                         <el-input v-model="searchFilters.orderNumber" placeholder="订单编号" />
                     </el-form-item>
@@ -43,22 +43,40 @@
                     </el-col>
                 </el-row>
                 <!--列表-->
-				<el-table ref="multipleTable" v-loading="tableListLoading" :data="tableList" tooltip-effect="dark" class="w-100" header-row-class-name="headerRow" row-key="id" @selection-change="selectionChange">
+                <el-table
+                    ref="multipleTable"
+                    v-loading="tableListLoading"
+                    :data="tableList"
+                    tooltip-effect="dark"
+                    class="w-100"
+                    header-row-class-name="headerRow"
+                    row-key="id"
+                    @selection-change="selectionChange"
+                >
                     <template slot="empty">
                         <empty empty-type="pro" />
                     </template>
-					<el-table-column type="selection" reserve-selection width="42" :selectable="(row)=>{return !row.hasInvoiceFlag}"/>
+                    <el-table-column
+                        type="selection"
+                        reserve-selection
+                        width="42"
+                        :selectable="
+                            (row) => {
+                                return !row.hasInvoiceFlag
+                            }
+                        "
+                    />
                     <el-table-column label="序号" type="index" width="48" />
                     <el-table-column prop="orderNumber" label="订单商品" width="200">
                         <template slot-scope="scope">
-							<div class="overflow-x text-nowrap">
-								<span :class="{'ml-10':index}" v-for="(item,index) in scope.row.orderProductPics">
-									<ls-image class="v-middle" :src="item" :options="{ w: '50', h: '50', br: '4' }" />
-								</span>
-							</div>
+                            <div class="overflow-x text-nowrap">
+                                <span v-for="(item, index) in scope.row.orderProductPics" :class="{ 'ml-10': index }">
+                                    <ls-image class="v-middle" :src="item" :options="{ w: '50', h: '50', br: '4' }" />
+                                </span>
+                            </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="orderNumber" label="订单编号" min-width="180"/>
+                    <el-table-column prop="orderNumber" label="订单编号" min-width="180" />
                     <el-table-column label="订单金额">
                         <template slot-scope="scope">
                             <div>{{ scope.row.actualTotalPrice | priceFilter }}</div>
@@ -79,11 +97,13 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="userName" label="用户名" min-width="100"/>
-                    <el-table-column prop="createTime" label="下单时间" width="140"/>
+                    <el-table-column prop="userName" label="用户名" min-width="100" />
+                    <el-table-column prop="createTime" label="下单时间" width="140" />
                     <el-table-column label="状态">
                         <template slot-scope="scope">
-                            <div :class="scope.row.hasInvoiceFlag?'status-pass':'status-done'">{{ scope.row.hasInvoiceFlag ? '已开发票' : '未开发票' }}</div>
+                            <div :class="scope.row.hasInvoiceFlag ? 'status-pass' : 'status-done'">
+                                {{ scope.row.hasInvoiceFlag ? '已开发票' : '未开发票' }}
+                            </div>
                         </template>
                     </el-table-column>
                     <el-table-column label="操作" align="left" fixed="right">
@@ -101,17 +121,24 @@
                     </el-table-column>
                 </el-table>
             </div>
-			<LsSticky :data="tableList">
-				<el-row type="flex" justify="space-between" class="w-100 overflow-h py-10 mt-10 bg-white">
-					<el-col class="text-nowrap flex-start">
-						<el-button size="mini" class="allCheck">
-							<el-checkbox v-model="checkAll" label="全选" size="small" @change="selAll" :indeterminate="checkHalf" :disabled='!selectableList.length'/>
-						</el-button>
-						<el-button size="small" @click="batchOpenInvoicing()">批量开票</el-button>
-					</el-col>
-					<pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
-				</el-row>
-			</LsSticky>
+            <LsSticky :data="tableList">
+                <el-row type="flex" justify="space-between" class="w-100 overflow-h py-10 mt-10 bg-white">
+                    <el-col class="text-nowrap flex-start">
+                        <el-button size="mini" class="allCheck">
+                            <el-checkbox
+                                v-model="checkAll"
+                                label="全选"
+                                size="small"
+                                :indeterminate="checkHalf"
+                                :disabled="!selectableList.length"
+                                @change="selAll"
+                            />
+                        </el-button>
+                        <el-button size="small" @click="batchOpenInvoicing()">批量开票</el-button>
+                    </el-col>
+                    <pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
+                </el-row>
+            </LsSticky>
         </el-card>
         <dialogInvoice ref="dialogInvoice" :invoice-info="invoiceInfo" />
     </section>
@@ -133,11 +160,10 @@ export default {
             url: {
                 getData: '/order/s/order/invoice/page'
             },
-            invoiceInfo: {}, // 增值税专票信息
+            invoiceInfo: {} // 增值税专票信息
         }
     },
-    computed: {
-    },
+    computed: {},
     methods: {
         // 切换状态
         changeStatus() {
@@ -167,12 +193,13 @@ export default {
             orderApi.batchOpenInvoicing(id ? [id] : this.mulSels).then((res) => {
                 if (res.code == 1) {
                     this.$message.success('开票成功')
-                    if(id) {    //单删
-                        let index = this.mulSels.indexOf(id);
-                        if(index > -1) {
-                            this.mulSels.splice(index,1)
+                    if (id) {
+                        //单删
+                        let index = this.mulSels.indexOf(id)
+                        if (index > -1) {
+                            this.mulSels.splice(index, 1)
                         }
-                    }else {
+                    } else {
                         this.mulSels = []
                     }
                     this.getData()

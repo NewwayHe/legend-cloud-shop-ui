@@ -12,7 +12,7 @@
                 :active-text-color="variables.menuActiveText"
                 :collapse-transition="false"
                 mode="vertical"
-				class="mb-30"
+                class="mb-30"
             >
                 <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path" />
             </el-menu>
@@ -30,7 +30,7 @@ import variables from '@/styles/variables.scss'
 export default {
     components: { SidebarItem, Logo, storeInfo },
     computed: {
-        ...mapGetters(['permission_routes', 'sidebar' , 'guide']),
+        ...mapGetters(['permission_routes', 'sidebar', 'guide']),
         activeMenu() {
             const route = this.$route
             const { meta, path } = route
@@ -49,7 +49,7 @@ export default {
             return !this.sidebar.opened
         }
     },
-    updated(){
+    updated() {
         console.log('sidebarIPDATE')
         this.$emit('updated')
     }

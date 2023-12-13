@@ -3,15 +3,15 @@
 */ -->
 <template>
     <section class="">
-        <el-card shadow :body-style="{padding:`20px 20px 10px 20px`}">
+        <el-card shadow :body-style="{ padding: `20px 20px 10px 20px` }">
             <!-- 查询 -->
             <div class="search">
                 <el-form :inline="true" :model="searchFilters" size="small">
                     <el-form-item label="规格标题">
-                        <el-input v-model="searchFilters.propName" placeholder="规格标题" clearable/>
+                        <el-input v-model="searchFilters.propName" placeholder="规格标题" clearable />
                     </el-form-item>
                     <el-form-item label="规格副标题">
-                        <el-input v-model="searchFilters.memo" placeholder="规格副标题" clearable/>
+                        <el-input v-model="searchFilters.memo" placeholder="规格副标题" clearable />
                     </el-form-item>
                     <el-form-item>
                         <el-button size="small" @click.stop="dbnSearch">搜索</el-button>
@@ -44,11 +44,11 @@
                         <empty empty-type="pro" />
                     </template>
                     <el-table-column label="序号" type="index" width="48" />
-                    <el-table-column prop="propName" label="规格标题" >
+                    <el-table-column prop="propName" label="规格标题">
                         <template slot-scope="scope">{{ scope.row.propName || '-' }}</template>
                     </el-table-column>
-                    <el-table-column prop="memo" label="规格副标题" >
-                          <template slot-scope="scope">{{ scope.row.memo || '-' }}</template>
+                    <el-table-column prop="memo" label="规格副标题">
+                        <template slot-scope="scope">{{ scope.row.memo || '-' }}</template>
                     </el-table-column>
                     <el-table-column prop="prodPropStr" label="规格值" show-overflow-tooltip>
                         <template slot-scope="scope">
@@ -72,11 +72,16 @@
                         </template>
                     </el-table-column>
                 </el-table>
-				<LsSticky :data="tableList">
-					<el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
-						<pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
-					</el-row>
-				</LsSticky>
+                <LsSticky :data="tableList">
+                    <el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
+                        <pagination
+                            :current-page="page.curPage"
+                            :total="tableTotal"
+                            @size-change="pageSizeChange"
+                            @current-change="currentPageChange"
+                        />
+                    </el-row>
+                </LsSticky>
             </div>
 
             <dialog-similar ref="similarDialog" url="/product/s/productProperty/page" attribute-type="S" @chooseItem="exportSimilar" />
@@ -205,7 +210,7 @@ export default {
 <!--
     表格内容过长显示tooltip时的最大宽度设置 不能使用scoped
 -->
-<style >
+<style>
 .el-tooltip__popper {
     max-width: 60vw;
 }

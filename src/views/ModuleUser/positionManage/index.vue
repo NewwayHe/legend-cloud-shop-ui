@@ -4,13 +4,20 @@
 <template>
     <section class="">
         <div class="table">
-            <el-card class="" shadow :body-style="{padding:`20px 20px 10px 20px`}">
+            <el-card class="" shadow :body-style="{ padding: `20px 20px 10px 20px` }">
                 <el-row class="mb-20">
                     <el-button type="primary" size="medium" @click="addRole('')">新增</el-button>
                 </el-row>
 
                 <!--列表-->
-                <el-table ref="multipleTable" v-loading="tableListLoading" :data="tableList" header-row-class-name="headerRow" tooltip-effect="dark" class="w-100">
+                <el-table
+                    ref="multipleTable"
+                    v-loading="tableListLoading"
+                    :data="tableList"
+                    header-row-class-name="headerRow"
+                    tooltip-effect="dark"
+                    class="w-100"
+                >
                     <template slot="empty">
                         <empty empty-type="pro" />
                     </template>
@@ -28,11 +35,16 @@
                         </template>
                     </el-table-column>
                 </el-table>
-				<LsSticky :data="tableList">
-					<el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
-						<pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
-					</el-row>
-				</LsSticky>
+                <LsSticky :data="tableList">
+                    <el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
+                        <pagination
+                            :current-page="page.curPage"
+                            :total="tableTotal"
+                            @size-change="pageSizeChange"
+                            @current-change="currentPageChange"
+                        />
+                    </el-row>
+                </LsSticky>
             </el-card>
         </div>
         <!-- 添加角色,分配权限 -->

@@ -3,9 +3,9 @@
         <!-- 进度 -->
         <div class="mb-20">
             <div class="p-10 bg-fff rounded-4 flex-start">
-                <i class="iconfont icon-tanhao text-warning"/>
+                <i class="iconfont icon-tanhao text-warning" />
                 <div class="ml-10 font-12">
-                    <div  v-if="detailsInfo.applyStatus == '2'">商家申请取消订单后，需要平台审核。</div>
+                    <div v-if="detailsInfo.applyStatus == '2'">商家申请取消订单后，需要平台审核。</div>
                     <div v-if="detailsInfo.applyStatus == '3'">平台审核同意，订单状态变为已取消</div>
                     <div v-if="detailsInfo.applyStatus == '-4'">平台审核拒绝，商家可重新申请。</div>
                     <div v-if="detailsInfo.applyStatus == '-1'">商家撤回申请，不需要平台审核，商家可重新申请。</div>
@@ -29,14 +29,14 @@
                             align-center
                         >
                             <el-step :description="detailsInfo.createTime" title="商家申请" />
-                            <el-step v-if="detailsInfo.applyStatus=='-1'" :description="detailsInfo.sellerTime" title="商家撤回" status="error"/>
+                            <el-step v-if="detailsInfo.applyStatus == '-1'" :description="detailsInfo.sellerTime" title="商家撤回" status="error" />
                             <template v-else>
                                 <el-step
                                     :description="detailsInfo.adminTime"
                                     title="平台审核"
-                                    :status="detailsInfo.applyStatus=='-4' ?'error': undefined"
+                                    :status="detailsInfo.applyStatus == '-4' ? 'error' : undefined"
                                 />
-                                <el-step :description="detailsInfo.applyStatus=='-4'?'--':detailsInfo.adminTime" title="订单取消" />
+                                <el-step :description="detailsInfo.applyStatus == '-4' ? '--' : detailsInfo.adminTime" title="订单取消" />
                             </template>
                         </el-steps>
                     </div>
@@ -47,22 +47,22 @@
         <!-- 商品表格 -->
         <el-card shadow>
             <el-form label-width="90px" label-position="left" size="small" class="order-form mb-20">
-                <div class="d-flex p-20" style="background-color: #F5F7FA;">
+                <div class="d-flex p-20" style="background-color: #f5f7fa">
                     <div class="flex-1 ml-20">
                         <!-- 退款信息 -->
                         <div>
-                            <div class="font-14 font-weight-600" style="line-height:32px;">退款信息</div>
+                            <div class="font-14 font-weight-600" style="line-height: 32px">退款信息</div>
                             <el-form-item label="申请时间：">{{ detailsInfo.createTime }}</el-form-item>
                             <el-form-item label="订单编号：">{{ detailsInfo.orderNumber }}</el-form-item>
                             <el-form-item label="取消原因：">{{ detailsInfo.reason }}</el-form-item>
-                            <el-form-item label="备注说明：">{{ detailsInfo.sellerMessage||'-' }}</el-form-item>
+                            <el-form-item label="备注说明：">{{ detailsInfo.sellerMessage || '-' }}</el-form-item>
                         </div>
                     </div>
                     <div style="flex-basis: 25%" class="ml-20">
                         <div>
-                            <div class="font-14 font-weight-600" style="line-height:32px;">平台退款处理</div>
+                            <div class="font-14 font-weight-600" style="line-height: 32px">平台退款处理</div>
                             <el-form-item label="备注：">{{ detailsInfo.remark || '-' }}</el-form-item>
-                            <el-form-item label="状态：">{{ refuseStatus(detailsInfo,true,false) }}</el-form-item>
+                            <el-form-item label="状态：">{{ refuseStatus(detailsInfo, true, false) }}</el-form-item>
                             <el-form-item label="处理时间：">{{ detailsInfo.adminTime || '-' }}</el-form-item>
                         </div>
                     </div>
@@ -85,7 +85,7 @@ import orderTable from './components/orderTableDetail'
 import { serviceOrderApi } from '@/api/ModuleOrder'
 export default {
     components: {
-        orderTable,
+        orderTable
     },
     data() {
         return {
@@ -113,7 +113,7 @@ export default {
                 if (data.applyStatus == 1 && data.sellerStatus == 0) {
                     return '待确认'
                 }
-                if (data.applyStatus == -3||data.sellerStatus == -1) {
+                if (data.applyStatus == -3 || data.sellerStatus == -1) {
                     return '已拒绝'
                 }
                 if (data.applyStatus == -1 || data.applyStatus == -2) {
@@ -143,7 +143,7 @@ export default {
                 if (data.applyStatus == -1 || data.applyStatus == -2) {
                     return istext ? (isPla ? '已撤回' : '-') : 5
                 }
-                if (data.applyStatus == -4||data.sellerStatus == -1) {
+                if (data.applyStatus == -4 || data.sellerStatus == -1) {
                     return istext ? '已拒绝' : 2
                 }
                 if (data.applyStatus == 3) {
@@ -160,12 +160,12 @@ export default {
             }
         }
     },
-    watch: {    
+    watch: {
         orderDialogVisible(newVal) {
             if (!newVal) {
                 this.$refs.form.resetFields()
             }
-        },
+        }
     },
     mounted() {
         this.orderNumber = this.$route.query.orderNumber || ''
@@ -337,7 +337,6 @@ export default {
         .el-timeline-item__tail {
             left: 2px;
         }
-        
     }
 }
 

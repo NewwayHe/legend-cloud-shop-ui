@@ -8,32 +8,32 @@
                 <div class="form-title">基本信息</div>
                 <el-form-item label="优惠券名称：" prop="title">
                     <el-input
-                        v-model="couponForm.title"
                         v-if="pageType != 'lookInfo'"
+                        v-model="couponForm.title"
                         placeholder="只支持中文或数字，最长25个字符"
                         style="width: 450px"
                         maxlength="25"
                         show-word-limit
                     />
-                    <span v-else>{{couponForm.title}}</span>
+                    <span v-else>{{ couponForm.title }}</span>
                 </el-form-item>
                 <el-form-item label="发放数量：" prop="count">
                     <el-input
-                        v-model="couponForm.count"
                         v-if="pageType != 'lookInfo'"
+                        v-model="couponForm.count"
                         placeholder="支持正整数，大于等于1且小于等于100万"
                         style="width: 450px"
                         :oninput="$inputInteger"
                     >
                         <template slot="append"><span class="font-12">张</span></template>
                     </el-input>
-                    <span v-else>{{couponForm.count}}张</span>
+                    <span v-else>{{ couponForm.count }}张</span>
                 </el-form-item>
                 <el-form-item key="receiveStartTime" label="领取时间：" prop="receiveStartTime">
                     <el-date-picker
+                        v-if="pageType != 'lookInfo'"
                         v-model="tempForm.receiveTime"
                         :picker-options="pickerOptions"
-                        v-if="pageType != 'lookInfo'"
                         type="datetimerange"
                         value-format="yyyy-MM-dd HH:mm:ss"
                         range-separator="至"
@@ -41,10 +41,10 @@
                         end-placeholder="领取结束时间"
                         @change="receiveTimeChange"
                     ></el-date-picker>
-                    <span v-else>{{couponForm.receiveStartTime + ' 至 ' + couponForm.receiveEndTime}}</span>
+                    <span v-else>{{ couponForm.receiveStartTime + ' 至 ' + couponForm.receiveEndTime }}</span>
                 </el-form-item>
                 <el-form-item label="使用时间：">
-                    <el-radio-group v-model="tempForm.useTimeType" v-if="pageType != 'lookInfo'" @change="clearInput($event ,'userTimeType')">
+                    <el-radio-group v-if="pageType != 'lookInfo'" v-model="tempForm.useTimeType" @change="clearInput($event, 'userTimeType')">
                         <el-form-item key="useStartTime" prop="useStartTime" label-width="0">
                             <div class="d-flex a-center font-14">
                                 <el-radio :label="0" class="mr-0">{{ '' }}</el-radio>
@@ -66,15 +66,29 @@
                         <div class="mt-10 d-flex a-center font-12">
                             <el-radio :label="1" class="mr-0">{{ '' }}</el-radio>
                             <div class="font-12">按照领取</div>
-							<lsInput class="mx-10 w-100p" v-model="couponForm.useDayLater" :disabled="pageType == 'lookInfo'" :precision="0" :min="0"  :max="999"/>
+                            <lsInput
+                                v-model="couponForm.useDayLater"
+                                class="mx-10 w-100p"
+                                :disabled="pageType == 'lookInfo'"
+                                :precision="0"
+                                :min="0"
+                                :max="999"
+                            />
                             天后
-							<lsInput class="mx-10 w-100p" v-model="couponForm.withinDay" :disabled="pageType == 'lookInfo'" :precision="0" :min="0"  :max="999"/>
-							内可用
+                            <lsInput
+                                v-model="couponForm.withinDay"
+                                class="mx-10 w-100p"
+                                :disabled="pageType == 'lookInfo'"
+                                :precision="0"
+                                :min="0"
+                                :max="999"
+                            />
+                            内可用
                         </div>
                     </el-radio-group>
                     <div v-else>
-                        <span v-if="tempForm.useTimeType==0">{{couponForm.useStartTime + ' 至 ' + couponForm.useEndTime}}</span>
-                        <span v-else>领取{{couponForm.useDayLater || '-'}}天后{{couponForm.withinDay || '-'}}天内可用</span>
+                        <span v-if="tempForm.useTimeType == 0">{{ couponForm.useStartTime + ' 至 ' + couponForm.useEndTime }}</span>
+                        <span v-else>领取{{ couponForm.useDayLater || '-' }}天后{{ couponForm.withinDay || '-' }}天内可用</span>
                     </div>
                 </el-form-item>
 
@@ -82,7 +96,7 @@
                 <!-- 这是分割线 -->
                 <div class="form-title">优惠券信息</div>
                 <el-form-item label="设置优惠门槛 ：">
-                    <el-radio-group v-model="tempForm.pointType" v-if="pageType != 'lookInfo'" @change="changePointType(tempForm.pointType)">
+                    <el-radio-group v-if="pageType != 'lookInfo'" v-model="tempForm.pointType" @change="changePointType(tempForm.pointType)">
                         <el-form-item key="minPoint" label-width="0" prop="minPoint">
                             <div class="d-flex a-center font-12">
                                 <el-radio :label="0" class="mr-0">{{ '' }}</el-radio>
@@ -94,7 +108,7 @@
                                     placeholder="请输入金额"
                                     style="width: 150px"
                                     :oninput="$inputInteger"
-									maxlength="9"
+                                    maxlength="9"
                                 >
                                     <template slot="append"><span class="font-12">元</span></template>
                                 </el-input>
@@ -102,41 +116,47 @@
                         </el-form-item>
                         <div class="mt-10 d-flex a-center font-12">
                             <el-radio :label="1" class="mr-0">{{ '' }}</el-radio>
-                            <div>无使用门槛<!--（可与其他优惠券叠加使用）--></div>
+                            <div>
+                                无使用门槛
+                                <!--（可与其他优惠券叠加使用）-->
+                            </div>
                         </div>
                     </el-radio-group>
                     <div v-else>
-                        <span v-if="tempForm.pointType==0">满{{couponForm.minPoint || '-'}}元</span>
-                        <span v-else>无使用门槛<!--（可与其他优惠券叠加使用）--></span>
+                        <span v-if="tempForm.pointType == 0">满{{ couponForm.minPoint || '-' }}元</span>
+                        <span v-else>
+                            无使用门槛
+                            <!--（可与其他优惠券叠加使用）-->
+                        </span>
                     </div>
                 </el-form-item>
                 <el-form-item key="amount" label="设置优惠金额 ：" prop="amount">
                     <div class="d-flex a-center font-12">
                         <div>减</div>
-						<template v-if="pageType != 'lookInfo'">
-							<lsInput
-								v-model="couponForm.amount"
-								:min="0"
-								:max="999999"
-								:precision="2"
-								:disabled="pageType == 'lookInfo'"
-								class="mx-10 w-150p"
-							>
-								<template slot="append">元</template>
-							</lsInput>
-						</template>
-                        <span v-else>{{couponForm.amount || '-'}}元</span>
+                        <template v-if="pageType != 'lookInfo'">
+                            <lsInput
+                                v-model="couponForm.amount"
+                                :min="0"
+                                :max="999999"
+                                :precision="2"
+                                :disabled="pageType == 'lookInfo'"
+                                class="mx-10 w-150p"
+                            >
+                                <template slot="append">元</template>
+                            </lsInput>
+                        </template>
+                        <span v-else>{{ couponForm.amount || '-' }}元</span>
                     </div>
                 </el-form-item>
-                <el-form-item v-if="pageType==='lookInfo'" label="优惠券链接 ：">
-                    <el-link class="text-blue" type="primary" :underline="false">{{couponUrl}}</el-link>
-                    <el-button type="primary" @click="handleCopy(couponUrl,$event)">复制链接</el-button>
+                <el-form-item v-if="pageType === 'lookInfo'" label="优惠券链接 ：">
+                    <el-link class="text-blue" type="primary" :underline="false">{{ couponUrl }}</el-link>
+                    <el-button type="primary" @click="handleCopy(couponUrl, $event)">复制链接</el-button>
                 </el-form-item>
                 <el-divider />
                 <!-- 这是分割线 -->
                 <div class="form-title">其它设置</div>
                 <el-form-item label="每人限领：">
-                    <el-radio-group v-model="tempForm.LimitType" v-if="pageType != 'lookInfo'" @change="clearInput($event ,'LimitType')">
+                    <el-radio-group v-if="pageType != 'lookInfo'" v-model="tempForm.LimitType" @change="clearInput($event, 'LimitType')">
                         <div class="mt-10 mb-20 d-flex a-center font-12">
                             <el-radio :label="0" class="mr-0">{{ '' }}</el-radio>
                             <div>不限领</div>
@@ -145,62 +165,67 @@
                             <div class="d-flex a-center font-12">
                                 <el-radio :label="1" class="mr-0">{{ '' }}</el-radio>
                                 <div>限制每天每人领取</div>
-								<lsInput
-									v-model="couponForm.perDayLimit"
-									:min="1"
-									:max="999"
-									:precision="0"
-									:disabled="pageType == 'lookInfo'"
-									class="mx-10 w-150p"
-								>
-									<template slot="append">张</template>
-								</lsInput>
+                                <lsInput
+                                    v-model="couponForm.perDayLimit"
+                                    :min="1"
+                                    :max="999"
+                                    :precision="0"
+                                    :disabled="pageType == 'lookInfo'"
+                                    class="mx-10 w-150p"
+                                >
+                                    <template slot="append">张</template>
+                                </lsInput>
                             </div>
                         </el-form-item>
                         <el-form-item key="perTotalLimit" label-width="0" prop="perTotalLimit">
                             <div class="d-flex a-center font-12">
                                 <el-radio class="mr-0" :label="2">{{ '' }}</el-radio>
                                 <div>限制活动期间每人领取</div>
-								<lsInput
-								    v-model="couponForm.perTotalLimit"
-									:min="1"
-								    :max="999"
-									:precision="0"
-								    :disabled="pageType == 'lookInfo'"
-								    class="mx-10 w-150p"
-								>
-								    <template slot="append">张</template>
-								</lsInput>
+                                <lsInput
+                                    v-model="couponForm.perTotalLimit"
+                                    :min="1"
+                                    :max="999"
+                                    :precision="0"
+                                    :disabled="pageType == 'lookInfo'"
+                                    class="mx-10 w-150p"
+                                >
+                                    <template slot="append">张</template>
+                                </lsInput>
                             </div>
                         </el-form-item>
                     </el-radio-group>
                     <div v-else>
-                        <span v-if="tempForm.LimitType==0">不限领</span>
-                        <span v-else-if="tempForm.LimitType==1">每天每人领取{{couponForm.perDayLimit}}张</span>
-                        <span v-else>活动期间每人领取{{couponForm.perTotalLimit}}张</span>
+                        <span v-if="tempForm.LimitType == 0">不限领</span>
+                        <span v-else-if="tempForm.LimitType == 1">每天每人领取{{ couponForm.perDayLimit }}张</span>
+                        <span v-else>活动期间每人领取{{ couponForm.perTotalLimit }}张</span>
                     </div>
                 </el-form-item>
                 <el-form-item label="领取方式：">
-                    <el-radio-group v-model="couponForm.receiveType" v-if="pageType != 'lookInfo'">
+                    <el-radio-group v-if="pageType != 'lookInfo'" v-model="couponForm.receiveType">
                         <div class="d-flex a-center font-12">
                             <el-radio :label="0" class="mr-0">{{ '' }}</el-radio>
                             <div>免费领取（不需要任何条件即可领取优惠券）</div>
                         </div>
                     </el-radio-group>
                     <div v-else>
-                        <span v-if="couponForm.receiveType==0">免费领取</span>
+                        <span v-if="couponForm.receiveType == 0">免费领取</span>
                     </div>
                 </el-form-item>
                 <el-form-item v-if="couponForm.receiveType == 0" label="指定发放：">
-                    <el-radio-group v-model="tempForm.userType" v-if="pageType != 'lookInfo'">
+                    <el-radio-group v-if="pageType != 'lookInfo'" v-model="tempForm.userType">
                         <el-radio :label="0">不指定用户发放</el-radio>
                         <el-radio :label="1">指定用户发放</el-radio>
                     </el-radio-group>
-                    <el-form-item v-if="tempForm.userType == 1" key="designatedUser" prop="designatedUser" :class="{'mt-10':pageType != 'lookInfo'}">
-                        <el-select v-model="couponForm.designatedUser" v-if="pageType != 'lookInfo'" clearable placeholder="请选择">
+                    <el-form-item
+                        v-if="tempForm.userType == 1"
+                        key="designatedUser"
+                        prop="designatedUser"
+                        :class="{ 'mt-10': pageType != 'lookInfo' }"
+                    >
+                        <el-select v-if="pageType != 'lookInfo'" v-model="couponForm.designatedUser" clearable placeholder="请选择">
                             <el-option v-for="item in platformType" :key="item.value" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <span v-else>{{platformType.find(item=>item.value==couponForm.designatedUser).label}}</span>
+                        <span v-else>{{ platformType.find((item) => item.value == couponForm.designatedUser).label }}</span>
                         <el-tooltip placement="right">
                             <div slot="content">
                                 店铺新用户=在店铺内没有购买过商品的用户（包括申请售后成功的用户）
@@ -210,11 +235,11 @@
                             <i class="el-icon-question font-16 text-000 opacity-3 ml-5"></i>
                         </el-tooltip>
                     </el-form-item>
-                    <el-form-item v-if="couponForm.designatedUser == 1" key="designatedUserText" :class="{'mt-10':pageType != 'lookInfo'}">
+                    <el-form-item v-if="couponForm.designatedUser == 1" key="designatedUserText" :class="{ 'mt-10': pageType != 'lookInfo' }">
                         <el-input
+                            v-if="pageType != 'lookInfo'"
                             key="mobileList"
                             v-model="couponForm.mobileList"
-                            v-if="pageType != 'lookInfo'"
                             type="textarea"
                             :rows="3"
                             show-word-limit
@@ -222,24 +247,24 @@
                             style="width: 500px"
                             placeholder='输入手机号码,使用英文符号逗号","隔开'
                         ></el-input>
-                        <span v-else>{{couponForm.mobileList}}</span>
+                        <span v-else>{{ couponForm.mobileList }}</span>
                     </el-form-item>
                 </el-form-item>
                 <el-form-item label="优惠券封面图：" prop="pic">
                     <imgCenter v-model="couponForm.pic" :disabled="pageType == 'lookInfo'" @input="$refs.form.validateField('pic')"></imgCenter>
-					<span v-show="pageType != 'lookInfo'" class="pl-20 v-top text-999">建议尺寸：160 x 160 像素</span>
+                    <span v-show="pageType != 'lookInfo'" class="pl-20 v-top text-999">建议尺寸：160 x 160 像素</span>
                 </el-form-item>
                 <el-divider />
                 <!-- 这是分割线 -->
                 <div class="form-title">活动商品</div>
-                <el-form-item label="选择商品：" v-if="pageType != 'lookInfo'">
-                    <el-radio-group v-model="couponForm.useType" >
+                <el-form-item v-if="pageType != 'lookInfo'" label="选择商品：">
+                    <el-radio-group v-model="couponForm.useType">
                         <el-radio :label="0">全场通用</el-radio>
                         <el-radio :label="1">部分商品参与</el-radio>
                         <el-radio :label="-1">部分商品不参与</el-radio>
                     </el-radio-group>
 
-                    <template v-if="couponForm.useType != 0" >
+                    <template v-if="couponForm.useType != 0">
                         <el-form-item label-width="0">
                             <el-button v-if="pageType != 'lookInfo'" type="primary" class="my-10" size="small" @click="choseGoods">
                                 选择商品
@@ -263,13 +288,13 @@
                         </el-form-item>
                     </template>
                 </el-form-item>
-				<template v-if="pageType == 'lookInfo'">
-					<div class="font-12 ml-60">
-						<span v-if="couponForm.useType===0">全场通用</span>
-						<span v-if="couponForm.useType===1">部分商品参与</span>
-						<span v-if="couponForm.useType===-1">部分商品不参与</span>
-					</div>
-				</template>
+                <template v-if="pageType == 'lookInfo'">
+                    <div class="font-12 ml-60">
+                        <span v-if="couponForm.useType === 0">全场通用</span>
+                        <span v-if="couponForm.useType === 1">部分商品参与</span>
+                        <span v-if="couponForm.useType === -1">部分商品不参与</span>
+                    </div>
+                </template>
                 <template v-if="couponForm.id && pageType == 'lookInfo'">
                     <el-divider />
                     <!-- 这是分割线 -->
@@ -282,8 +307,8 @@
                     <el-form-item label-width="0"><receiveInfo :coupon-id="couponForm.id" @statusChange="getcounPage"></receiveInfo></el-form-item>
                 </template>
                 <submitBottom>
-					<el-button size="small" @click="back">返回</el-button>
-					<ls-button v-if="pageType != 'lookInfo'" type="primary" size="small" :asyncFunction="onSubmit">新增</ls-button>
+                    <el-button size="small" @click="back">返回</el-button>
+                    <ls-button v-if="pageType != 'lookInfo'" type="primary" size="small" :async-function="onSubmit">新增</ls-button>
                 </submitBottom>
             </el-form>
         </el-card>
@@ -306,7 +331,7 @@ export default {
         Upload,
         dialogSpuGoods,
         tableGoods,
-        receiveInfo,
+        receiveInfo
     },
     data() {
         function parseTime(time) {
@@ -373,9 +398,9 @@ export default {
 
         //每人每天领张数 校验
         var amountValidate = (rule, value, callback) => {
-			if (!this.couponForm.amount) {
-				callback(new Error('优惠金额不能为0'))
-			}
+            if (!this.couponForm.amount) {
+                callback(new Error('优惠金额不能为0'))
+            }
             if (this.tempForm.pointType == 0 && Number(this.couponForm.amount) > Number(this.couponForm.minPoint)) {
                 callback(new Error('优惠金额不能大于门槛金额'))
             }
@@ -388,16 +413,16 @@ export default {
                 onPick: (obj) => {
                     this.pickerMinDate = new Date(obj.minDate).getTime()
                 },
-				disabledDate: time => {
-				    if (this.pickerMinDate) {
-				        const day1 = 30 * 24 * 3600 * 1000 - 1000; // 最后一天只能到23:59:59
-				        let maxTime = this.pickerMinDate + day1;
-				        let minTime = this.pickerMinDate - day1;
-				        return time.getTime() > maxTime || time.getTime() < minTime || time.getTime() < Date.now() - 1 * 24 * 3600 * 1000;
-				    } else {
-				        return time.getTime() < Date.now() - 1 * 24 * 3600 * 1000;
-				    }
-				}
+                disabledDate: (time) => {
+                    if (this.pickerMinDate) {
+                        const day1 = 30 * 24 * 3600 * 1000 - 1000 // 最后一天只能到23:59:59
+                        let maxTime = this.pickerMinDate + day1
+                        let minTime = this.pickerMinDate - day1
+                        return time.getTime() > maxTime || time.getTime() < minTime || time.getTime() < Date.now() - 1 * 24 * 3600 * 1000
+                    } else {
+                        return time.getTime() < Date.now() - 1 * 24 * 3600 * 1000
+                    }
+                }
             },
             couponStatus: [
                 {
@@ -435,7 +460,7 @@ export default {
                 status: 0,
                 title: '', //优惠券标题
                 count: '', //发放数量
-				amount: undefined, // 优惠券面额(备注：要用undefined才能一开始显示placeholder内容)
+                amount: undefined, // 优惠券面额(备注：要用undefined才能一开始显示placeholder内容)
                 receiveStartTime: '', //领取开始时间
                 receiveEndTime: '', //领取结束时间
                 useStartTime: '', //使用开始时间
@@ -448,7 +473,7 @@ export default {
                 skuIdList: [], //sku商品列表
                 mobileList: '', //指定的用户手机号码
                 designatedUser: '', //指定用户
-				minPoint: undefined, // 使用门槛，0.00为无门槛(备注：要用undefined才能一开始显示placeholder内容)
+                minPoint: undefined, // 使用门槛，0.00为无门槛(备注：要用undefined才能一开始显示placeholder内容)
                 description: '', // 优惠券描述
                 perTotalLimit: '', //每人总限领张数
                 perDayLimit: '' //每人每天领张数
@@ -576,7 +601,7 @@ export default {
                 total: 0
             },
             imageUrl: '',
-            couponUrl:''
+            couponUrl: ''
         }
     },
     created() {
@@ -587,7 +612,7 @@ export default {
             this.couponId = this.$route.query.couponId
             this.getCouponDetail(this.couponId)
         }
-        if(this.pageType==='lookInfo'){
+        if (this.pageType === 'lookInfo') {
             this.couponUrl = `${this.$config.shareUrl}/pages/webview/shareUrlRedirect?detailsType=coupon&id=${this.couponId}`
         }
     },
@@ -663,15 +688,15 @@ export default {
                     } else {
                         this.couponForm.designatedUser = ''
                     }
-					
-					// 限领
-					if (res.data.perDayLimit) {
-						this.tempForm.LimitType = 1;
-					} else if (res.data.perTotalLimit) {
-						this.tempForm.LimitType = 2;
-					} else {
-						this.tempForm.LimitType = 0;
-					}
+
+                    // 限领
+                    if (res.data.perDayLimit) {
+                        this.tempForm.LimitType = 1
+                    } else if (res.data.perTotalLimit) {
+                        this.tempForm.LimitType = 2
+                    } else {
+                        this.tempForm.LimitType = 0
+                    }
                 }
             })
         },
@@ -702,7 +727,7 @@ export default {
         },
 
         onSubmit() {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 this.$refs['form'].validate((val) => {
                     if (val) {
                         let formParam = Object.assign({}, this.couponForm)
@@ -733,24 +758,27 @@ export default {
                         } else {
                             formParam.perDayLimit = 0
                         }
-                        if(this.couponForm.useType != 0 && this.$utils.test.isEmpty(this.couponTableList)){
-                            this.$message.error(this.couponForm.useType==1 ? '请选择参加活动的商品':'请选择不参加活动的商品')
+                        if (this.couponForm.useType != 0 && this.$utils.test.isEmpty(this.couponTableList)) {
+                            this.$message.error(this.couponForm.useType == 1 ? '请选择参加活动的商品' : '请选择不参加活动的商品')
                             resolve()
                             return
                         }
-                        couponApi.saveCoupon(formParam).then((res) => {
-                            if (res.code == 1) {
-                                this.$router.back()
-                            }
-                            console.log(res)
-                        }).finally(_=>{
-                            resolve()
-                        })
-                    }else{
+                        couponApi
+                            .saveCoupon(formParam)
+                            .then((res) => {
+                                if (res.code == 1) {
+                                    this.$router.back()
+                                }
+                                console.log(res)
+                            })
+                            .finally((_) => {
+                                resolve()
+                            })
+                    } else {
                         resolve()
                     }
                 })
-            })   
+            })
         },
 
         // 返回
@@ -768,8 +796,8 @@ export default {
             })
         },
 
-        clearInput(event,val){
-            if(val=='LimitType'){
+        clearInput(event, val) {
+            if (val == 'LimitType') {
                 if (event == 0) {
                     this.couponForm.perDayLimit = 1
                     this.couponForm.perTotalLimit = 1
@@ -785,11 +813,11 @@ export default {
                     this.$refs.form.validateField('perDayLimit')
                 }
             }
-            if(val=='userTimeType') {
-                if(event == 0){
+            if (val == 'userTimeType') {
+                if (event == 0) {
                     this.couponForm.withinDay = 1
                     this.couponForm.useDayLater = 0
-                }else{
+                } else {
                     this.tempForm.useTime = []
                     this.couponForm.useStartTime = ''
                     this.couponForm.useEndTime = ''

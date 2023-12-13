@@ -33,29 +33,29 @@
         </el-row>
         <div class="search">
             <el-form :inline="true" :model="searchFilters" label-width="0" size="small">
-            <el-form-item>
-                <el-input v-model="searchFilters.categoryName" placeholder="类目名称"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-date-picker
-                    v-model="date"
-                    :picker-options="pickerOptions"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    type="daterange"
-                    align="right"
-                    unlink-panels
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                    :clearable="false"
-                    @change="changeDate"
-                ></el-date-picker>
-            </el-form-item>
-            <el-form-item>
-                <el-button @click.stop="search">搜索</el-button>
-                <el-button @click.stop="dbnExcel">导出报表</el-button>
-            </el-form-item>
-        </el-form>
+                <el-form-item>
+                    <el-input v-model="searchFilters.categoryName" placeholder="类目名称"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-date-picker
+                        v-model="date"
+                        :picker-options="pickerOptions"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        type="daterange"
+                        align="right"
+                        unlink-panels
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期"
+                        :clearable="false"
+                        @change="changeDate"
+                    ></el-date-picker>
+                </el-form-item>
+                <el-form-item>
+                    <el-button @click.stop="search">搜索</el-button>
+                    <el-button @click.stop="dbnExcel">导出报表</el-button>
+                </el-form-item>
+            </el-form>
         </div>
         <el-row type="flex" justify="space-around" align="top" class="mt-20">
             <el-col :span="8">

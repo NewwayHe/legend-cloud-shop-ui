@@ -3,7 +3,7 @@
 */ -->
 <template>
     <section class="">
-        <el-card shadow :body-style="{padding:`20px 20px 10px 20px`}">
+        <el-card shadow :body-style="{ padding: `20px 20px 10px 20px` }">
             <!-- 查询 -->
             <div class="search">
                 <el-form :inline="true" :model="searchFilters" size="small">
@@ -33,7 +33,12 @@
                                 <ls-image style="flex: 0 0 50px" :src="scope.row.pic" :options="{ w: '50', h: '50', br: '4' }" />
                                 <el-popover placement="top-start" width="300" trigger="hover" :content="scope.row.name">
                                     <template slot="reference">
-                                        <el-link class="ml-10 text-blue goodPic" :underline="false" type="primary" @click="proPreview(scope.row.productId)">
+                                        <el-link
+                                            class="ml-10 text-blue goodPic"
+                                            :underline="false"
+                                            type="primary"
+                                            @click="proPreview(scope.row.productId)"
+                                        >
                                             <span class="line-clamp2">{{ scope.row.name || '-' }}</span>
                                         </el-link>
                                     </template>
@@ -64,38 +69,43 @@
                         </template>
                     </el-table-column>
                 </el-table>
-				<LsSticky :data="tableList">
-					<el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
-						<pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
-					</el-row>
-				</LsSticky>
+                <LsSticky :data="tableList">
+                    <el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
+                        <pagination
+                            :current-page="page.curPage"
+                            :total="tableTotal"
+                            @size-change="pageSizeChange"
+                            @current-change="currentPageChange"
+                        />
+                    </el-row>
+                </LsSticky>
             </div>
         </el-card>
-		<!-- 新增-编辑 -->
-		<el-dialog title="查看" custom-class="dialog-form-small" :visible.sync="dialogVisible">
-		    <el-row class="mb-20">
-		        <el-table :data="tableData" class="w-100 dialog-form-table mt-15" header-row-class-name="headerRow" size='small'>
-		            <el-table-column type="index" label="序号" width="48" />
-		            <el-table-column prop="nickName" label="用户" />
-		            <el-table-column prop="createTime" label="编辑时间" width="140"/>
-		        </el-table>
-		    </el-row>
-		    <el-row type="flex" justify="end" align="middle" class="mt-10">
-		        <el-pagination
-		            small
-		            layout="prev, pager, next"
-		            :page-size="dialogPage.curPage"
-		            :total="dialogPage.total"
-		            @size-change="dialogPageSizeChange"
-		            @current-change="dialogPageChange"
-		        ></el-pagination>
-		    </el-row>
-		    <span slot="footer" class="dialog-footer">
-		        <el-button size="small" @click="dialogVisible = false">取 消</el-button>
-		        <el-button size="small" type="primary" @click="dialogVisible = false">确 定</el-button>
-		    </span>
-		</el-dialog>
-		<dialogPreview ref="dialogPreview"/>
+        <!-- 新增-编辑 -->
+        <el-dialog title="查看" custom-class="dialog-form-small" :visible.sync="dialogVisible">
+            <el-row class="mb-20">
+                <el-table :data="tableData" class="w-100 dialog-form-table mt-15" header-row-class-name="headerRow" size="small">
+                    <el-table-column type="index" label="序号" width="48" />
+                    <el-table-column prop="nickName" label="用户" />
+                    <el-table-column prop="createTime" label="编辑时间" width="140" />
+                </el-table>
+            </el-row>
+            <el-row type="flex" justify="end" align="middle" class="mt-10">
+                <el-pagination
+                    small
+                    layout="prev, pager, next"
+                    :page-size="dialogPage.curPage"
+                    :total="dialogPage.total"
+                    @size-change="dialogPageSizeChange"
+                    @current-change="dialogPageChange"
+                ></el-pagination>
+            </el-row>
+            <span slot="footer" class="dialog-footer">
+                <el-button size="small" @click="dialogVisible = false">取 消</el-button>
+                <el-button size="small" type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+        </el-dialog>
+        <dialogPreview ref="dialogPreview" />
     </section>
 </template>
 <script>
@@ -104,7 +114,6 @@ import cud from '@/mixins/pages/cud.js'
 import setting from '@/settings'
 import { GoodsManage } from '@/api/ModuleGoods'
 import dialogPreview from '@/components/iphonePreview/dialogPreview.vue'
-
 
 export default {
     name: 'ArrivalNotice',
@@ -125,15 +134,15 @@ export default {
             accusationDetail: {},
             url: {
                 getData: '/product/s/productArrivalNotice/productPage'
-            },
+            }
         }
     },
     mounted() {},
     methods: {
-		//预览
-		 proPreview(id) {
-			this.$refs.dialogPreview.showDialog({id:id});
-		},
+        //预览
+        proPreview(id) {
+            this.$refs.dialogPreview.showDialog({ id: id })
+        },
         dialogPageSizeChange(p) {
             this.dialogPage.curPage = p
             this.getData()

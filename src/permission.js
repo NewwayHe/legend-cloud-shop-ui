@@ -48,24 +48,24 @@ router.beforeEach(async (to, from, next) => {
                         })
                     }
                     NProgress.done()
-                }else {
-                    if(to.matched.length == 0) {        //没有匹配到
+                } else {
+                    if (to.matched.length == 0) {
+                        //没有匹配到
                         Message({
                             message: '当前操作权限不足，请联系管理员！',
                             type: 'error'
                         })
-                    }else {
+                    } else {
                         next()
                     }
                 }
-                
             } else {
                 try {
                     await store.dispatch('user/getInfo')
                     await store.dispatch('user/getShopStatus')
                     store.dispatch('user/getMsgInfo')
                     const getShopInfo = await store.dispatch('user/getShopInfo')
-                    if(!getShopInfo?.data?.shopNewBieStatus){
+                    if (!getShopInfo?.data?.shopNewBieStatus) {
                         store.dispatch('app/setGuide', true)
                     }
                     const accessRoutes = await store.dispatch('permission/generateRoutes')

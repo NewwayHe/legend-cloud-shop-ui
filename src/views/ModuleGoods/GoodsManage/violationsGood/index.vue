@@ -4,7 +4,7 @@
 <template>
     <section class="">
         <!-- 查询 -->
-        <el-card shadow :body-style="{padding:`20px 20px 10px 20px`}">
+        <el-card shadow :body-style="{ padding: `20px 20px 10px 20px` }">
             <div class="search">
                 <el-form :inline="true" :model="searchFilters" size="small">
                     <el-form-item label="商品名称">
@@ -54,39 +54,46 @@
                                 <ls-image style="flex: 0 0 50px" :src="scope.row.pic" :options="{ w: '50', h: '50', br: '4' }" />
                                 <el-popover placement="top-start" width="300" trigger="hover" :content="scope.row.name">
                                     <template slot="reference">
-                                        <el-link class="ml-10 text-blue goodPic" :underline="false" type="primary"  @click="proPreview(scope.row.id)">
+                                        <el-link class="ml-10 text-blue goodPic" :underline="false" type="primary" @click="proPreview(scope.row.id)">
                                             <span class="line-clamp2">{{ scope.row.name || '-' }}</span>
                                         </el-link>
                                     </template>
-                                    <div>{{scope.row.name}}</div>
-                                    <el-link class="text-blue" :underline="false"  target="_blank" :href="$shareRedirectUrl+'?detailsType=good&id='+scope.row.id">{{ $shareRedirectUrl+'?detailsType=good&id='+scope.row.id }}</el-link> 
+                                    <div>{{ scope.row.name }}</div>
+                                    <el-link
+                                        class="text-blue"
+                                        :underline="false"
+                                        target="_blank"
+                                        :href="$shareRedirectUrl + '?detailsType=good&id=' + scope.row.id"
+                                    >
+                                        {{ $shareRedirectUrl + '?detailsType=good&id=' + scope.row.id }}
+                                    </el-link>
                                 </el-popover>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="price" label="销售价"  width="224">
+                    <el-table-column prop="price" label="销售价" width="224">
                         <template slot-scope="scope">{{ scope.row.price | priceRangeFilters }}</template>
                     </el-table-column>
                     <el-table-column label="品牌">
                         <template slot-scope="scope">{{ scope.row.brandName || '-' }}</template>
                     </el-table-column>
-                    <el-table-column prop="accusationTime" label="违规下架时间"  width="160">
+                    <el-table-column prop="accusationTime" label="违规下架时间" width="160">
                         <template slot-scope="scope">{{ scope.row.accusationTime || '-' }}</template>
                     </el-table-column>
                     <el-table-column label="状态">
                         <template slot-scope="scope">
-                            <span class="status-veto" v-if="scope.row.opStatus == 2">违规下架</span>
-                            <span class="status-veto" v-if="scope.row.opStatus == 3">锁定商品</span>
+                            <span v-if="scope.row.opStatus == 2" class="status-veto">违规下架</span>
+                            <span v-if="scope.row.opStatus == 3" class="status-veto">锁定商品</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="draftStatus" label="草稿状态" align="left">
                         <template slot-scope="scope">
                             <!-- -10:未发布 -1: 拒绝、0: 待审核、1: 通过 -->
-                            <template v-if="scope.row.opStatus == 2 && [-10,0,-1,1].includes(scope.row.draftStatus)">
-                                <span class="status-veto" v-if="scope.row.draftStatus == -10">未提审</span>
-                                <span class="status-veto" v-if="scope.row.draftStatus == 0">待审核</span>
-                                <span class="status-veto" v-if="scope.row.draftStatus == -1">拒绝</span>
-                                <span class="status-pass" v-if="scope.row.draftStatus == 1">通过</span>
+                            <template v-if="scope.row.opStatus == 2 && [-10, 0, -1, 1].includes(scope.row.draftStatus)">
+                                <span v-if="scope.row.draftStatus == -10" class="status-veto">未提审</span>
+                                <span v-if="scope.row.draftStatus == 0" class="status-veto">待审核</span>
+                                <span v-if="scope.row.draftStatus == -1" class="status-veto">拒绝</span>
+                                <span v-if="scope.row.draftStatus == 1" class="status-pass">通过</span>
                             </template>
                             <span v-else>-</span>
                         </template>
@@ -94,31 +101,34 @@
                     <el-table-column prop="accusationContent" label="违规下架原因" width="160">
                         <template slot-scope="scope">{{ scope.row.accusationContent || '-' }}</template>
                     </el-table-column>
-                    <el-table-column label="操作" align="left" fixed="right" width="200" >
+                    <el-table-column label="操作" align="left" fixed="right" width="200">
                         <template slot-scope="scope">
                             <span class="table__action flex-center">
                                 <el-link :underline="false" type="primary">
-                                    <el-dropdown size="medium" @command="setClick" style="line-height:19px">
+                                    <el-dropdown size="medium" style="line-height: 19px" @command="setClick">
                                         <el-link style="padding: 0" :underline="false" type="primary">编辑</el-link>
                                         <el-dropdown-menu slot="dropdown">
                                             <el-dropdown-item
                                                 v-if="scope.row.opStatus == 2"
-                                                key="edit" 
+                                                key="edit"
                                                 :command="{ type: 'product', params: scope.row }"
                                             >
                                                 编辑商品
                                             </el-dropdown-item>
                                             <el-dropdown-item
-                                                v-if="scope.row.opStatus == 2 && ((scope.row.draftStatus == -10 && scope.row.status != -10) || scope.row.draftStatus == -1)"
-                                                key="editDraft" 
-                                                :command="{ type: 'editDraft', params: scope.row }" 
+                                                v-if="
+                                                    scope.row.opStatus == 2 &&
+                                                    ((scope.row.draftStatus == -10 && scope.row.status != -10) || scope.row.draftStatus == -1)
+                                                "
+                                                key="editDraft"
+                                                :command="{ type: 'editDraft', params: scope.row }"
                                             >
                                                 编辑草稿
                                             </el-dropdown-item>
                                             <el-dropdown-item
                                                 v-if="scope.row.opStatus == 2 && scope.row.draftStatus === 0"
-                                                key="cancelAudit" 
-                                                :command="{ type: 'cancelAudit', params: scope.row }" 
+                                                key="cancelAudit"
+                                                :command="{ type: 'cancelAudit', params: scope.row }"
                                             >
                                                 撤回审核
                                             </el-dropdown-item>
@@ -131,8 +141,8 @@
                                             </el-dropdown-item>
                                             <el-dropdown-item
                                                 v-if="scope.row.opStatus == 2 && scope.row.draftStatus == -10"
-                                                key="draftArraignment" 
-                                                :command="{ type: 'draftArraignment', params: scope.row }" 
+                                                key="draftArraignment"
+                                                :command="{ type: 'draftArraignment', params: scope.row }"
                                             >
                                                 提交审核
                                             </el-dropdown-item>
@@ -144,17 +154,24 @@
                     </el-table-column>
                 </el-table>
             </div>
-			<LsSticky :data="tableList">
-				<el-row type="flex" justify="space-between" class="w-100 overflow-h py-10 mt-10 bg-white">
-					<el-col class="text-nowrap flex-start">
-						<el-button size="mini" class="allCheck">
-							<el-checkbox v-model="checkAll" label="全选" size="small" @change="selAll" :indeterminate="checkHalf" :disabled='!selectableList.length'/>
-						</el-button>
-						<el-button size="small" @click="handleMulDel({ status: -1 })">批量删除</el-button>
-					</el-col>
-					<pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
-				</el-row>
-			</LsSticky>
+            <LsSticky :data="tableList">
+                <el-row type="flex" justify="space-between" class="w-100 overflow-h py-10 mt-10 bg-white">
+                    <el-col class="text-nowrap flex-start">
+                        <el-button size="mini" class="allCheck">
+                            <el-checkbox
+                                v-model="checkAll"
+                                label="全选"
+                                size="small"
+                                :indeterminate="checkHalf"
+                                :disabled="!selectableList.length"
+                                @change="selAll"
+                            />
+                        </el-button>
+                        <el-button size="small" @click="handleMulDel({ status: -1 })">批量删除</el-button>
+                    </el-col>
+                    <pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
+                </el-row>
+            </LsSticky>
         </el-card>
         <dialogPreview ref="dialogPreview" />
         <dialogStock ref="dialogStock" :product-id="currentItem.id" />
@@ -172,7 +189,7 @@ export default {
     name: 'ViolationsGood',
     components: {
         dialogPreview,
-        dialogStock,
+        dialogStock
     },
     mixins: [common, cud],
     data() {
@@ -189,7 +206,7 @@ export default {
                 delete: '/product/s/product/batchUpdateStatus',
                 mulDel: '/product/s/product/batchUpdateDelStatus' // 注意返回去的是id的数组['asb','sdf']
             },
-            currentItem: {}, //当前编辑操作对象
+            currentItem: {} //当前编辑操作对象
         }
     },
     watch: {},
@@ -197,10 +214,10 @@ export default {
         this.getBrand()
     },
     methods: {
-		//预览
-		 proPreview(id) {
-			this.$refs.dialogPreview.showDialog({id:id});
-		},
+        //预览
+        proPreview(id) {
+            this.$refs.dialogPreview.showDialog({ id: id })
+        },
         // 获取所有品牌
         getBrand() {
             GoodsManage.getBrandAllOnline()
@@ -216,22 +233,22 @@ export default {
         },
         // 编辑下拉选择
         setClick(params) {
-            if(params.type == 'draftArraignment'){
+            if (params.type == 'draftArraignment') {
                 this.productDraftArraignment(params.params.id)
-            }else if(params.type == 'cancelAudit'){
+            } else if (params.type == 'cancelAudit') {
                 this.productDraftRevokeArraignment(params.params.id)
-            }else if (params.type == 'editDraft' || params.type == 'product') {
+            } else if (params.type == 'editDraft' || params.type == 'product') {
                 this.editGood(params.params)
-            }else if(params.type == 'stock') {
+            } else if (params.type == 'stock') {
                 this.goodOper(params.type, params.params)
             }
         },
         editGood(row) {
-            this.$router.push({ name: 'addGood', query: { productId: row.id || '', time: new Date().getTime(), isDraft:true }})
+            this.$router.push({ name: 'addGood', query: { productId: row.id || '', time: new Date().getTime(), isDraft: true } })
         },
         // 商品操作
         goodOper(type, row) {
-            this.currentItem = row;
+            this.currentItem = row
             this.$refs.dialogStock.showDialog()
         },
         // 导出
@@ -245,36 +262,39 @@ export default {
         // 切换状态
         changeStatus() {
             this.page.curPage = 1
-            this.$refs.multipleTable.clearSelection()       //清除表格选择勾选行
+            this.$refs.multipleTable.clearSelection() //清除表格选择勾选行
             this.getData()
         },
         // 单删
         handleSingleDel(row) {
-            this.handleMulDel({ ids: [row.id], status: -1, single: true, callback: ()=> {
-                this.$refs.multipleTable.toggleRowSelection(row, false)
-            }})
-            
+            this.handleMulDel({
+                ids: [row.id],
+                status: -1,
+                single: true,
+                callback: () => {
+                    this.$refs.multipleTable.toggleRowSelection(row, false)
+                }
+            })
         },
         // 提审
-        productDraftArraignment(id){
-            addGood.productDraftArraignment({productId:id}).then(res=>{
-                if(res.code){
+        productDraftArraignment(id) {
+            addGood.productDraftArraignment({ productId: id }).then((res) => {
+                if (res.code) {
                     this.$message.success('提交审核成功')
                     this.getData()
                 }
             })
         },
         // 撤审
-        productDraftRevokeArraignment(id){
-            this.$confirm('撤销提审后，可重新编辑商品提交审核，确定撤销','消息确认').then(res=>{
-                    addGood.productDraftRevokeArraignment({productId:id}).then(res=>{
-                        if(res.code){
-                            this.$message.success('撤回审核成功')
-                            this.getData()
-                        }
-                    })
-                }
-            )
+        productDraftRevokeArraignment(id) {
+            this.$confirm('撤销提审后，可重新编辑商品提交审核，确定撤销', '消息确认').then((res) => {
+                addGood.productDraftRevokeArraignment({ productId: id }).then((res) => {
+                    if (res.code) {
+                        this.$message.success('撤回审核成功')
+                        this.getData()
+                    }
+                })
+            })
         }
     }
 }

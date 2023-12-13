@@ -19,7 +19,7 @@
                 <el-table-column prop="propName" label="规格标题" />
                 <el-table-column prop="memo" label="规格副标题">
                     <template slot-scope="scope">
-                        {{ scope.row.memo || '-'}}
+                        {{ scope.row.memo || '-' }}
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" align="center">
@@ -133,14 +133,14 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-::v-deep .el-table td{
+::v-deep .el-table td {
     color: #333;
 }
-::v-deep .el-table__header th{
+::v-deep .el-table__header th {
     color: #333;
 }
-::v-deep .el-form .el-form-item{
-    .el-form-item__content{
+::v-deep .el-form .el-form-item {
+    .el-form-item__content {
         color: #333;
     }
 }

@@ -54,13 +54,13 @@ const mssApi = {
     //营销分析
     masketingAnalysis: (data) => request.get('/data/s/count//activity/detail', data),
     // 商家优惠券投入产出数据统计
-    couponAmountCount:(data) => request.get('/data/shop/coupon/statement/shop/amountCount',data),
+    couponAmountCount: (data) => request.get('/data/shop/coupon/statement/shop/amountCount', data),
     // 商家优惠券拉新复购数据统计
-    couponUserAmountCount: (data) => request.get('/data/shop/coupon/statement/shop/userAmountCount',data),
+    couponUserAmountCount: (data) => request.get('/data/shop/coupon/statement/shop/userAmountCount', data),
     // 商家优惠券数据趋势数据统计
-    couponShopUserDataCount: (data) => request.get('/data/shop/coupon/statement/shop/userDataCount',data),
+    couponShopUserDataCount: (data) => request.get('/data/shop/coupon/statement/shop/userDataCount', data),
 
-    excelUserDataCount:(data) => request.getFile('/data/shop/coupon/statement/shop/page/excel/userDataCount',data)
+    excelUserDataCount: (data) => request.getFile('/data/shop/coupon/statement/shop/page/excel/userDataCount', data)
 }
 
 export { pssApi, srgApi, dtsApi, psyApi, csyApi, mssApi }

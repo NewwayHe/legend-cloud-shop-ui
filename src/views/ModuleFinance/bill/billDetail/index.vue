@@ -37,17 +37,17 @@
                             <el-form-item label="结算档期：" size="small">{{ detailsInfo.flag }}</el-form-item>
                             <el-form-item label="结算单号：">{{ detailsInfo.sn }}</el-form-item>
                             <el-form-item label="起止日期：">
-                                {{ detailsInfo.startDate+'' | dateFilter }} &nbsp;至&nbsp; {{ detailsInfo.endDate+'' | dateFilter }}
+                                {{ (detailsInfo.startDate + '') | dateFilter }} &nbsp;至&nbsp; {{ (detailsInfo.endDate + '') | dateFilter }}
                             </el-form-item>
-                            <el-form-item label="出账日期：">{{ detailsInfo.createDate+'' | dateFilter }}</el-form-item>
+                            <el-form-item label="出账日期：">{{ (detailsInfo.createDate + '') | dateFilter }}</el-form-item>
                         </div>
                         <div class="flex-2">
                             <div class="mb-20 font-14 font-weight">金额信息</div>
                             <el-form-item label="平台佣金比例：" label-width="100px">
                                 {{ detailsInfo.commisRate || '0.0' }}%（平台佣金按照订单金额进行计算）
                             </el-form-item>
-                            <el-form-item label="平台应付："  label-width="100px">￥{{ detailsInfo.resultTotalAmount || '0.0' }}</el-form-item>
-                            <el-form-item  label-width="100px">
+                            <el-form-item label="平台应付：" label-width="100px">￥{{ detailsInfo.resultTotalAmount || '0.0' }}</el-form-item>
+                            <el-form-item label-width="100px">
                                 =&nbsp;
                                 <span>
                                     {{ detailsInfo.orderAmount || '0.0' }}
@@ -70,13 +70,18 @@
                                     </el-tooltip>
                                 </span>
                                 &nbsp;-&nbsp;
-								<span>
-								    {{ detailsInfo.distCommisTotals || '0.0' }}
-								    <el-tooltip class="item" effect="dark" content="分销佣金：若订单项申请售后，则对应的佣金不需要结算；" placement="top">
-								        <span class="price-color">（分销佣金）</span>
-								    </el-tooltip>
-								</span>
-								&nbsp;+&nbsp;
+                                <span>
+                                    {{ detailsInfo.distCommisTotals || '0.0' }}
+                                    <el-tooltip
+                                        class="item"
+                                        effect="dark"
+                                        content="分销佣金：若订单项申请售后，则对应的佣金不需要结算；"
+                                        placement="top"
+                                    >
+                                        <span class="price-color">（分销佣金）</span>
+                                    </el-tooltip>
+                                </span>
+                                &nbsp;+&nbsp;
                                 <span>
                                     {{ detailsInfo.redpackTotals || '0.0' }}
                                     <el-tooltip class="item" effect="dark" content="优惠券金额 ：平台发出的优惠券金额，按用户消费的%" placement="top">
@@ -125,7 +130,7 @@
         <!-- 查询 -->
         <el-card shadow>
             <div class="search">
-                <el-form :inline="true" :model="searchFilters" size="small" ref="formWrapBtn" label-width="86px">
+                <el-form ref="formWrapBtn" :inline="true" :model="searchFilters" size="small" label-width="86px">
                     <el-form-item label="订单编号"><el-input v-model="searchFilters.orderNumber" placeholder="订单编号" /></el-form-item>
                     <el-form-item label="下单时间：">
                         <el-date-picker
@@ -155,22 +160,22 @@
                     </el-form-item>
                 </el-form>
             </div>
-         <el-row type="flex">
-                    <el-col>
-                        <el-radio-group v-model="orderType" size="medium" class="mb-20">
-                            <el-radio-button label="orderAmount">订单金额</el-radio-button>
-                            <el-radio-button label="chargebackAmount">退单金额</el-radio-button>
-                            <el-radio-button label="collectAmount">预售定金</el-radio-button>
-                        </el-radio-group>
-                    </el-col>
-                </el-row>
-                <!-- 表格 -->
-                <component :is="orderType" ref="orderCom" :search-params="searchFilters"></component>
-                <Sticky>
-                    <el-button size="small" @click="$router.push({ name: 'billList' })">返回</el-button>
-                    <ls-button v-if="detailsInfo.status == 1" size="small" type="primary" :asyncFunction="determine">确认</ls-button>
-                </Sticky>
-         </el-card>
+            <el-row type="flex">
+                <el-col>
+                    <el-radio-group v-model="orderType" size="medium" class="mb-20">
+                        <el-radio-button label="orderAmount">订单金额</el-radio-button>
+                        <el-radio-button label="chargebackAmount">退单金额</el-radio-button>
+                        <el-radio-button label="collectAmount">预售定金</el-radio-button>
+                    </el-radio-group>
+                </el-col>
+            </el-row>
+            <!-- 表格 -->
+            <component :is="orderType" ref="orderCom" :search-params="searchFilters"></component>
+            <Sticky>
+                <el-button size="small" @click="$router.push({ name: 'billList' })">返回</el-button>
+                <ls-button v-if="detailsInfo.status == 1" size="small" type="primary" :async-function="determine">确认</ls-button>
+            </Sticky>
+        </el-card>
     </section>
 </template>
 <script>
@@ -180,12 +185,12 @@ import chargebackAmount from './components/chargebackAmount'
 import collectAmount from './components/collectAmount'
 import common from '@/mixins/pages/commom'
 export default {
-    mixins: [common],
     components: {
         orderAmount,
         chargebackAmount,
-        collectAmount,
+        collectAmount
     },
+    mixins: [common],
     data() {
         return {
             searchFilters: {},
@@ -223,7 +228,6 @@ export default {
 
     created() {
         this.getBillDetail()
-       
     },
     methods: {
         searchData() {
@@ -285,7 +289,7 @@ export default {
 
         //确认
         determine() {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 this.$confirm('一旦确认将无法恢复，系统将自动进入结算环节,确认系统出账单计算无误吗?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -303,11 +307,10 @@ export default {
                         })
                     })
                     .catch(() => {})
-                    .finally(_=>{
+                    .finally((_) => {
                         resolve()
                     })
             })
-            
         }
     }
 }

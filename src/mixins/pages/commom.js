@@ -1,5 +1,5 @@
 import * as formFn from './formFn.js'
-import { debounce,object } from '@/utils/utils.js'
+import { debounce, object } from '@/utils/utils.js'
 import setting from '@/settings'
 import serviceConfig from '@/config'
 export default {
@@ -13,17 +13,17 @@ export default {
             //         this.formWrapBtnFn()
             //     },300)
             // })
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.formWrapBtnFn()
-            },300)
+            }, 300)
         }
     },
     data() {
         return {
             searchFilters: {}, // 搜索参数
-            rawSearchFilters:{},        //重置时使用原有的搜索参数
+            rawSearchFilters: {}, //重置时使用原有的搜索参数
             fixFilters: {}, // 固定参数
-			tableDatas:'',//用来接收res.data
+            tableDatas: '', //用来接收res.data
             tableList: [], // 表格列表
             typeLink: setting.linkTag,
             tableListLoading: false, // 表格请求loading
@@ -45,8 +45,8 @@ export default {
                 则在屏幕resize时 子组件的created会覆盖父组件的created 导致父组件refs.fromWrapBtn会被子组件进行覆盖而丢失
                 因此该变量在这种情况下要进行置True 来标识子组件不走created中的resize
                 example: 财务管理——>平台资金明细——>查看[账单明细]
-            */ 
-            sonEffect: false,   
+            */
+            sonEffect: false
         }
     },
     methods: {
@@ -114,7 +114,7 @@ export default {
             // this.searchFilters = {}
             this.searchFilters = object.deepClone(this.rawSearchFilters)
             this.page.curPage = 1
-            this.$refs.multipleTable && this.$refs.multipleTable.clearSelection()       //清除表格选择勾选行
+            this.$refs.multipleTable && this.$refs.multipleTable.clearSelection() //清除表格选择勾选行
             this.getData()
         }),
         /**
@@ -153,36 +153,40 @@ export default {
             return (this.page.curPage - 1) * this.page.pageSize + (idx + 1)
         },
         // 搜索表单的按钮组在小尺寸屏幕时需换行对齐输入框[结合防抖在1329px时获取form的offsetWidth会莫名多10px]
-        formWrapBtnFn: debounce(function() {
+        formWrapBtnFn: debounce(function () {
             // console.log('formWrapBtn--',this.$refs.formWrapBtn);
-            if(!this.$refs.formWrapBtn) return;
-            let el = this.$refs.formWrapBtn.$el;
-            let pWidth = el.offsetWidth;  
-            let totalWidth = 0, childs = [...el.children], childLen = childs.length;
+            if (!this.$refs.formWrapBtn) return
+            let el = this.$refs.formWrapBtn.$el
+            let pWidth = el.offsetWidth
+            let totalWidth = 0,
+                childs = [...el.children],
+                childLen = childs.length
             // console.log('childs--',childs,childLen)
-            let preWrapChildW = parseInt(this.$refs.formWrapBtn.labelWidth || '86px') + 12;   //保存换行前的第一个元素的labelWidth+marginRight 按钮组的marginLeft大小 以该元素的labelWidth + marginRight为准
-            childs.forEach((child,index) => {
+            let preWrapChildW = parseInt(this.$refs.formWrapBtn.labelWidth || '86px') + 12 //保存换行前的第一个元素的labelWidth+marginRight 按钮组的marginLeft大小 以该元素的labelWidth + marginRight为准
+            childs.forEach((child, index) => {
                 // totalWidth += (child.offsetWidth + ((index === childLen - 1) ? 0 : 30));
-                totalWidth += (child.offsetWidth + 30);
+                totalWidth += child.offsetWidth + 30
                 // console.log('pre--',totalWidth,pWidth)
-                if(totalWidth > pWidth) {   //换行
+                if (totalWidth > pWidth) {
+                    //换行
                     // console.log('totalWidth--',totalWidth, pWidth, index)
-                    totalWidth = child.offsetWidth + 30;
-                    if(index === childLen - 1) {     //按钮组
-                        child.classList.add('formWrapBtn');
-                        child.style.marginLeft = preWrapChildW + 'px';
+                    totalWidth = child.offsetWidth + 30
+                    if (index === childLen - 1) {
+                        //按钮组
+                        child.classList.add('formWrapBtn')
+                        child.style.marginLeft = preWrapChildW + 'px'
                     }
-                }else {
-                    if(child.classList.contains('formWrapBtn')) {
+                } else {
+                    if (child.classList.contains('formWrapBtn')) {
                         child.classList.remove('formWrapBtn')
-                        child.style.marginLeft = 0;
+                        child.style.marginLeft = 0
                     }
                 }
             })
-        },200),
+        }, 200)
     },
     created() {
-        this.rawSearchFilters = object.deepClone(this.searchFilters);      //某些页面有另外的搜索参数，拷贝一份原有的搜索参数
+        this.rawSearchFilters = object.deepClone(this.searchFilters) //某些页面有另外的搜索参数，拷贝一份原有的搜索参数
     },
     mounted() {
         if (this.isMounted) {
@@ -190,32 +194,31 @@ export default {
             this.getData()
         }
         // 页面一定会走mounted
-        if(!this.sonEffect) {
-            this.formWrapBtnFn();
-            window.addEventListener('resize',this.formWrapBtnFn)
+        if (!this.sonEffect) {
+            this.formWrapBtnFn()
+            window.addEventListener('resize', this.formWrapBtnFn)
         }
-
     },
 
     activated() {
         if (!this.isMounted) {
             this.getData()
         }
-        if(!this.sonEffect) {
-            this.formWrapBtnFn();
-            window.addEventListener('resize',this.formWrapBtnFn)
+        if (!this.sonEffect) {
+            this.formWrapBtnFn()
+            window.addEventListener('resize', this.formWrapBtnFn)
         }
     },
 
     deactivated() {
-        if(!this.sonEffect) {
-            window.removeEventListener('resize',this.formWrapBtnFn)
+        if (!this.sonEffect) {
+            window.removeEventListener('resize', this.formWrapBtnFn)
         }
     },
 
     destroyed() {
-        if(!this.sonEffect) {
-            window.removeEventListener('resize',this.formWrapBtnFn)
+        if (!this.sonEffect) {
+            window.removeEventListener('resize', this.formWrapBtnFn)
         }
     }
 }

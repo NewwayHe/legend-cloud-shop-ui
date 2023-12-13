@@ -35,7 +35,7 @@ const positionManage = {
     staffUpdatePwd: (data) => request.postForm('/user/s/shop/subUser/updatePassword', data),
 
     // 获取员工列表
-    getStaffList: (data) => request.get(`/user/s/shop/subUser/queryUserPage`, data),
+    getStaffList: (data) => request.get(`/user/s/shop/subUser/queryUserPage`, data)
 }
 
 const storeManage = {

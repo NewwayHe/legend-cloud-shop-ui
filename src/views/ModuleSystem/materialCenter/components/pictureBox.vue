@@ -55,7 +55,7 @@ import { set } from 'nprogress'
 import { debounce } from '@/utils/utils.js'
 export default {
     name: 'MaterialCenter',
-    components: { },
+    components: {},
     mixins: [common, cud],
 
     data() {

@@ -1,8 +1,8 @@
 <template>
-    <div class="fixedBar" :style="{ left: leftWidth, width:`calc(100% - ${leftWidth})` }">
-		<slot>
-			<div>i am sticky</div>
-		</slot>
+    <div class="fixedBar" :style="{ left: leftWidth, width: `calc(100% - ${leftWidth})` }">
+        <slot>
+            <div>i am sticky</div>
+        </slot>
     </div>
 </template>
 

@@ -36,7 +36,7 @@
             </el-row>
         </el-scrollbar>
         <el-row style="padding: 0 15px">
-            <el-checkbox v-model="checkedAll"  :disabled="checkDisable" @change="allSelectChange">全选</el-checkbox>
+            <el-checkbox v-model="checkedAll" :disabled="checkDisable" @change="allSelectChange">全选</el-checkbox>
         </el-row>
         <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="dialogVisible = false">取 消</el-button>
@@ -85,7 +85,7 @@ export default {
             set(val) {
                 return val
             }
-        },
+        }
     },
     watch: {
         dialogVisible(newVal) {

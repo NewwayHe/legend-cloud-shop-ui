@@ -21,7 +21,7 @@ export default {
     },
     computed: {
         isExternal() {
-			return this.$checkInfo([{ type: 'isExternal', value: this.iconClass }])
+            return this.$checkInfo([{ type: 'isExternal', value: this.iconClass }])
         },
         iconName() {
             return `#icon-${this.iconClass}`

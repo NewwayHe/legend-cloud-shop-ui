@@ -11,10 +11,10 @@ const orderApi = {
     cancelOrder: (data) => request.post('/order/s/order/cancel/order', data), //取消订单(买家未付款)
 
     cancelOrderBatch: (data) => request.post('/order/s/order/cancel/batch', data), //批量取消订单
-    
+
     applyCancel: (data) => request.post('/order/s/order/refund/apply/cancel', data), // 申请取消订单(买家已付款)
 
-    cancelPreSellOrder:(data) => request.post('/order/s/order/cancel/pre/sell/order', data), //取消预售订单
+    cancelPreSellOrder: (data) => request.post('/order/s/order/cancel/pre/sell/order', data), //取消预售订单
 
     insertLogistic: (data) => request.postForm('/order/s/order/insert/logistic', data), // 确认发货
 
@@ -30,10 +30,9 @@ const orderApi = {
 
     orderExport: (data) => request.getFile('/order/s/order/export', data), // 订单数据导出
 
-    updateLogistic:(data) => request.postForm('/order/s/order/update/logistic',data), //商家修改物流信息
+    updateLogistic: (data) => request.postForm('/order/s/order/update/logistic', data), //商家修改物流信息
 
-    logisticsExport:(importId)=>request.getFile(`/order/s/order/import/logistics/export/detail/${importId}`),//导出批量发货结果
-
+    logisticsExport: (importId) => request.getFile(`/order/s/order/import/logistics/export/detail/${importId}`) //导出批量发货结果
 }
 // 评论
 const commentApi = {
@@ -60,18 +59,16 @@ const serviceOrderApi = {
     //售后导出
     refundExport: (data) => request.getFile('/order/s/order/refund/export', data),
     // 获取取消订单原因
-    refundReason:() => request.post('/order/admin/order/refund/cancel/reason'),
+    refundReason: () => request.post('/order/admin/order/refund/cancel/reason'),
 
-    auditWithdrawGood: (data) =>request.post('/order/s/order/refund/audit/withdraw/good',data), //撤回取消订单(买家已付款)申请
-    
+    auditWithdrawGood: (data) => request.post('/order/s/order/refund/audit/withdraw/good', data), //撤回取消订单(买家已付款)申请
+
     // 退款退货原因列表
-    afterSalesReason:(data) => request.postForm('/order/s/order/refund/afterSales/reason',data),
+    afterSalesReason: (data) => request.postForm('/order/s/order/refund/afterSales/reason', data),
     // 批量审核退款订单
     batchAuditRefund: (data) => request.post('/order/s/order/refund/batch/audit/refund', data),
     // 批量审核退货订单
-    batchAuditRefundGood: (data) => request.post('/order/s/order/refund/batch/audit/refund/good', data),
-
-
+    batchAuditRefundGood: (data) => request.post('/order/s/order/refund/batch/audit/refund/good', data)
 }
 
 // 问答

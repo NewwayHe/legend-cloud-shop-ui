@@ -17,9 +17,7 @@
 export default {
     props: ['title', 'describe1', 'describe2', 'describe3', 'url'],
     data() {
-        return {
-			
-		}
+        return {}
     },
     methods: {
         go() {

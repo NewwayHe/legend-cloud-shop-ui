@@ -1,6 +1,6 @@
 <template>
     <section class="">
-        <el-card shadow :body-style="{padding:`20px 20px 10px 20px`}">
+        <el-card shadow :body-style="{ padding: `20px 20px 10px 20px` }">
             <!-- 表格 -->
             <detailsTable :table-list="formData" />
             <el-form ref="form" :model="formData" label-width="132px" size="small" class="mt-40 formWarp">
@@ -28,7 +28,7 @@
                 </el-form-item>
                 <el-form-item label="评论图片：">
                     <div v-if="formData.photos && formData.photos.length > 0">
-                        <ls-image v-for="(item, index) in formData.photos" :key="index" class="mr-20" :src="item" :options="{ w: '100', h: '100' }"/>
+                        <ls-image v-for="(item, index) in formData.photos" :key="index" class="mr-20" :src="item" :options="{ w: '100', h: '100' }" />
                     </div>
                     <div v-else>-</div>
                 </el-form-item>
@@ -47,9 +47,9 @@
                     <p>{{ formData.shopReplyTime || '-' }}</p>
                 </el-form-item>
                 <el-form-item label="平台评论状态：">
-                    <span class="status-wait" v-if="formData.status == 0">待审核</span>
-                    <span class="status-pass" v-if="formData.status == 1">通过</span>
-                    <span class="status-veto" v-if="formData.status == -1">拒绝</span>
+                    <span v-if="formData.status == 0" class="status-wait">待审核</span>
+                    <span v-if="formData.status == 1" class="status-pass">通过</span>
+                    <span v-if="formData.status == -1" class="status-veto">拒绝</span>
                 </el-form-item>
                 <el-form-item label="平台审核时间：">
                     <p>{{ formData.auditTime || '-' }}</p>
@@ -61,7 +61,13 @@
                 </el-form-item>
                 <el-form-item label="评论图片：">
                     <div v-if="formData.addPhotos && formData.addPhotos.length > 0">
-                        <ls-image v-for="(item, index) in formData.addPhotos" :key="index" class="mr-20" :src="item" :options="{ w: '100', h: '100' }" />
+                        <ls-image
+                            v-for="(item, index) in formData.addPhotos"
+                            :key="index"
+                            class="mr-20"
+                            :src="item"
+                            :options="{ w: '100', h: '100' }"
+                        />
                     </div>
                     <div v-else>-</div>
                 </el-form-item>
@@ -90,13 +96,22 @@
                 <el-form-item label="平台审核时间：" class="btn_lastItem">
                     <p>{{ formData.addAuditTime || '-' }}</p>
                 </el-form-item>
-				<LsSticky :data="formData">
-					<el-row type="flex" justify="center" class="w-100 overflow-h py-10 mt-10 bg-white">
-						<el-button size="small" @click="$router.go(-1)">返回</el-button>
-						<el-button size="small" v-if="formData.status == 1 && !formData.replyFlag" type="primary" @click="showDialog(formData, 1)">回复初评</el-button>
-						<el-button size="small" v-if="formData.addStatus == 1 && !formData.addReplyFlag" type="primary" @click="showDialog(formData, 2)"> 回复追评</el-button>
-					</el-row>
-				</LsSticky>
+                <LsSticky :data="formData">
+                    <el-row type="flex" justify="center" class="w-100 overflow-h py-10 mt-10 bg-white">
+                        <el-button size="small" @click="$router.go(-1)">返回</el-button>
+                        <el-button v-if="formData.status == 1 && !formData.replyFlag" size="small" type="primary" @click="showDialog(formData, 1)">
+                            回复初评
+                        </el-button>
+                        <el-button
+                            v-if="formData.addStatus == 1 && !formData.addReplyFlag"
+                            size="small"
+                            type="primary"
+                            @click="showDialog(formData, 2)"
+                        >
+                            回复追评
+                        </el-button>
+                    </el-row>
+                </LsSticky>
             </el-form>
         </el-card>
 
@@ -158,5 +173,4 @@ export default {
     }
 }
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

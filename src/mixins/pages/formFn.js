@@ -19,10 +19,10 @@ export function editFn(row = {}) {
     this.dialogForm.isEdit = true
     this.dialogForm.title = '编辑'
     this.dialogForm.isVisible = true
-	
-	this.$nextTick(() => {
-		this.dialogForm.formData = Object.assign({}, object.deepClone(row))
-	})
+
+    this.$nextTick(() => {
+        this.dialogForm.formData = Object.assign({}, object.deepClone(row))
+    })
 }
 
 export function delFn(row, url) {
@@ -30,18 +30,20 @@ export function delFn(row, url) {
         type: 'warning'
     })
         .then(() => {
-            service.request({ url: url + '/' + row[this.rowKey], method: 'delete' }).then((res) => {
-				if (res.code) {
-				    this.$message.success('删除成功')
-				    this.getData()
-				} else {
-				    this.$message.warning(res.msg)
-				}
-            })
-            .catch((e) => {
-                // this.$message.error(e.message)
-                catchUrl(e, url)
-            })
+            service
+                .request({ url: url + '/' + row[this.rowKey], method: 'delete' })
+                .then((res) => {
+                    if (res.code) {
+                        this.$message.success('删除成功')
+                        this.getData()
+                    } else {
+                        this.$message.warning(res.msg)
+                    }
+                })
+                .catch((e) => {
+                    // this.$message.error(e.message)
+                    catchUrl(e, url)
+                })
         })
         .catch(() => {
             // this.$message.info('取消删除')
@@ -75,9 +77,9 @@ export function getDataFn(url, params = {}) {
     request
         .get(url, params, { isShowLoading: this.isShowLoading })
         .then((res) => {
-            if(res.code) {
-				this.tableList = res?.data?.resultList || []
-                // 如果有自定义选择列时 tableDatas赋值必须写在tableList下面 
+            if (res.code) {
+                this.tableList = res?.data?.resultList || []
+                // 如果有自定义选择列时 tableDatas赋值必须写在tableList下面
                 // 因为下面语句会优先执行到双向数据监听
                 this.tableDatas = res?.data || ''
                 this.tableTotal = res?.data?.total || 0
@@ -86,7 +88,7 @@ export function getDataFn(url, params = {}) {
         .catch((e) => {
             catchUrl(e, url)
         })
-		.finally((res) => {
+        .finally((res) => {
             this.tableListLoading = false
         })
 }
@@ -113,11 +115,13 @@ export function mulDelFn(url, params = {}, message = '') {
                     ...params
                 })
                 .then((res) => {
-                    if(res.code) {
-                        if(params.single && params.callback) {  //单删
+                    if (res.code) {
+                        if (params.single && params.callback) {
+                            //单删
                             params.callback()
-                        }else {     //批量删
-                            this.$refs.multipleTable && this.$refs.multipleTable.clearSelection()       //清除表格选择勾选行
+                        } else {
+                            //批量删
+                            this.$refs.multipleTable && this.$refs.multipleTable.clearSelection() //清除表格选择勾选行
                         }
                         this.$message.success('操作成功')
                         this.getData()

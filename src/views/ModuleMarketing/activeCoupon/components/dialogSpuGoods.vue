@@ -251,7 +251,7 @@ export default {
             couponApi
                 .productPage({ ...this.dialogSearchFilters, ...this.dialogPage, couponId: this.couponId })
                 .then((res) => {
-                    if (res.code&&res.data&&res.data.resultList) {
+                    if (res.code && res.data && res.data.resultList) {
                         this.templateList = this.initList(res.data.resultList)
                         this.dialogPage.total = res.data.total
                     }

@@ -23,15 +23,15 @@ const shopMoveIn = {
 }
 const storeManage = {
     storeDetail: (id) => request.get(`/admin/shop/detail/${id}`), // 获取店铺详情
-	systemConfig: () => request.get('/shop/systemConfig'), // 【用户】获取ICP备案号以及商城名称等
-	contactInformationGet: (data) => request.get('/shop/contactInformation/infoByShopId',data), // 【商家，平台】根据当前登录用户id查询商家或平台微信联系方式存储表
-	contactInformationSave: (data) => request.post('/shop/contactInformation/s/save',data), // 【商家】保存商家微信联系方式
+    systemConfig: () => request.get('/shop/systemConfig'), // 【用户】获取ICP备案号以及商城名称等
+    contactInformationGet: (data) => request.get('/shop/contactInformation/infoByShopId', data), // 【商家，平台】根据当前登录用户id查询商家或平台微信联系方式存储表
+    contactInformationSave: (data) => request.post('/shop/contactInformation/s/save', data) // 【商家】保存商家微信联系方式
 }
 
 const addressApi = {
     location: (parentId) => request.get(`/basic/location/children/${parentId}`), //获取地址信息
     loadProvinceCity: () => request.get(`/basic/location/loadProvinceCity`), // 获取所有省市数据
-    addressAndLocationCode: (params) => request.get('/basic/a/map/addressAndLocationCode', params, { isShowMessage: false }), // 【公共】根据经纬度获取地址和省市区LocationID
+    addressAndLocationCode: (params) => request.get('/basic/a/map/addressAndLocationCode', params, { isShowMessage: false }) // 【公共】根据经纬度获取地址和省市区LocationID
 }
 // 消息
 const messageApi = {
@@ -45,8 +45,8 @@ const messageApi = {
     getPubDetail: (data) => request.get('/shop/s/pub/info', data),
     // 获取未读消息数
     getUnread: (params) => request.get('/basic/s/msg/unallread', params, { isShowMessage: false }),
-	// 【商家】一键清除消息未读标记
-	cleanUnread:(data) => request.get('/basic/s/msg/cleanUnread',data),
+    // 【商家】一键清除消息未读标记
+    cleanUnread: (data) => request.get('/basic/s/msg/cleanUnread', data)
 }
 
 // 登录页(忘记密码/注册)
@@ -70,12 +70,12 @@ const getToken = (data) => request.get('/shop/admin/grass/article/preview', data
 // 小程序
 const miniWxApi = {
     // 小程序码接口
-    getMiniQrCode: (data) => request.get('/basic/wx/getMiniQrCode', { flag: false, ...data }),
+    getMiniQrCode: (data) => request.get('/basic/wx/getMiniQrCode', { flag: false, ...data })
 }
 
 const excelCenter = {
-    excelPage:(data)=>request.get('/basic/shop/export/excel/page',data),   // 文件导出分页查询
-    excelDownload:(data) => request.getFile('/basic/export/excel/download',data)
+    excelPage: (data) => request.get('/basic/shop/export/excel/page', data), // 文件导出分页查询
+    excelDownload: (data) => request.getFile('/basic/export/excel/download', data)
 }
 
 export { shopMoveIn, storeManage, loginPage, addressApi, messageApi, uploadApi, getDomainApi, getToken, miniWxApi, excelCenter }

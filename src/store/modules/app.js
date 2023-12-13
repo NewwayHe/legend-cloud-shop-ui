@@ -6,7 +6,7 @@ const state = {
         withoutAnimation: false
     },
     device: 'desktop',
-    guide:false//是否正在新手指引中,防止菜单收缩
+    guide: false //是否正在新手指引中,防止菜单收缩
 }
 
 const mutations = {
@@ -27,7 +27,7 @@ const mutations = {
     TOGGLE_DEVICE: (state, device) => {
         state.device = device
     },
-    SET_GUIDE:(state,guide)=>{
+    SET_GUIDE: (state, guide) => {
         state.guide = guide
     }
 }
@@ -42,7 +42,7 @@ const actions = {
     toggleDevice({ commit }, device) {
         commit('TOGGLE_DEVICE', device)
     },
-    setGuide({ commit },guide){
+    setGuide({ commit }, guide) {
         commit('SET_GUIDE', guide)
     }
 }

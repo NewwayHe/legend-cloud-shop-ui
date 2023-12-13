@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-card :body-style="{padding:`20px 20px 10px 20px`}">
+        <el-card :body-style="{ padding: `20px 20px 10px 20px` }">
             <el-row slot="header">
                 <span>商品销售排行</span>
                 <el-tooltip class="item" placement="right">
@@ -64,11 +64,7 @@
                     <el-table-column prop="image" label="商品" width="280">
                         <template slot-scope="scope">
                             <div class="d-flex a-center">
-                                <ls-image
-                                    style="flex: 0 0 50px"
-                                    :src="scope.row.image"
-                                    :options="{ w: '50', h: '50', br: '6' }"
-                                />
+                                <ls-image style="flex: 0 0 50px" :src="scope.row.image" :options="{ w: '50', h: '50', br: '6' }" />
                                 <el-popover placement="top-start" trigger="hover" :content="scope.row.productName" class="d-flex flex-column a-start">
                                     <div>{{ scope.row.productName }}</div>
                                     <el-link
@@ -95,12 +91,12 @@
                     <el-table-column prop="price" label="销售价" sortable="custom">
                         <template slot-scope="scope">{{ (scope.row.price + '') | priceRangeFilters }}</template>
                     </el-table-column>
-                    <el-table-column label="累计成交金额" prop="dealAmount" sortable="custom" min-width="120px" >
+                    <el-table-column label="累计成交金额" prop="dealAmount" sortable="custom" min-width="120px">
                         <template slot-scope="scope">{{ (scope.row.dealAmount + '') | priceRangeFilters }}</template>
                     </el-table-column>
                     <el-table-column prop="dealGoodNum" label="累计成交数量" sortable="custom" min-width="120px" />
-                    <el-table-column prop="viewNum" label="累计访问次数" sortable="custom" min-width="120px" ></el-table-column>
-                    <el-table-column prop="favoriteNum" label="累计商品收藏量" sortable="custom" min-width="130px"  />
+                    <el-table-column prop="viewNum" label="累计访问次数" sortable="custom" min-width="120px"></el-table-column>
+                    <el-table-column prop="favoriteNum" label="累计商品收藏量" sortable="custom" min-width="130px" />
                     <el-table-column label="操作" align="left" fixed="right" width="200">
                         <template slot-scope="scope">
                             <span class="table__action">
@@ -110,11 +106,11 @@
                     </el-table-column>
                 </el-table>
             </el-row>
-			<LsSticky :data="tableList">
-				<el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
-					<pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
-				</el-row>
-			</LsSticky>
+            <LsSticky :data="tableList">
+                <el-row type="flex" justify="end" class="w-100 overflow-h py-10 mt-10 bg-white">
+                    <pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
+                </el-row>
+            </LsSticky>
         </el-card>
     </div>
 </template>

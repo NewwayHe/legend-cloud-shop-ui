@@ -172,7 +172,7 @@ export default {
                         pointJson: this.secretKey ? aesEncrypt(JSON.stringify(this.checkPosArr), this.secretKey) : JSON.stringify(this.checkPosArr),
                         token: this.backToken
                     }
-                    this.$store.dispatch('user/saveRepeatVerify',data); //存一份用于做登录二次校验
+                    this.$store.dispatch('user/saveRepeatVerify', data) //存一份用于做登录二次校验
                     reqCheck(data).then((res) => {
                         if (res.code === 1) {
                             this.barAreaColor = '#4cae4c'

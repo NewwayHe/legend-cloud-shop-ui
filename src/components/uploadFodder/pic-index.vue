@@ -28,7 +28,7 @@
                                         :class="{ active: filterImg.includes(item.filePath) }"
                                         @click="choose(item.filePath)"
                                     >
-                                        <ls-image :src="item.filePath" :options="{ w: '130', h: '130' }" :isPreview="false" />
+                                        <ls-image :src="item.filePath" :options="{ w: '130', h: '130' }" :is-preview="false" />
                                         <span class="mt-10 line-clamp1 px-10">{{ item.fileName }}</span>
                                     </div>
                                 </el-col>
@@ -106,8 +106,7 @@ export default {
             return this.isUpload == false ? '我的图片' : '上传图片'
         }
     },
-    mounted() {
-    },
+    mounted() {},
     methods: {
         showDialog() {
             this.isVisible = true

@@ -6,11 +6,11 @@
         <el-card shadow>
             <el-form ref="form" :model="form" :rules="rules" label-width="132px" size="small">
                 <el-form-item label="参数标题：" prop="propName">
-                    <el-input v-model.trim="form.propName" maxlength="20" show-word-limit class="w-450p" placeholder="请输入"/>
+                    <el-input v-model.trim="form.propName" maxlength="20" show-word-limit class="w-450p" placeholder="请输入" />
                     <span class="ml-10 text-999">参数标题会显示在用户端的商品详情页中，最多20字</span>
                 </el-form-item>
                 <el-form-item label="参数副标题：" prop="memo">
-                    <el-input v-model.trim="form.memo" class="w-450p" placeholder="请输入"/>
+                    <el-input v-model.trim="form.memo" class="w-450p" placeholder="请输入" />
                     <span class="ml-10 text-999">
                         类似于备注的功能，不显示在用户端，仅显示在后台中，建议名称为 "将要绑定的商品类目全路径名称 + 标题"
                     </span>
@@ -19,7 +19,7 @@
                     <el-button type="primary" @click="addSpe">添加参数值</el-button>
                     <span class="ml-10 text-999">
                         一个参数可添加多个参数值值（拖动可以改变顺序）
-						<imgPreview class="ml-10" :src="require('@/assets/images/exampleImgs/paraOperate.png')" />
+                        <imgPreview class="ml-10" :src="require('@/assets/images/exampleImgs/paraOperate.png')" />
                     </span>
                 </el-form-item>
                 <el-form-item class="btn_lastItem">
@@ -30,13 +30,13 @@
                         tooltip-effect="dark"
                         size="mini"
                         :data="form.groupList"
-					    header-row-class-name="headerRow"
+                        header-row-class-name="headerRow"
                     >
                         <el-table-column prop="name" label="参数值" align="center" width="300">
                             <template slot-scope="scope">
                                 <el-form :ref="'tableForm' + scope.$index" :key="scope.row.id" :model="scope.row" :rules="rules" size="small">
                                     <el-form-item prop="name">
-                                        <el-input v-model.trim="scope.row.name" placeholder="请输入" :maxlength="50"/>
+                                        <el-input v-model.trim="scope.row.name" placeholder="请输入" :maxlength="50" />
                                     </el-form-item>
                                 </el-form>
                             </template>
@@ -49,12 +49,10 @@
                     </el-table>
                 </el-form-item>
             </el-form>
-			<el-row type="flex" justify="center" class="py-10">
-				<el-button size="small" @click="onCancel">取消</el-button>
-				<ls-button size="small" type="primary" :asyncFunction="onSubmit">
-					保存
-				</ls-button>
-			</el-row>
+            <el-row type="flex" justify="center" class="py-10">
+                <el-button size="small" @click="onCancel">取消</el-button>
+                <ls-button size="small" type="primary" :async-function="onSubmit">保存</ls-button>
+            </el-row>
         </el-card>
 
         <dialog-group
@@ -96,14 +94,14 @@ export default {
         }
     },
     beforeRouteEnter(to, from, next) {
-        let type = to.query.type;
+        let type = to.query.type
         let title = to.meta.title.split('/')
-        if(type === 'add' || type === 'similar') {
-            to.meta.text = '新增参数'   //面包屑
-            title[1] = '新增参数'       //顶部导航栏[黑色区显示]
-        }else {
+        if (type === 'add' || type === 'similar') {
+            to.meta.text = '新增参数' //面包屑
+            title[1] = '新增参数' //顶部导航栏[黑色区显示]
+        } else {
             to.meta.text = '编辑参数'
-            title[1] = '编辑参数'   
+            title[1] = '编辑参数'
         }
         to.meta.title = title.join('/')
 
@@ -184,7 +182,7 @@ export default {
 
         // 提交
         onSubmit() {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 this.$refs.form.validate((valid) => {
                     if (valid) {
                         const tableFormList = []
@@ -207,10 +205,11 @@ export default {
                             })
                             .catch((err) => {
                                 console.log('验证失败', err)
-                            }).finally(_=>{
+                            })
+                            .finally((_) => {
                                 resolve()
                             })
-                    }else{
+                    } else {
                         resolve()
                     }
                 })
@@ -219,7 +218,7 @@ export default {
 
         // 新增
         addItem() {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 console.log(this.form)
                 params
                     .add({
@@ -241,41 +240,42 @@ export default {
                     })
                     .catch((err) => {
                         console.log(err)
-                    }).finally(_=>{
-                    resolve()
-                })
+                    })
+                    .finally((_) => {
+                        resolve()
+                    })
             })
         },
 
         // 编辑
         editItem() {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 params
-                .edit({
-                    id: this.form.id,
-                    propName: this.form.propName,
-                    memo: this.form.memo,
-                    searchFlag: Boolean(this.form.searchFlag),
-                    type: 'TXT', // 这个写死
-                    attributeType: 'P', // 这个写死
-                    prodPropList: this.form.groupList,
-                    aggIdList: this.form.relatedGroup.map((item) => item.id),
-                    source: 'USER' // 这个写死
-                })
-                .then((res) => {
-                    this.$message({
-                        message: '编辑成功',
-                        type: 'success'
+                    .edit({
+                        id: this.form.id,
+                        propName: this.form.propName,
+                        memo: this.form.memo,
+                        searchFlag: Boolean(this.form.searchFlag),
+                        type: 'TXT', // 这个写死
+                        attributeType: 'P', // 这个写死
+                        prodPropList: this.form.groupList,
+                        aggIdList: this.form.relatedGroup.map((item) => item.id),
+                        source: 'USER' // 这个写死
                     })
-                    this.$router.push({ path: '/ModuleGoods/attributeManage/params' })
-                })
-                .catch((err) => {
-                    console.log(err)
-                }).finally(_=>{
-                    resolve()
-                })
+                    .then((res) => {
+                        this.$message({
+                            message: '编辑成功',
+                            type: 'success'
+                        })
+                        this.$router.push({ path: '/ModuleGoods/attributeManage/params' })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+                    .finally((_) => {
+                        resolve()
+                    })
             })
-            
         },
 
         // 取消返回上一个路由
@@ -319,10 +319,9 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 /* 修改popover样式 不能加scoped */
 .el-popover.atooltip {
     padding: 10px;
 }
 </style>
-

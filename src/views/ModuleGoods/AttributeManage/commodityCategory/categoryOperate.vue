@@ -10,14 +10,14 @@
                 <el-form-item label="父级：" prop="parentId">
                     <span>{{ form.parentName || '顶级' }}</span>
                     <span class="m-20 mr-0 ml-10 complain--color">父类，即新增类目的上级类目，一个类目只可绑定一个父类</span>
-					<imgPreview class="ml-10" :src="require('@/assets/images/exampleImgs/leimu.png')" />
+                    <imgPreview class="ml-10" :src="require('@/assets/images/exampleImgs/leimu.png')" />
                 </el-form-item>
                 <el-form-item label="类目名称：" prop="name">
                     <el-input v-model="form.name" class="w-450p" maxlength="6" placeholder="类目标题，最多不能超过6个字符" />
                     <span class="m-20 ml-10 complain--color">类目名称，会显示在用户端给用户查看</span>
                 </el-form-item>
                 <el-form-item label="排序：" prop="seq">
-                    <el-input v-model="form.seq" min="0" type="number" class="w-450p" placeholder="请输入"/>
+                    <el-input v-model="form.seq" min="0" type="number" class="w-450p" placeholder="请输入" />
                     <span class="m-20 ml-10 complain--color">设置类目顺序</span>
                 </el-form-item>
                 <el-form-item label="状态：" prop="status" class="btn_lastItem">
@@ -27,12 +27,10 @@
                     </el-radio-group>
                 </el-form-item>
             </el-form>
-			<el-row type="flex" justify="center" class="py-10">
-				<el-button size="small" @click="onCancel">取消</el-button>
-				<ls-button size="small" type="primary" :asyncFunction="onSubmit">
-					保存
-				</ls-button>
-			</el-row>
+            <el-row type="flex" justify="center" class="py-10">
+                <el-button size="small" @click="onCancel">取消</el-button>
+                <ls-button size="small" type="primary" :async-function="onSubmit">保存</ls-button>
+            </el-row>
         </el-card>
     </section>
 </template>
@@ -73,12 +71,12 @@ export default {
         }
     },
     beforeRouteEnter(to, from, next) {
-        let status = to.query.status;
-        let { text } = from.meta;
-        if(status === 'add') {
-            to.meta.text = '新增商品类目'   //面包屑
-            to.meta.title = text + '/新增商品类目'       //顶部导航栏[黑色区显示]
-        }else {
+        let status = to.query.status
+        let { text } = from.meta
+        if (status === 'add') {
+            to.meta.text = '新增商品类目' //面包屑
+            to.meta.title = text + '/新增商品类目' //顶部导航栏[黑色区显示]
+        } else {
             to.meta.text = '编辑商品类目'
             to.meta.title = text + '/编辑商品类目'
         }
@@ -126,7 +124,7 @@ export default {
 
         // 提交
         onSubmit() {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 this.$refs.form.validate(async (valid) => {
                     if (valid) {
                         if (this.isEdit) {
@@ -135,54 +133,55 @@ export default {
                             await this.add()
                         }
                         resolve()
-                    }else{
+                    } else {
                         resolve()
                     }
                 })
             })
-            
         },
 
         // 添加
         add() {
-            return new Promise(resolve=>{
+            return new Promise((resolve) => {
                 category
-                .add(this.form)
-                .then((res) => {
-                    console.log(res)
-                    this.$message({
-                        message: '新增成功',
-                        type: 'success',
+                    .add(this.form)
+                    .then((res) => {
+                        console.log(res)
+                        this.$message({
+                            message: '新增成功',
+                            type: 'success'
+                        })
+                        this.$router.push({ name: 'commodityCategory' })
                     })
-                    this.$router.push({ name: 'commodityCategory' })
-                })
-                .catch((err) => {
-                    console.log(err)
-                }).finally(_=>{
-                    resolve()
-                })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+                    .finally((_) => {
+                        resolve()
+                    })
             })
         },
 
         // 编辑
         edit() {
-            return new Promise(resolve=>{
-            console.log('test', this.form)
-            category
-                .edit(this.form)
-                .then((res) => {
-                    console.log(res)
-                    this.$message({
-                        message: '编辑成功',
-                        type: 'success',
+            return new Promise((resolve) => {
+                console.log('test', this.form)
+                category
+                    .edit(this.form)
+                    .then((res) => {
+                        console.log(res)
+                        this.$message({
+                            message: '编辑成功',
+                            type: 'success'
+                        })
+                        this.$router.push({ name: 'commodityCategory' })
                     })
-                    this.$router.push({ name: 'commodityCategory' })
-                })
-                .catch((err) => {
-                    console.log(err)
-                }).finally(_=>{
-                    resolve()
-                })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+                    .finally((_) => {
+                        resolve()
+                    })
             })
         },
 
@@ -208,7 +207,7 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 /* 修改popover样式 不能加scoped */
 .el-popover.atooltip {
     padding: 10px;

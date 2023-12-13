@@ -2,7 +2,7 @@
     优惠券报表—>拉新复购饼图
 -->
 <template>
-    <div :class="className" :style="{ height: height, width: width }"/>
+    <div :class="className" :style="{ height: height, width: width }" />
 </template>
 
 <script>
@@ -34,7 +34,7 @@ export default {
         },
         chartName: {
             type: String
-        },
+        }
     },
     data() {
         return {
@@ -43,17 +43,15 @@ export default {
         }
     },
     watch: {
-        chartData:{
-            handler(){
+        chartData: {
+            handler() {
                 this.getChartData()
             },
-            deep:true,
-            immediate:true
+            deep: true,
+            immediate: true
         }
     },
-    created() {
-       
-    },
+    created() {},
     mounted() {
         this.getChartData()
         // console.log('mount--',this.chartData)
@@ -67,7 +65,7 @@ export default {
         this.chart = null
     },
     methods: {
-        getChartData(){
+        getChartData() {
             this.series = [
                 {
                     name: this.chartName,
@@ -101,7 +99,7 @@ export default {
                     data: this.chartData
                 }
             ]
-            if(!this.$utils.test.isEmpty(this.chartData)) {
+            if (!this.$utils.test.isEmpty(this.chartData)) {
                 this.$nextTick(() => {
                     this.initChart()
                 })
@@ -111,26 +109,23 @@ export default {
             this.chart = echarts.init(this.$el)
             this.setOptions()
         },
-        setOptions(){
+        setOptions() {
             const option = {
                 tooltip: {
-                    trigger: 'item',
+                    trigger: 'item'
                     // position: ['50%', '50%']
                 },
-                legend: {           //图例
+                legend: {
+                    //图例
                     bottom: '0%',
-                    left: 'center',
+                    left: 'center'
                 },
-                series: this.series,
-            };
+                series: this.series
+            }
             this.chart.setOption(option)
-        },
-
-
+        }
     }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -13,7 +13,16 @@
                 <h3 class="title">注册</h3>
             </div>
             <el-form-item prop="mobile">
-                <el-input ref="mobile" v-model="loginForm.mobile" placeholder="手机号" name="mobile" type="text" tabindex="1" auto-complete="on" maxlength="11"/>
+                <el-input
+                    ref="mobile"
+                    v-model="loginForm.mobile"
+                    placeholder="手机号"
+                    name="mobile"
+                    type="text"
+                    tabindex="1"
+                    auto-complete="on"
+                    maxlength="11"
+                />
             </el-form-item>
 
             <el-form-item prop="password">
@@ -121,7 +130,7 @@ export default {
             },
             loginRules: {
                 mobile: [
-                    { required: true, trigger: 'blur', validator: validateUsername },
+                    { required: true, trigger: 'blur', validator: validateUsername }
                     // { required: true, trigger: 'blur', validator: this.isPhoneExist }
                 ],
                 password: [{ required: true, trigger: 'blur', validator: validatePassword }],
@@ -429,11 +438,11 @@ $cursor: #fff;
 }
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-    .login-container{
-		::v-deep .el-input input {
-			color: $cursor;
-		}
-	} 
+    .login-container {
+        ::v-deep .el-input input {
+            color: $cursor;
+        }
+    }
 }
 .login__Active {
     position: relative;

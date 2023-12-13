@@ -2,7 +2,14 @@
     <section class="mb-50">
         <div class="table">
             <el-card class="mb-15" shadow>
-                <el-table ref="table" v-loading="tableDetailListLoading" header-row-class-name="headerRow" border :data="categoryTable" class="w-100 mb-50">
+                <el-table
+                    ref="table"
+                    v-loading="tableDetailListLoading"
+                    header-row-class-name="headerRow"
+                    border
+                    :data="categoryTable"
+                    class="w-100 mb-50"
+                >
                     <template slot="empty">
                         <empty empty-type="pro" />
                     </template>
@@ -28,11 +35,18 @@
 
                 <!--列表-->
                 <p class="font text-333 mb-20">类目下的商品：</p>
-                <el-table ref="multipleTable" v-loading="tableListLoading" header-row-class-name="headerRow" :data="tableList" tooltip-effect="dark" class="w-100">
+                <el-table
+                    ref="multipleTable"
+                    v-loading="tableListLoading"
+                    header-row-class-name="headerRow"
+                    :data="tableList"
+                    tooltip-effect="dark"
+                    class="w-100"
+                >
                     <template slot="empty">
                         <empty empty-type="pro" />
                     </template>
-                    <el-table-column label="序号" type="index" width="48"/>
+                    <el-table-column label="序号" type="index" width="48" />
                     <el-table-column prop="pic" label="商品主图">
                         <template slot-scope="scope">
                             <div class="d-flex a-center">
@@ -51,11 +65,9 @@
                         <template slot-scope="scope">{{ scope.row.brandName || '-' }}</template>
                     </el-table-column>
                     <el-table-column prop="price" label="销售价">
-                        <template slot-scope="scope">
-							￥{{ scope.row.price }}
-						</template>
+                        <template slot-scope="scope">￥{{ scope.row.price }}</template>
                     </el-table-column>
-                    <el-table-column prop="buys" label="销量"/>
+                    <el-table-column prop="buys" label="销量" />
                     <el-table-column prop="status" label="状态">
                         <template slot-scope="scope">
                             <span v-if="scope.row.opStatus == -1" class="status-veto">审核不通过</span>
@@ -72,8 +84,15 @@
                 </el-table>
 
                 <el-row type="flex" justify="end" class="mt-30">
-                    <el-pagination :page-sizes="[10, 30, 50, 100, 500, 1000]" :page-size="10" layout="total, sizes, prev, pager, next, jumper"
-                        :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
+                    <el-pagination
+                        :page-sizes="[10, 30, 50, 100, 500, 1000]"
+                        :page-size="10"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :current-page="page.curPage"
+                        :total="tableTotal"
+                        @size-change="pageSizeChange"
+                        @current-change="currentPageChange"
+                    />
                 </el-row>
             </el-card>
         </div>
@@ -84,95 +103,95 @@
 </template>
 
 <script>
-    import { category } from '@/api/ModuleGoods'
-    import Sticky from '@/components/Sticky'
+import { category } from '@/api/ModuleGoods'
+import Sticky from '@/components/Sticky'
 
-    export default {
-        components: {
-            Sticky
+export default {
+    components: {
+        Sticky
+    },
+    data() {
+        return {
+            tableDetailListLoading: false, // 表格请求loading
+            categoryTable: [], // 类目信息
+            id: '',
+            parentName: '',
+            url: {
+                getData: '/product/s/product/page'
+            },
+            searchFilters: {
+                shopFirstCatId: this.$route.query.gradeId == 1 ? this.$route.query.id : '',
+                shopSecondCatId: this.$route.query.gradeId == 2 ? this.$route.query.id : '',
+                shopThirdCatId: this.$route.query.gradeId == 3 ? this.$route.query.id : ''
+            },
+            page: {
+                // 表格页码
+                pageSize: 10,
+                curPage: 1
+            },
+            tableList: [], // 表格列表
+            tableTotal: 0, // 表格列表总数
+            tableListLoading: false // 表格请求loading
+        }
+    },
+    mounted() {
+        this.id = this.$route.query.id
+        this.parentName = this.$route.query.parentName
+        this.init(this.$route.query.id)
+        this.getPage()
+    },
+    methods: {
+        //类目下的商品列表
+        getPage() {
+            this.tableListLoading = true
+            category
+                .page2({
+                    categoryId: this.id,
+                    curPage: this.page.curPage,
+                    pageSize: this.page.pageSize
+                })
+                .then((res) => {
+                    this.tableListLoading = false
+                    this.tableTotal = res?.data?.total || 0
+                    this.tableList = res?.data?.resultList || []
+                })
         },
-        data() {
-            return {
-                tableDetailListLoading: false, // 表格请求loading
-                categoryTable: [], // 类目信息
-                id: '',
-                parentName: '',
-                url: {
-                    getData: '/product/s/product/page'
-                },
-                searchFilters: {
-                    shopFirstCatId: this.$route.query.gradeId == 1 ? this.$route.query.id : '',
-                    shopSecondCatId: this.$route.query.gradeId == 2 ? this.$route.query.id : '',
-                    shopThirdCatId: this.$route.query.gradeId == 3 ? this.$route.query.id : ''
-                },
-                page: {
-                    // 表格页码
-                    pageSize: 10,
-                    curPage: 1
-                },
-                tableList: [], // 表格列表
-                tableTotal: 0, // 表格列表总数
-                tableListLoading: false // 表格请求loading
-            }
-        },
-        mounted() {
-            this.id = this.$route.query.id
-            this.parentName = this.$route.query.parentName
-            this.init(this.$route.query.id)
+        /**
+         *  页码改变
+         */
+        currentPageChange(p) {
+            this.page.curPage = p
             this.getPage()
         },
-        methods: {
-            //类目下的商品列表
-            getPage() {
-                this.tableListLoading = true
-                category
-                    .page2({
-                        categoryId: this.id,
-                        curPage: this.page.curPage,
-                        pageSize: this.page.pageSize
-                    })
-                    .then((res) => {
-                        this.tableListLoading = false
-                        this.tableTotal = res?.data?.total || 0
-                        this.tableList = res?.data?.resultList || []
-                    })
-            },
-            /**
-             *  页码改变
-             */
-            currentPageChange(p) {
-                this.page.curPage = p
-                this.getPage()
-            },
-            /**
-             *  页数改变
-             */
-            pageSizeChange(size) {
-                this.page.pageSize = size
-                this.getPage()
-            },
-            // 初始化页面
-            init(id) {
-                this.tableDetailListLoading = true
-                category
-                    .detail(id)
-                    .then((res) => {
-                        console.log(res)
-                        this.tableDetailListLoading = false
-                        this.categoryTable = [res.data]
-                    })
-                    .catch((err) => {
-                        this.tableDetailListLoading = false
-                        console.log(err)
-                    })
-            },
-
-            // 返回列表页
-            goBack() {
-                this.$router.push({
-                    name: 'commodityCategory'
+        /**
+         *  页数改变
+         */
+        pageSizeChange(size) {
+            this.page.pageSize = size
+            this.getPage()
+        },
+        // 初始化页面
+        init(id) {
+            this.tableDetailListLoading = true
+            category
+                .detail(id)
+                .then((res) => {
+                    console.log(res)
+                    this.tableDetailListLoading = false
+                    this.categoryTable = [res.data]
                 })
-            }
+                .catch((err) => {
+                    this.tableDetailListLoading = false
+                    console.log(err)
+                })
+        },
+
+        // 返回列表页
+        goBack() {
+            this.$router.push({
+                name: 'commodityCategory'
+            })
         }
     }
+}
 </script>

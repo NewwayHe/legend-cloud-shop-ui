@@ -1,9 +1,8 @@
- * @Descripttion:商品回收站
-*/ -->
+* @Descripttion:商品回收站 */ -->
 <template>
     <section class="">
         <!-- 查询 -->
-        <el-card shadow :body-style="{padding:`20px 20px 10px 20px`}">
+        <el-card shadow :body-style="{ padding: `20px 20px 10px 20px` }">
             <div class="search">
                 <el-form :inline="true" :model="searchFilters" size="small">
                     <el-form-item label="商品名称">
@@ -19,7 +18,7 @@
                         <el-button size="small" @click.stop="dbnResetSearch(['delStatus'])">重置</el-button>
                         <el-button size="small" @click.stop="dbnExcel">导出数据</el-button>
                     </el-form-item>
-                </el-form> 
+                </el-form>
             </div>
             <div class="table">
                 <!--列表-->
@@ -49,29 +48,36 @@
                                             <span class="line-clamp2">{{ scope.row.name || '-' }}</span>
                                         </el-link>
                                     </template>
-                                    <div>{{scope.row.name}}</div>
-                                    <el-link class="text-blue" :underline="false"  target="_blank" :href="$shareRedirectUrl+'?detailsType=good&id='+scope.row.id">{{ $shareRedirectUrl+'?detailsType=good&id='+scope.row.id }}</el-link> 
+                                    <div>{{ scope.row.name }}</div>
+                                    <el-link
+                                        class="text-blue"
+                                        :underline="false"
+                                        target="_blank"
+                                        :href="$shareRedirectUrl + '?detailsType=good&id=' + scope.row.id"
+                                    >
+                                        {{ $shareRedirectUrl + '?detailsType=good&id=' + scope.row.id }}
+                                    </el-link>
                                 </el-popover>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="brandName" label="品牌" >
+                    <el-table-column prop="brandName" label="品牌">
                         <template slot-scope="scope">{{ scope.row.brandName || '-' }}</template>
                     </el-table-column>
-                    <el-table-column prop="skuCount" label="SKU数量"  >
+                    <el-table-column prop="skuCount" label="SKU数量">
                         <template slot-scope="scope">{{ scope.row.skuCount || '-' }}</template>
                     </el-table-column>
-                    <el-table-column sortable prop="price" width="224" label="销售价"  >
+                    <el-table-column sortable prop="price" width="224" label="销售价">
                         <template slot-scope="scope">{{ scope.row.price | priceRangeFilters }}</template>
                     </el-table-column>
-                    <el-table-column sortable prop="buys" label="销量" >
+                    <el-table-column sortable prop="buys" label="销量">
                         <template slot-scope="scope">{{ scope.row.buys || '-' }}</template>
                     </el-table-column>
-                    <el-table-column sortable prop="actualStocks" label="实际库存"  width="130">
+                    <el-table-column sortable prop="actualStocks" label="实际库存" width="130">
                         <template slot-scope="scope">{{ scope.row.actualStocks || '-' }}</template>
                     </el-table-column>
-                    <el-table-column label="销售库存" prop="stocks"  />
-                    <el-table-column label="状态" >
+                    <el-table-column label="销售库存" prop="stocks" />
+                    <el-table-column label="状态">
                         <template>
                             <span class="status-veto">删除</span>
                         </template>
@@ -81,7 +87,7 @@
                             {{ scope.row.brief || '-' }}
                         </template>
                     </el-table-column>
-                    <el-table-column label="操作" align="left" fixed="right" width="300px" >
+                    <el-table-column label="操作" align="left" fixed="right" width="300px">
                         <template slot-scope="scope">
                             <span class="table__action flex-center">
                                 <el-link :underline="false" type="primary" @click="updateDelStatus(scope.row, true)">恢复</el-link>
@@ -91,20 +97,27 @@
                     </el-table-column>
                 </el-table>
             </div>
-			<LsSticky :data="tableList">
-				<el-row type="flex" justify="space-between" class="w-100 overflow-h py-10 mt-10 bg-white">
-					<el-col class="text-nowrap flex-start">
-						<el-button size="mini" class="allCheck">
-							<el-checkbox v-model="checkAll" label="全选" size="small" @change="selAll" :indeterminate="checkHalf" :disabled='!selectableList.length'/>
-						</el-button>
-						<el-button size="small" @click="handleMulDel({ status: 1 }, '确认恢复所选数据吗?')">批量恢复</el-button>
-						<el-button size="small" @click="handleMulDel({ status: -2 }, '确认永久删除所选数据吗?')">批量永久删除</el-button>
-					</el-col>
-					<pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
-				</el-row>
-			</LsSticky>
+            <LsSticky :data="tableList">
+                <el-row type="flex" justify="space-between" class="w-100 overflow-h py-10 mt-10 bg-white">
+                    <el-col class="text-nowrap flex-start">
+                        <el-button size="mini" class="allCheck">
+                            <el-checkbox
+                                v-model="checkAll"
+                                label="全选"
+                                size="small"
+                                :indeterminate="checkHalf"
+                                :disabled="!selectableList.length"
+                                @change="selAll"
+                            />
+                        </el-button>
+                        <el-button size="small" @click="handleMulDel({ status: 1 }, '确认恢复所选数据吗?')">批量恢复</el-button>
+                        <el-button size="small" @click="handleMulDel({ status: -2 }, '确认永久删除所选数据吗?')">批量永久删除</el-button>
+                    </el-col>
+                    <pagination :current-page="page.curPage" :total="tableTotal" @size-change="pageSizeChange" @current-change="currentPageChange" />
+                </el-row>
+            </LsSticky>
         </el-card>
-       <dialogPreview ref="dialogPreview"/>
+        <dialogPreview ref="dialogPreview" />
     </section>
 </template>
 <script>
@@ -138,7 +151,7 @@ export default {
                 getExcel: '/product/s/product/recycleBin/export',
                 delete: '/product/s/product/batchUpdateDelStatus',
                 mulDel: '/product/s/product/batchUpdateDelStatus'
-            },
+            }
         }
     },
     watch: {},
@@ -146,10 +159,10 @@ export default {
         this.getBrand()
     },
     methods: {
-		//预览
-		 proPreview(row) {
-			this.$refs.dialogPreview.showDialog({id:row.id,viewDraft:[0,-1,'0','-1'].includes(row.opStatus)?true:false});
-		},
+        //预览
+        proPreview(row) {
+            this.$refs.dialogPreview.showDialog({ id: row.id, viewDraft: [0, -1, '0', '-1'].includes(row.opStatus) ? true : false })
+        },
         // 获取所有品牌
         getBrand() {
             GoodsManage.getBrandAllOnline()
@@ -169,10 +182,10 @@ export default {
             this.getData()
         },
         //查看链接
-		async viewLinks(id) {
-		    let res = await GoodsManage.productPreview({ productId: id })
-		    this.$refs.dialogLink.showDialog(`?detailsType=good&id=${id}&token=${res.data}`)
-		},
+        async viewLinks(id) {
+            let res = await GoodsManage.productPreview({ productId: id })
+            this.$refs.dialogLink.showDialog(`?detailsType=good&id=${id}&token=${res.data}`)
+        },
         // 更新被删除商品状态
         updateDelStatus(row, flag) {
             this.$confirm(`${flag ? '确定恢复商品？' : '永久删除商品后不可恢复，确定删除？'}`, '消息确认', {
@@ -203,7 +216,7 @@ export default {
 <!--
     表格内容过长显示tooltip时的最大宽度设置 不能使用scoped
 -->
-<style >
+<style>
 .el-tooltip__popper {
     max-width: 60vw;
 }

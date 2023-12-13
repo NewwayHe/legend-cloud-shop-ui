@@ -9,12 +9,17 @@
             auto-complete="on"
             label-position="left"
         >
-			<div class="w-100 flex-center mb-30" v-loading="!systemConfigFinally">
-				<img :src="$photoServer+systemConfigTemp.shopBigLogo" style="max-width: 200px;height: 50px;object-fit: contain;" :onerror="$defaultImg" v-if="systemConfigTemp&&systemConfigTemp.shopBigLogo">
-				<img style="width: 150px;height: 50px;" src="@/assets/images/login__logo.png" alt="" v-else-if="systemConfigFinally"/>
-				<div style="width: 150px;height: 50px;" v-else></div>
-				<h3 class="ml-20 text-nowrap">商家端</h3>
-			</div>
+            <div v-loading="!systemConfigFinally" class="w-100 flex-center mb-30">
+                <img
+                    v-if="systemConfigTemp && systemConfigTemp.shopBigLogo"
+                    :src="$photoServer + systemConfigTemp.shopBigLogo"
+                    style="max-width: 200px; height: 50px; object-fit: contain"
+                    :onerror="$defaultImg"
+                />
+                <img v-else-if="systemConfigFinally" style="width: 150px; height: 50px" src="@/assets/images/login__logo.png" alt="" />
+                <div v-else style="width: 150px; height: 50px"></div>
+                <h3 class="ml-20 text-nowrap">商家端</h3>
+            </div>
             <div class="d-flex text-center pb-40">
                 <div
                     class="flex-1 pb-8 cursor-pointer"
@@ -139,14 +144,14 @@ export default {
             loading: false,
             passwordType: 'password',
             redirect: undefined,
-			systemConfigTemp:'',// 【用户】获取ICP备案号以及商城名称、登录页面logo、侧边栏左上角图标等
-			systemConfigFinally:false
+            systemConfigTemp: '', // 【用户】获取ICP备案号以及商城名称、登录页面logo、侧边栏左上角图标等
+            systemConfigFinally: false
         }
     },
     computed: {
         //检测手机号码是否正确
-        phoneRight() { 
-			return this.$checkInfo([{ type: 'phone', value: this.loginForm.principal }]);
+        phoneRight() {
+            return this.$checkInfo([{ type: 'phone', value: this.loginForm.principal }])
         }
     },
     watch: {
@@ -168,25 +173,25 @@ export default {
         }
     },
     created() {
-		let systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
-		// 如果main.js里面执行了方法获取到系统设置
-		if (systemConfig&&systemConfig.id) {
-			this.systemConfigTemp = systemConfig
-			this.systemConfigFinally = true
-		// 如果VUEX里没有设置systemConfig(系统设置)
-		}else{
-			this.$store
-			    .dispatch('user/getSystemConfig')
-			    .then((res) => {
-					this.systemConfigTemp = res
-					// console.log('systemConfig:',this.systemConfig);
-			    })
-			    .catch(() => {
-			    }).finally(()=>{
-					this.systemConfigFinally = true
-				})
-		}
-	},
+        let systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
+        // 如果main.js里面执行了方法获取到系统设置
+        if (systemConfig && systemConfig.id) {
+            this.systemConfigTemp = systemConfig
+            this.systemConfigFinally = true
+            // 如果VUEX里没有设置systemConfig(系统设置)
+        } else {
+            this.$store
+                .dispatch('user/getSystemConfig')
+                .then((res) => {
+                    this.systemConfigTemp = res
+                    // console.log('systemConfig:',this.systemConfig);
+                })
+                .catch(() => {})
+                .finally(() => {
+                    this.systemConfigFinally = true
+                })
+        }
+    },
     methods: {
         swithchLogin(name) {
             this.loginMethod = name
@@ -213,9 +218,7 @@ export default {
                                 }
                             }
                         })
-                        .catch((e)=>{
-
-                        })
+                        .catch((e) => {})
                         .finally(() => {
                             this.loading = false
                         })
@@ -258,11 +261,11 @@ $light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-    .login-container{
-		::v-deep .el-input input {
-		    color: $cursor;
-		}
-	} 
+    .login-container {
+        ::v-deep .el-input input {
+            color: $cursor;
+        }
+    }
 }
 .login__Active {
     position: relative;
@@ -323,7 +326,7 @@ $dark_gray: #889aa4;
 $light_gray: #eee;
 
 .login-container {
-    min-height: 768px;      //防止底部往上挪
+    min-height: 768px; //防止底部往上挪
     height: 100%;
     width: 100%;
     background-color: $bg;

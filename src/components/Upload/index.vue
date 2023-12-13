@@ -42,7 +42,7 @@
                 <div :class="{ lsUpload__box: !isHiddenImg && (!button || (!multiple && tempUrl)) }" :style="uploadStyle">
                     <ls-image
                         v-if="!isHiddenImg && !multiple && tempUrl"
-                        :isPreview="false"
+                        :is-preview="false"
                         class="lsUpload__img w-100 h-100"
                         mode="contain"
                         :src="tempUrl"
@@ -110,7 +110,7 @@ export default {
         size: {
             // 每次上传限制多大
             type: Number,
-            default: 5*1024*1024,   //5MB
+            default: 5 * 1024 * 1024 //5MB
         },
         sortable: {
             //
@@ -193,11 +193,11 @@ export default {
         },
         beforeAvatarUpload(file) {
             this.loadingFlag = this.$loading({ text: '正在上传' })
-            const isLt = file.size < this.size;
-            
+            const isLt = file.size < this.size
+
             if (!isLt) {
                 this.loadingFlag.close()
-                this.$message.error(`上传图片大小不能超过 ${Math.floor(this.size/2**20)}MB!`)
+                this.$message.error(`上传图片大小不能超过 ${Math.floor(this.size / 2 ** 20)}MB!`)
             }
             return isLt
         },

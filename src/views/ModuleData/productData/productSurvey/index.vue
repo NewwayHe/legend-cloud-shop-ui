@@ -110,7 +110,7 @@
                     tooltip-effect="dark"
                     class="w-100 mt-50"
                     header-row-class-name="headerRow"
-					row-key="id"
+                    row-key="id"
                     @sort-change="changeSort"
                 >
                     <template slot="empty">

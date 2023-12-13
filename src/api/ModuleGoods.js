@@ -16,7 +16,7 @@ const GoodsManage = {
     updateRatio: (params) => request.sendRequest({ url: '/activity/distribution/prod/update/ratio', params, method: 'put' }), //更新佣金比例
     proPreview: (data) => request.get('/product/s/product/preview', data), // 预览商品生成标识
     updateProductList: (data) => request.post('/product/s/product/updateProductList', data), // 预览商品生成标识
-    batchInsertProductFailPage: (data) => request.post('/product/s/product/batchInsertProductFailPage', data), // 页面展示近7天导入结果
+    batchInsertProductFailPage: (data) => request.post('/product/s/product/batchInsertProductFailPage', data) // 页面展示近7天导入结果
 }
 
 // 商品举报
@@ -38,9 +38,8 @@ const addGood = {
     userPropertyNameId: (data) => request.get(`/product/s/product/userPropertyNameId`, data), // 获取商家自定义规格名称id
     productId: (id) => request.get(`/product/s/product/${id}`), // 获取商家自定义规格名称
     productDraftId: (id) => request.get(`/product/s/product/draft/${id}`), // 获取商家商品草稿
-    productDraftArraignment:(data) => request.postForm('/product/s/product/draft/arraignment',data),//草稿提交审核
-    productDraftRevokeArraignment:(data) => request.postForm('/product/s/product/draft/revokeArraignment',data)//草稿撤回审核
-
+    productDraftArraignment: (data) => request.postForm('/product/s/product/draft/arraignment', data), //草稿提交审核
+    productDraftRevokeArraignment: (data) => request.postForm('/product/s/product/draft/revokeArraignment', data) //草稿撤回审核
 }
 
 // 商品举报类型
